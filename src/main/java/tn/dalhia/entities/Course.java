@@ -1,10 +1,7 @@
 package tn.dalhia.entities;
 import tn.dalhia.entities.enumerations.CourseStatus;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -19,6 +16,7 @@ public class Course {
     private Date datePublished;
     private Date dateRemoved;
     private float rate;
+    @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
 
 }

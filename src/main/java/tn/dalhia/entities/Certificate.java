@@ -2,10 +2,7 @@ package tn.dalhia.entities;
 
 import tn.dalhia.entities.enumerations.CertificateType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,5 +13,6 @@ public class Certificate {
     private String title;
     private Date dateAffection;
     private Date dateAdded;
+    @Enumerated(EnumType.STRING)
     private CertificateType certificateType;
 }

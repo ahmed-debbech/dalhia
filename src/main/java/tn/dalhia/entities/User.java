@@ -31,6 +31,8 @@ public class User {
     private LocalTime start_hour; //?? time ? e.g: 19:50
     private LocalTime end_hour; //?? time ? e.g: 19:50
     private Job job;
+    @Enumerated(EnumType.STRING)
+    private Speciality speciality;
 
     @OneToMany(cascade = CascadeType.ALL) //uniderectional
     private List<Course> courses;

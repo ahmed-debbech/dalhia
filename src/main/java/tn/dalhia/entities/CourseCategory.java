@@ -1,9 +1,7 @@
 package tn.dalhia.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class CourseCategory {
@@ -11,4 +9,7 @@ public class CourseCategory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseCategory")
+    private List<Course> courseList;
 }

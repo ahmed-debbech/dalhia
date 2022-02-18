@@ -15,4 +15,13 @@ public class Certificate {
     private Date dateAdded;
     @Enumerated(EnumType.STRING)
     private CertificateType certificateType;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
 }

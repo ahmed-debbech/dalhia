@@ -1,10 +1,8 @@
 package tn.dalhia.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Quiz {
@@ -14,4 +12,7 @@ public class Quiz {
     private String title;
     private Date dateAdded;
     private Date dateRemoved;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Answer> answers;
 }

@@ -7,12 +7,10 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Message {
+public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String text;
-    private Date dateSent;
-    private boolean banned; // when in group chat
-
+    private Date date_debut;
+    private Date fin_debut;
 }

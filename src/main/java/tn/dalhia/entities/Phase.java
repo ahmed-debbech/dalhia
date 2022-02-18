@@ -1,10 +1,8 @@
 package tn.dalhia.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Phase {
@@ -16,4 +14,11 @@ public class Phase {
     private int duration;
     private Date dateAdded;
     private boolean finalPhase;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Quiz> quiz;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Resources> resources;
+
 }

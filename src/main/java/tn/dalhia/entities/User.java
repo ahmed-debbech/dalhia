@@ -2,6 +2,7 @@ package tn.dalhia.entities;
 
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
+import tn.dalhia.entities.enumerations.Speciality;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -34,44 +35,44 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
 
-    @OneToMany(cascade = CascadeType.ALL) //uniderectional
+    @OneToMany(cascade = CascadeType.ALL) //the list of courses of coach
     private List<Course> courses;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CourseProgress> courseProgresses;
 
     @OneToMany(cascade = CascadeType.ALL) //uni
     private List<Subscription> subscriptions;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL) //uni
     private List<Application> applications;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Channel> channels;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Ad> ads;
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Topic> topics; //?? to ask about comments
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Appointment> appointmentLists;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Request> requests;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Review> reviews; // ?? to ask
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Report> reports;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL) //uni
     private List<Donation> donations;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Participation> participations;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Evaluation> evaluations;
+    @OneToMany(mappedBy = "user")
+    private List<Certificate> certificates;
+
+    //@OneToMany(cascade = CascadeType.ALL)
+    //private List<Evaluation> evaluations;
 
 
 }

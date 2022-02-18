@@ -1,9 +1,6 @@
 package tn.dalhia.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.xml.crypto.Data;
 
 @Entity
@@ -15,4 +12,8 @@ public class CourseProgress {
     private Data unrollDate;
     private int duration;
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 }

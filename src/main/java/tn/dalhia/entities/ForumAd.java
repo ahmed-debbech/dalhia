@@ -1,9 +1,6 @@
 package tn.dalhia.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -23,4 +20,13 @@ public class ForumAd {
     private String text;
     private String redirectUrl;
     private int numClicks; // how many times the user clicked on the banned after loading
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "forum_ad_id")
+    private ForumAdTarget forumAdTarget;
+
 }

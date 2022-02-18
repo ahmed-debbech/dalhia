@@ -1,9 +1,6 @@
 package tn.dalhia.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ForumAdTarget {
@@ -16,4 +13,5 @@ public class ForumAdTarget {
     private int applicationCount; // the ad shows to who has the application to offers
     private int certCount; // the ad shows to who has a certificate equal to that number or more
     private boolean any; // any criteria
+
 }

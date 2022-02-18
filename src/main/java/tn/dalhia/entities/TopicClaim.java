@@ -15,4 +15,8 @@ public class TopicClaim {
     private boolean approved;
     @Enumerated(EnumType.STRING)
     private TopicClaimType topicClaimType;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

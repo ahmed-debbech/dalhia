@@ -50,29 +50,29 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Topic> topics; //?? to ask about comments
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
-    //private List<Appointment> appointmentLists;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    private List<Appointment> appointmentLists;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
-    //private List<Request> requests;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    private List<Request> requests;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     //private List<Review> reviews; // ?? to ask
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
-    //private List<Report> reports;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    private List<Report> reports;
 
-    //@OneToMany(cascade = CascadeType.ALL) //uni
-    //private List<Donation> donations;
+    @OneToMany(cascade = CascadeType.ALL) //uni
+    private List<Donation> donations;
 
-    //@OneToMany(cascade = CascadeType.ALL)
-    //private List<Participation> participations;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Participation> participations;
 
     @OneToMany(mappedBy = "user")
     private List<Certificate> certificates;
 
-    //@OneToMany(cascade = CascadeType.ALL)
-    //private List<Evaluation> evaluations;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Review> reviews;
 
 
 }

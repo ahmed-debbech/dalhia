@@ -22,10 +22,13 @@ public class Topic {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<TopicRate> topicRateList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ForumComment> forumComments;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<TopicClaim> topicClaims;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

@@ -10,6 +10,6 @@ public class CourseCategory {
     private Long id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseCategory")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Course> courseList;
 }

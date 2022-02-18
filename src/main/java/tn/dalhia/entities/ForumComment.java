@@ -19,7 +19,7 @@ public class ForumComment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "forumComment")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<CommentReaction> commentReactionList;
 
     @OneToMany(cascade = CascadeType.ALL)

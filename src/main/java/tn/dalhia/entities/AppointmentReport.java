@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,7 @@ import javax.persistence.OneToOne;
 
 import tn.dalhia.entities.enumerations.AppReportCategory;
 
-
+@Entity
 public class AppointmentReport {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -29,6 +29,9 @@ public class Appointment {
 
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     private AppointmentRate appointmentRate;
+    
+    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
+    private AppointmentReport appointmentReport;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

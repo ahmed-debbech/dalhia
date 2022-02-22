@@ -1,9 +1,8 @@
 package tn.dalhia.entities.enumerations;
 
 public enum Role {
-    EXPERT,
+    EXPERT, //can be also a COACH
     WOMAN,
     ADMIN,
-    COACH,
     ASSOCIATION
 }

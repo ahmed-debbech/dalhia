@@ -1,25 +1,13 @@
 package tn.dalhia.entities;
 
-import tn.dalhia.entities.enumerations.AppointmentStatus;
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
 
 import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
-
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class User {
     @Id
@@ -40,8 +28,8 @@ public class User {
     private String city;
     private String state;
     private int zipCode;
-    private int start_hour; //?? time ? e.g: 19:50
-    private int end_hour; //?? time ? e.g: 19:50
+    private LocalTime start_hour; //?? time ? e.g: 19:50
+    private LocalTime end_hour; //?? time ? e.g: 19:50
     private Job job;
 
     @OneToMany(cascade = CascadeType.ALL) //uniderectional

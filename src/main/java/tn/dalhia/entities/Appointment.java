@@ -26,18 +26,4 @@ public class Appointment {
 
     @Enumerated(EnumType.STRING)
     private AppointmentStatus AppStatus;
-<<<<<<< Updated upstream
 }
-=======
-
-    @OneToOne(mappedBy = "appointment")
-    private AppointmentRate appointmentRate;
-    
-    @OneToOne(mappedBy = "appointment")
-    private AppointmentReport appointmentReport;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-}
->>>>>>> Stashed changes

@@ -21,8 +21,6 @@ public class AppointmentReport {
     private AppReportCategory category;
 	
     private String report;
-    
-    
 
     @OneToOne
     @JoinColumn(name = "appointment_id")

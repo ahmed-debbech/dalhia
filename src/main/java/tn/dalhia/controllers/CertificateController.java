@@ -8,7 +8,7 @@ import tn.dalhia.services.ICertificateService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/certificate")
+
 public class CertificateController {
 
 

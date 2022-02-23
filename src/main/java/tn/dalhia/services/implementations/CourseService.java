@@ -16,35 +16,38 @@ public class CourseService implements ICourseService {
     CourseRepository courseRepository;
 
     @Override
-    public List<Course> retrieveAllClients(){
-        List<Course> listCourse= courseRepository.findAll();
-        for(Course c:listCourse)
-        {
-            log.info("Course:" + c.getName() );
+    public List<Course> getAll(){
+        return courseRepository.findAll();
+    }
+
+    @Override
+    public Course add(Course course){
+
+        return courseRepository.save(course);
+    }
+
+    @Override
+    public Course modify(Course course , Long id){
+        Course c1 = this.get(id);
+        if(c1 == null){
+            return null;
         }
-        return listCourse;
+
+        return courseRepository.save(course);
     }
 
     @Override
-    public Course addClient(Course c) {
-        courseRepository.save(c);
-        return c;
+    public Course get(Long id){
+        return courseRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteClient(Long id) {
-        courseRepository.deleteById(id);
-    }
-
-    @Override
-    public Course updateClient(Course c) {
-        courseRepository.save(c);
-        return c;
-    }
-
-    @Override
-    public Course retrieveClient(Long id) {
-        Course c= courseRepository.findById(id).get();
-        return c;
+    public  boolean delete(Long id){
+        Course c = courseRepository.findById(id).orElse(null);
+        if(c != null){
+            courseRepository.save(c);
+            return true;
+        }
+        return false;
     }
 }

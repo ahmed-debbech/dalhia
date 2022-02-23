@@ -25,7 +25,7 @@ public class CourseController {
     @GetMapping()
     public ResponseEntity<List<Course>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
-                courseService.
+                courseService.getAll()
         );
     }
     @PostMapping()
@@ -36,20 +36,20 @@ public class CourseController {
         );
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Certificate> modify(@RequestBody Certificate certificate, @PathVariable("id") Long id){
-        Certificate certificate1 = certificateService.modify(certificate, id);
-        if(certificate == null){
+    public ResponseEntity<Course> modify(@RequestBody Course course, @PathVariable("id") Long id){
+        Course course1 = courseService.modify(course, id);
+        if(course == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     null
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                certificate1
+                course1
         );
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Certificate> get(@PathVariable("id") Long id){
-        Certificate c1 = certificateService.get(id);
+    public ResponseEntity<Course> get(@PathVariable("id") Long id){
+        Course c1 = courseService.get(id);
         if(c1 == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     null
@@ -61,7 +61,7 @@ public class CourseController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id){
-        boolean b = certificateService.delete(id);
+        boolean b = courseService.delete(id);
         if(!b){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     false

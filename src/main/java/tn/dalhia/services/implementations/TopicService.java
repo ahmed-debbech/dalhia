@@ -63,8 +63,10 @@ public class TopicService implements ITopicService {
 
     @Override
     public boolean delete(Long id) {
-        if(topicRepository.findById(id).orElse(null) != null){
-            topicRepository.deleteById(id);
+        Topic tt = topicRepository.findById(id).orElse(null);
+        if(tt != null){
+            tt.setDateRemoved(LocalDateTime.now());
+            topicRepository.save(tt);
             return true;
         }
         return false;
@@ -74,6 +76,9 @@ public class TopicService implements ITopicService {
     public boolean bans(Long id, boolean ban) {
         Topic tt = topicRepository.findById(id).orElse(null);
         if(tt != null){
+            if(ban){
+                tt.setDateRemoved(LocalDateTime.now());
+            }
             tt.setBanned(ban);
             topicRepository.save(tt);
             return true;

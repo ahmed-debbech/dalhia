@@ -18,17 +18,18 @@ TODO
 /forum (GET)
 /forum/topics (POST/GET)
 /forum/topics/{id} (PUT/ GET/ DELETE)
-/forum/topics/{id}/bans (PUT / DELETE)
-/forum/topics/{id}/claims (POST/GET)
-
-~ TopicClaimController
-/forum/claims/{id} (GET)
-/forum/claims/{id}/approvals (DELETE, PUT)
-/forum/topics/{id}/comments (POST/GET)
-/forum/topics/{id}/rate/{action} (GET, POST, DELETE)
+/forum/topics/{id}/bans/{bool} (PUT)
+/forum/topics/{id}/rate/{action} (POST)
+/forum/topics/{id}/rate (DELETE)
 /forum/topics/{id}/rate (GET)
 
+~ TopicClaimController
+/forum/topics/{id}/claims (POST/GET)
+/forum/claims/{id} (GET)
+/forum/claims/{id}/approvals (DELETE, PUT)
+
 ~ ForumCommentController
+/forum/topics/{id}/comments (POST/GET)
 /forum/comments/{cmt_id} (PUT, DELETE, GET)
 /forum/comments/{cmt_id}/bans (PUT / DELETE)
 /forum/comments/{cmt_id}/replies (POST,GET)

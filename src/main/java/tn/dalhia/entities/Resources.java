@@ -17,7 +17,7 @@ public class Resources {
     private Long id;
     @Enumerated(EnumType.STRING)
     private ResourceType type;
-    @NonNull private String link;
-    @NonNull private String name;
-    @NonNull private int size;
+    private String link;
+    private String name;
+    private int size;
 }

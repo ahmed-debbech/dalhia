@@ -1,9 +1,15 @@
 package tn.dalhia.entities;
 
+import lombok.*;
 import tn.dalhia.entities.enumerations.ResourceType;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Resources {
     @Id
@@ -11,7 +17,7 @@ public class Resources {
     private Long id;
     @Enumerated(EnumType.STRING)
     private ResourceType type;
-    private String link;
-    private String name;
-    private int size;
+    @NonNull private String link;
+    @NonNull private String name;
+    @NonNull private int size;
 }

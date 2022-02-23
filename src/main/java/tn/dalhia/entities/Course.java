@@ -1,22 +1,29 @@
 package tn.dalhia.entities;
+import lombok.*;
 import tn.dalhia.entities.enumerations.CourseStatus;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private float price;
-    private String modality;
-    private Date dateAdded;
-    private Date datePublished;
-    private Date dateRemoved;
-    private float rate;
+    @NonNull private String name;
+    @NonNull private float price;
+    @NonNull private String modality;
+    @NonNull private Date dateAdded;
+    @NonNull private Date datePublished;
+    @NonNull private Date dateRemoved;
+    @NonNull private float rate;
 
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;

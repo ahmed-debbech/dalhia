@@ -31,11 +31,11 @@ public class ReviewService implements IReviewService {
 	@Override
 	public void updateReview(Review rv, int id) {
 		Review Rv = rvr.findById(id).get();
-		Rv.setReviewHeader(Rv.getReviewHeader());
-		Rv.setReviewBody(Rv.getReviewBody());
-		Rv.setReviewDate(Rv.getReviewDate());
-		Rv.setStars(Rv.getStars());
-		rvr.save(rv);
+		Rv.setReviewHeader(rv.getReviewHeader());
+		Rv.setReviewBody(rv.getReviewBody());
+		Rv.setReviewDate(rv.getReviewDate());
+		Rv.setStars(rv.getStars());
+		rvr.save(Rv);
 		log.info("Review edited.");
 	}
 

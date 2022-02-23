@@ -41,8 +41,8 @@ public class AppointmentReportService implements IAppointmentReportService {
 	@Override
 	public void updateAppointmentReport(AppointmentReport rp, Long id) {
 		AppointmentReport report = AppReportRepo.findById(id).get();
-		report.setReport(report.getReport());
-		report.setCategory(report.getCategory());
+		report.setReport(rp.getReport());
+		report.setCategory(rp.getCategory());
 		AppReportRepo.save(rp);
 		log.info("Appointment Report edited.");
 	}

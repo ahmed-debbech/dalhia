@@ -42,9 +42,9 @@ public class AppointmentRateService implements IAppointmentRateService {
 	@Override
 	public void updateAppointmentRate(AppointmentRate Ar, Long id) {
 		AppointmentRate rate = AppRateRepo.findById(id).get();
-		rate.setStars(rate.getStars());
-		rate.setSatisfaction(rate.getSatisfaction());
-		AppRateRepo.save(Ar);
+		rate.setStars(Ar.getStars());
+		rate.setSatisfaction(Ar.getSatisfaction());
+		AppRateRepo.save(rate);
 		log.info("Appointment Rate edited.");
 	}
 	@Override

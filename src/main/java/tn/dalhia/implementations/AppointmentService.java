@@ -53,11 +53,11 @@ public class AppointmentService implements IAppointmentService {
 	public void updateAppointment(Appointment app, int id) {
 		Appointment a = AppRepo.findById(id).get();
 		
-		a.setAppHour(a.getAppHour());
-		a.setAppDate(a.getAppDate());
-		a.setAppStatus(a.getAppStatus());
-		a.setUser(a.getUser());
-		AppRepo.save(app);
+		a.setAppHour(app.getAppHour());
+		a.setAppDate(app.getAppDate());
+		a.setAppStatus(app.getAppStatus());
+		a.setUser(app.getUser());
+		AppRepo.save(a);
 		log.info("Appointment edited.");
 		
 	}

@@ -25,11 +25,11 @@ public class ReportService implements IReportService{
 	public void updateReport(Report Report, int id) {
      
 		Report Rp = rr.findById(id).get();
-		Rp.setCategory(Rp.getCategory());
-		Rp.setReportBody(Rp.getReportBody());
-		Rp.setReportDate(Rp.getReportDate());
+		Rp.setCategory(Report.getCategory());
+		Rp.setReportBody(Report.getReportBody());
+		Rp.setReportDate(Report.getReportDate());
 	
-		rr.save(Report);
+		rr.save(Rp);
 		log.info("Report edited.");
 		
 	}

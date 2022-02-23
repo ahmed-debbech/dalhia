@@ -32,10 +32,10 @@ public class RequestService implements IRequestService {
 	@Override
 	public void updateRequest(Request rq, int id) {
 		Request Rq = rqr.findById(id).get();
-		Rq.setRequestBody(Rq.getRequestBody());
-		Rq.setRequestDate(Rq.getRequestDate());
-		Rq.setRequestHeader(Rq.getRequestHeader());
-		rqr.save(rq);
+		Rq.setRequestBody(rq.getRequestBody());
+		Rq.setRequestDate(rq.getRequestDate());
+		Rq.setRequestHeader(rq.getRequestHeader());
+		rqr.save(Rq);
 		log.info("Request edited.");
 		
 	}

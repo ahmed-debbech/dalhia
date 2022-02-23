@@ -16,11 +16,11 @@ public class Phase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NonNull private String title;
-    @NonNull private int number;
-    @NonNull private int duration;
-    @NonNull private Date dateAdded;
-    @NonNull private boolean finalPhase;
+    private String title;
+    private int number;
+    private int duration;
+    private Date dateAdded;
+    private boolean finalPhase;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Quiz> quiz;

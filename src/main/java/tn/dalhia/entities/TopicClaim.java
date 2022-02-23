@@ -5,6 +5,7 @@ import lombok.*;
 import tn.dalhia.entities.enumerations.TopicClaimType;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,7 @@ public class TopicClaim {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String text;
-    private Date date_created;
+    private LocalDateTime date_created;
     private boolean approved;
     @Enumerated(EnumType.STRING)
     private TopicClaimType topicClaimType;

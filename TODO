@@ -26,7 +26,7 @@ TODO
 ~ TopicClaimController
 /forum/topics/{id}/claims (POST/GET)
 /forum/claims/{id} (GET)
-/forum/claims/{id}/approvals (DELETE, PUT)
+/forum/claims/{id}/approvals/{action} (PUT)
 
 ~ ForumCommentController
 /forum/topics/{id}/comments (POST/GET)

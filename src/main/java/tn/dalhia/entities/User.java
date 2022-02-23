@@ -1,14 +1,26 @@
 package tn.dalhia.entities;
 
+import tn.dalhia.entities.enumerations.AppointmentStatus;
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
 
 import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class User {
     @Id
@@ -29,50 +41,51 @@ public class User {
     private String city;
     private String state;
     private int zipCode;
-    private LocalTime start_hour; //?? time ? e.g: 19:50
-    private LocalTime end_hour; //?? time ? e.g: 19:50
+    private int start_hour; //?? time ? e.g: 19:50
+    private int end_hour; //?? time ? e.g: 19:50
+    @Enumerated(EnumType.STRING)
     private Job job;
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
 
-    @OneToMany(cascade = CascadeType.ALL) //the list of courses of coach
+    @OneToMany(cascade = CascadeType.ALL) //uniderectional
     private List<Course> courses;
 
+    @OneToMany(cascade = CascadeType.ALL) //uni
+    private List<Subscription> subscriptions;
+
     @OneToMany(cascade = CascadeType.ALL)
-    private List<CourseProgress> courseProgresses;
+    private List<Application> applications;
 
-    //@OneToMany(cascade = CascadeType.ALL) //uni
-    //private List<Subscription> subscriptions;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Channel> channels;
 
-    //@OneToMany(cascade = CascadeType.ALL) //uni
-    //private List<Application> applications;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Advertisement> ads;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Topic> topics; //?? to ask about comments
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Appointment> appointmentLists;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Request> requests;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
-    //private List<Review> reviews; // ?? to ask
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Review> reviews;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Report> reports;
 
-    @OneToMany(cascade = CascadeType.ALL) //uni
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Donation> donations;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Participation> participations;
 
-    @OneToMany(mappedBy = "user")
-    private List<Certificate> certificates;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Review> reviews;
+    /*@OneToMany(cascade = CascadeType.ALL)
+    private List<Evaluation> evaluations;**/
 
 
 }

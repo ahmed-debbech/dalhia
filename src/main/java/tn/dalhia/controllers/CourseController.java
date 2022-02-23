@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/course/course")
+@RequestMapping("/course")
 @RequiredArgsConstructor
 @Slf4j
 
@@ -28,7 +28,7 @@ public class CourseController {
                 courseService.getAll()
         );
     }
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Course> add(@RequestBody Course course){
         Course c = courseService.add(course);
         return ResponseEntity.status(HttpStatus.OK).body(

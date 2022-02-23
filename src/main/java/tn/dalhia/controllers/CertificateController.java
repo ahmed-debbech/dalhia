@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/course/certificate")
+@RequestMapping("/course")
 @RequiredArgsConstructor
 @Slf4j
 public class CertificateController {
@@ -21,20 +21,20 @@ public class CertificateController {
         @Autowired
         private ICertificateService certificateService;
 
-        @GetMapping()
+        @GetMapping("/{id}/certificate")
         public ResponseEntity<List<Certificate>> get(){
             return ResponseEntity.status(HttpStatus.OK).body(
                     certificateService.getAll()
             );
         }
-        @PostMapping()
-        public ResponseEntity<Certificate> add(@RequestBody Certificate certificate){
-            Certificate c = certificateService.add(certificate);
+        @PostMapping("/{id}/certificate")
+        public ResponseEntity<Certificate> add(@PathVariable("id") Long id,@RequestBody Certificate certificate){
+            Certificate c = certificateService.add(certificate, id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     c
             );
         }
-        @PutMapping("/{id}")
+        @PutMapping("/certificate/{id}")
         public ResponseEntity<Certificate> modify(@RequestBody Certificate certificate, @PathVariable("id") Long id){
             Certificate certificate1 = certificateService.modify(certificate, id);
             if(certificate == null){
@@ -58,7 +58,7 @@ public class CertificateController {
                     c1
             );
         }
-        @DeleteMapping("/{id}")
+        @DeleteMapping("/certificate/{id}")
         public ResponseEntity<Boolean> delete(@PathVariable("id") Long id){
             boolean b = certificateService.delete(id);
             if(!b){

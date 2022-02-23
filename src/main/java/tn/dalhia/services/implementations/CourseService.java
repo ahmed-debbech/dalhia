@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Course;
 import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.services.ICourseService;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,7 +24,8 @@ public class CourseService implements ICourseService {
 
     @Override
     public Course add(Course course){
-
+        course.setDateAdded(LocalDateTime.now());
+        course.setDatePublished(LocalDateTime.now());
         return courseRepository.save(course);
     }
 

@@ -4,9 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Certificate;
+import tn.dalhia.entities.Course;
 import tn.dalhia.repositories.CertificateRepository;
+import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.services.ICertificateService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,6 +18,8 @@ public class CertificateService implements ICertificateService {
 
     @Autowired
     CertificateRepository certificateRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     @Override
     public List<Certificate> getAll(){
@@ -22,9 +27,15 @@ public class CertificateService implements ICertificateService {
     }
 
     @Override
-    public Certificate add(Certificate certificate){
-
-        return certificateRepository.save(certificate);
+    public Certificate add(Certificate certificate , Long courseId){
+        Course cc = courseRepository.findById(courseId).orElse(null);
+        if(cc != null) {
+            certificate.setDateAffection(LocalDateTime.now());
+            certificate.setDateAdded(LocalDateTime.now());
+            certificate.setCourse(cc);
+            return certificateRepository.save(certificate);
+        }
+        return null;
     }
 
     @Override
@@ -48,7 +59,7 @@ public class CertificateService implements ICertificateService {
     public  boolean delete(Long id){
         Certificate c = certificateRepository.findById(id).orElse(null);
         if(c != null){
-            certificateRepository.save(c);
+            certificateRepository.delete(c);
             return true;
         }
         return false;

@@ -1,12 +1,15 @@
 package tn.dalhia.services.implementations;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Phase;
 import tn.dalhia.repositories.PhaseRepository;
 import tn.dalhia.services.IPhaseService;
 
 import java.util.List;
-
+@Service
+@Slf4j
 public class PhaseService implements IPhaseService {
 
     @Autowired

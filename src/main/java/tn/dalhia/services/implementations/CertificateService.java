@@ -17,35 +17,41 @@ public class CertificateService implements ICertificateService {
     CertificateRepository certificateRepository;
 
     @Override
-    public List<Certificate> retrieveAllCertificates(){
-        List<Certificate> listCertificate= certificateRepository.findAll();
-        for(Certificate c:listCertificate)
-        {
-            log.info("Certificate:" + c.getTitle() );
+    public List<Certificate> getAll(){
+        return certificateRepository.findAll();
+    }
+
+    @Override
+    public Certificate add(Certificate certificate){
+
+        return certificateRepository.save(certificate);
+    }
+
+    @Override
+    public Certificate modify(Certificate certificate , Long id){
+        Certificate c1 = this.get(id);
+        if(c1 == null){
+            return null;
         }
-        return listCertificate;
+        c1.setTitle(certificate.getTitle());
+        c1.setCourse(certificate.getCourse());
+        c1.setCertificateType(certificate.getCertificateType());
+        return certificateRepository.save(certificate);
     }
 
     @Override
-    public Certificate addCertificate(Certificate c) {
-        certificateRepository.save(c);
-        return c;
+    public Certificate get(Long id){
+        return certificateRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteCertificate(Long id) {
-        certificateRepository.deleteById(id);
+    public  boolean delete(Long id){
+        Certificate c = certificateRepository.findById(id).orElse(null);
+        if(c != null){
+            certificateRepository.save(c);
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    public Certificate updateCertificate(Certificate c) {
-        certificateRepository.save(c);
-        return c;
-    }
-
-    @Override
-    public Certificate retrieveCertificate(Long id) {
-        Certificate c= certificateRepository.findById(id).get();
-        return c;
-    }
 }

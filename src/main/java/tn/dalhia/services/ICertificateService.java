@@ -6,13 +6,9 @@ import java.util.List;
 
 public interface ICertificateService {
 
-    List<Certificate> retrieveAllCertificates();
-
-    Certificate addCertificate(Certificate c);
-
-    void deleteCertificate(Long id);
-
-    Certificate updateCertificate(Certificate c);
-
-    Certificate retrieveCertificate(Long id);
+    List<Certificate> getAll();
+    Certificate add(Certificate certificate);
+    Certificate modify(Certificate certificate, Long id);
+    Certificate get(Long id);
+    boolean delete(Long id);
 }

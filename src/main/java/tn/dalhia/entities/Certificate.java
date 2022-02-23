@@ -16,9 +16,9 @@ public class Certificate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NonNull private String title;
-    @NonNull private Date dateAffection;
-    @NonNull private Date dateAdded;
+    private String title;
+    private Date dateAffection;
+    private Date dateAdded;
 
     @Enumerated(EnumType.STRING)
     private CertificateType certificateType;

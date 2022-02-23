@@ -17,13 +17,13 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NonNull private String name;
-    @NonNull private float price;
-    @NonNull private String modality;
-    @NonNull private Date dateAdded;
-    @NonNull private Date datePublished;
-    @NonNull private Date dateRemoved;
-    @NonNull private float rate;
+    private String name;
+    private float price;
+    private String modality;
+    private Date dateAdded;
+    private Date datePublished;
+    private Date dateRemoved;
+    private float rate;
 
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;

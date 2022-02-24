@@ -1,0 +1,53 @@
+TODO
+ * CRUD
+ - Topic (mod, del, add, show, ban)
+ - Topic comment (add, ,del, mod, ban, show)
+ -COmment reaction (add, del)
+ - topic claim (add),
+
+ - add new channel for group (add, delete, mod, show)
+ - show all group channels
+ - creat channel invdiv ( add , show)
+ - messages ( add )
+
+ - ads(add, remove, mod, show all)
+
+ ROUTES:
+
+~ TopicController
+/forum (GET)
+/forum/topics (POST/GET)
+/forum/topics/{id} (PUT/ GET/ DELETE)
+/forum/topics/{id}/bans/{bool} (PUT)
+/forum/topics/{id}/rate/{action} (POST)
+/forum/topics/{id}/rate (DELETE)
+/forum/topics/{id}/rate (GET)
+
+~ TopicClaimController
+/forum/topics/{id}/claims (POST/GET)
+/forum/claims/{id} (GET)
+/forum/claims/{id}/approvals/{action} (PUT)
+
+~ ForumCommentController
+/forum/topics/{id}/comments (POST/GET)
+/forum/comments/{cmt_id} (PUT, DELETE, GET)
+/forum/comments/{cmt_id}/bans (PUT / DELETE)
+/forum/comments/{cmt_id}/replies (POST,GET)
+/forum/replies/{rep_id} (PUT, GET, DELETE)
+/forum/comments/{cmt_id}/reactions (GET, POST, DELETE)
+
+~ ChannelController
+/forum/channels/{type} (GET/ POST)
+/forum/channels/q/{id} (GET, DELETE, PUT)
+--> until here it is complete
+
+
+~ MessageController
+/forum/channels/{id}/messages (GET, POST)
+/forum/channels/messages/{usr_a}/{usr_b} (POST)
+/forum/channels/{id}/messages/{id} (DELETE)
+
+~ ForumAdsController
+/forum/ads (GET, POST)
+/forum/ads/{id} (DELETE, PUT, GET)
+/forum/ads/{id}/clicks (POST)

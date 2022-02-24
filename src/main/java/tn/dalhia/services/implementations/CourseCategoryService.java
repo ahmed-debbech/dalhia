@@ -33,8 +33,8 @@ public class CourseCategoryService implements ICourseCategoryService {
         if(c1 == null){
             return null;
         }
-
-        return courseCategoryRepository.save(courseCategory);
+        c1.setName(courseCategory.getName());
+        return courseCategoryRepository.save(c1);
     }
 
     @Override

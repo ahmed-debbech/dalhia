@@ -27,16 +27,6 @@ public class CourseProgressService implements ICourseProgressService {
     }
 
     @Override
-    public CourseProgress modify(CourseProgress courseProgress , Long id){
-        CourseProgress c1 = this.get(id);
-        if(c1 == null){
-            return null;
-        }
-
-        return courseProgressRepository.save(courseProgress);
-    }
-
-    @Override
     public CourseProgress get(Long id){
         return courseProgressRepository.findById(id).orElse(null);
     }

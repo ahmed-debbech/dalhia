@@ -32,8 +32,7 @@ public class AnswerService implements IAnswerService {
         if(a1 == null){
             return null;
         }
-
-        return answerRepository.save(a1);
+        return answerRepository.save(answer);
     }
 
     @Override

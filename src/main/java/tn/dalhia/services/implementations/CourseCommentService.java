@@ -32,8 +32,8 @@ public class CourseCommentService implements ICourseCommentService {
         if(c1 == null){
             return null;
         }
-
-        return courseCommentRepository.save(courseComment);
+        c1.setText(courseComment.getText());
+        return courseCommentRepository.save(c1);
     }
 
     @Override

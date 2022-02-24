@@ -35,18 +35,7 @@ public class CourseProgressController {
                 c
         );
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<CourseProgress> modify(@RequestBody CourseProgress courseProgress, @PathVariable("id") Long id){
-        CourseProgress courseProgress1 = courseProgressService.modify(courseProgress, id);
-        if(courseProgress == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    null
-            );
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(
-                courseProgress1
-        );
-    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CourseProgress> get(@PathVariable("id") Long id){
         CourseProgress c1 = courseProgressService.get(id);

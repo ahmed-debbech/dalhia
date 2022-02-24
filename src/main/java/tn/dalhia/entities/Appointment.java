@@ -28,10 +28,10 @@ public class Appointment {
     private AppointmentStatus AppStatus;
 
 
-    @OneToOne(mappedBy = "appointment")
+    @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
     private AppointmentRate appointmentRate;
     
-    @OneToOne(mappedBy = "appointment")
+    @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
     private AppointmentReport appointmentReport;
 
     @ManyToOne

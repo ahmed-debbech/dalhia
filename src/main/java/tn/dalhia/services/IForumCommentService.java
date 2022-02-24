@@ -13,11 +13,11 @@ public interface IForumCommentService {
     ForumComment get(Long id);
     ForumComment bans(Long id, boolean action);
     List<ForumComment> getReplies(Long id);
-    ForumComment reply(Long id);
+    ForumComment reply(ForumComment comment, Long id);
     ForumComment getReply(Long rep_id);
-    ForumComment modifyReply(Long rep_id);
+    ForumComment modifyReply(ForumComment comment, Long rep_id);
     ForumComment deleteReply(Long rep_id);
-    CommentReaction react(Long id);
+    CommentReaction react(CommentReaction reaction, Long id);
     List<CommentReaction> getAllReactions(Long id);
     boolean deleteReaction(Long id);
 }

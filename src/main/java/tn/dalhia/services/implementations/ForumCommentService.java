@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import tn.dalhia.entities.CommentReaction;
 import tn.dalhia.entities.ForumComment;
 import tn.dalhia.entities.Topic;
+import tn.dalhia.repositories.CommentReactionRepository;
 import tn.dalhia.repositories.ForumCommentRepository;
 import tn.dalhia.repositories.TopicClaimRepository;
 import tn.dalhia.repositories.TopicRepository;
@@ -26,6 +27,9 @@ public class ForumCommentService implements IForumCommentService {
     private ForumCommentRepository repository;
     @Autowired
     private TopicRepository topicRepository;
+    @Autowired
+    private CommentReactionRepository commentReactionRepository;
+
 
     @Override
     public ForumComment add(ForumComment comment, Long id) {
@@ -90,41 +94,77 @@ public class ForumCommentService implements IForumCommentService {
 
     @Override
     public List<ForumComment> getReplies(Long id) {
+        ForumComment c = repository.findById(id).orElse(null);
+        if(c != null){
+            return c.getReplies();
+        }
         return null;
     }
 
     @Override
-    public ForumComment reply(Long id) {
+    public ForumComment reply(ForumComment comment, Long id) {
+        ForumComment c = repository.findById(id).orElse(null);
+        if(c != null){
+            comment.setDatePublished(LocalDateTime.now());
+            c.getReplies().add(comment);
+            return repository.save(c);
+        }
         return null;
     }
 
     @Override
     public ForumComment getReply(Long rep_id) {
-        return null;
+        return repository.findById(rep_id).orElse(null);
     }
 
     @Override
-    public ForumComment modifyReply(Long rep_id) {
+    public ForumComment modifyReply(ForumComment comment, Long rep_id) {
+        ForumComment c = repository.findById(rep_id).orElse(null);
+        if(c != null){
+            c.setText(comment.getText());
+            return repository.save(c);
+        }
         return null;
     }
 
     @Override
     public ForumComment deleteReply(Long rep_id) {
+        ForumComment c = repository.findById(rep_id).orElse(null);
+        if(c != null){
+            c.setDateRemoved(LocalDateTime.now());
+            return repository.save(c);
+        }
         return null;
     }
 
     @Override
-    public CommentReaction react(Long id) {
+    public CommentReaction react(CommentReaction reaction, Long id) {
+        ForumComment fc = repository.findById(id).orElse(null);
+        if(fc != null){
+            reaction.setDate(LocalDateTime.now());
+            fc.getCommentReactionList().add(reaction);
+            repository.save(fc);
+            return reaction;
+        }
         return null;
     }
 
     @Override
     public List<CommentReaction> getAllReactions(Long id) {
+        ForumComment fc = repository.findById(id).orElse(null);
+        if(fc != null){
+            return fc.getCommentReactionList();
+        }
         return null;
     }
 
     @Override
     public boolean deleteReaction(Long id) {
+        ForumComment fc = repository.findById(id).orElse(null);
+        if(fc != null){
+            //TODO CHECK IF A USER HAS ALREADY A REACTION THEN REMOVE IT\
+            return true;
+        }
         return false;
     }
 }

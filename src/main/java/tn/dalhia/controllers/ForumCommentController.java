@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.dalhia.entities.CommentReaction;
 import tn.dalhia.entities.ForumComment;
 import tn.dalhia.entities.TopicClaim;
 import tn.dalhia.repositories.ForumCommentRepository;
@@ -104,6 +105,102 @@ public class ForumCommentController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(
                 true
+        );
+    }
+    @GetMapping("/comments/{cmt_id}/replies")
+    public ResponseEntity<List<ForumComment>> getReplies(@PathVariable("cmt_id") Long id){
+        List<ForumComment> tc = commentService.getReplies(id);
+        if(tc == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    null
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                tc
+        );
+    }
+    @PostMapping("/comments/{cmt_id}/replies")
+    public ResponseEntity<ForumComment> writeReplies(@RequestBody ForumComment comment, @PathVariable("cmt_id") Long id){
+        ForumComment tc = commentService.reply(comment, id);
+        if(tc == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    null
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                tc
+        );
+    }
+    @PutMapping("/replies/{rep_id}")
+    public ResponseEntity<ForumComment> modReply(@RequestBody ForumComment comment, @PathVariable("rep_id") Long id){
+        ForumComment tc = commentService.modifyReply(comment, id);
+        if(tc == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    null
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                tc
+        );
+    }
+    @GetMapping("/replies/{rep_id}")
+    public ResponseEntity<ForumComment> getReply(@PathVariable("rep_id") Long id){
+        ForumComment tc = commentService.getReply(id);
+        if(tc == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    null
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                tc
+        );
+    }
+    @DeleteMapping("/replies/{rep_id}")
+    public ResponseEntity<ForumComment> deleteReply(@PathVariable("rep_id") Long id){
+        ForumComment tc = commentService.deleteReply(id);
+        if(tc == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    null
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                tc
+        );
+    }
+    @PostMapping("/comments/{cmt_id}/reactions")
+    public ResponseEntity<Boolean> addReaction(@RequestBody CommentReaction reaction, @PathVariable("cmt_id") Long id){
+        CommentReaction tc = commentService.react(reaction, id);
+        if(tc == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    false
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                true
+        );
+    }
+    @DeleteMapping("/comments/{cmt_id}/reactions")
+    public ResponseEntity<Boolean> deleteReaction(@PathVariable("cmt_id") Long id){
+        boolean tc = commentService.deleteReaction(id);
+        if(!tc){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    false
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                true
+        );
+    }
+    @GetMapping("/comments/{cmt_id}/reactions")
+    public ResponseEntity<List<CommentReaction>> getAllreactions(@PathVariable("cmt_id") Long id){
+        List<CommentReaction> tc = commentService.getAllReactions(id);
+        if(tc == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    null
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                tc
         );
     }
 }

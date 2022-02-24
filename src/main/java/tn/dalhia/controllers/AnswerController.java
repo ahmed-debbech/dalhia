@@ -27,6 +27,14 @@ public class AnswerController {
                 answerService.getAll()
         );
     }
+
+    /*@GetMapping("/answerListByQuestion/{id}")
+    public ResponseEntity<List<Answer>> get1(){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                answerService.getAllByQuestion(id)
+        );
+    }*/
+
     @PostMapping("/add")
     public ResponseEntity<Answer> add(@RequestBody Answer answer){
         Answer a = answerService.add(answer);

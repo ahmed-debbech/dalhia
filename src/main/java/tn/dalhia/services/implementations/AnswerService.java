@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Answer;
+import tn.dalhia.entities.Question;
 import tn.dalhia.repositories.AnswerRepository;
+import tn.dalhia.repositories.QuestionRepository;
 import tn.dalhia.services.IAnswerService;
 
 import java.util.List;
@@ -14,15 +16,25 @@ import java.util.List;
 public class AnswerService implements IAnswerService {
     @Autowired
     AnswerRepository answerRepository;
+    @Autowired
+    QuestionRepository questionRepository;
 
     @Override
     public List<Answer> getAll(){
         return answerRepository.findAll();
     }
 
+
+    /*@Override
+    public List<Answer> getAllByQuestion( Long id){
+        Question q = questionRepository.findById(id).orElse(null);
+        if (q == null)
+            return null;
+
+        return q.getAnswers();
+    }*/
     @Override
     public Answer add(Answer answer){
-
         return answerRepository.save(answer);
     }
 

@@ -22,7 +22,7 @@ public class CourseCommentController {
     @Autowired
     private ICourseCommentService courseCommentService;
 
-    @GetMapping("/coursesList")
+    @GetMapping("/courseCommentList")
     public ResponseEntity<List<CourseComment>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 courseCommentService.getAll()

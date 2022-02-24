@@ -35,8 +35,12 @@ public class CourseService implements ICourseService {
         if(c1 == null){
             return null;
         }
-
-        return courseRepository.save(course);
+        c1.setName(course.getName());
+        c1.setModality(course.getModality());
+        c1.setPlaces(course.getPlaces());
+        c1.setPrice(course.getPrice());
+        c1.setPhases(course.getPhases());
+        return courseRepository.save(c1);
     }
 
     @Override

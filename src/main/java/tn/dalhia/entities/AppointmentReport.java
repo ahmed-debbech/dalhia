@@ -1,7 +1,6 @@
 package tn.dalhia.entities;
 
 
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,6 +24,7 @@ import tn.dalhia.entities.enumerations.AppReportCategory;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class AppointmentReport {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +37,7 @@ public class AppointmentReport {
     
     
     @JsonIgnore
+
     @OneToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;

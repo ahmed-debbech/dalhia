@@ -10,8 +10,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableAspectJAutoProxy
 @EnableWebMvc
 @SpringBootApplication
+@EnableAspectJAutoProxy
+@EnableScheduling
+@EnableWebMvc
 public class DalhiaApplication {
-
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(DalhiaApplication.class, args);
 	}

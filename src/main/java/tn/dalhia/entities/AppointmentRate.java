@@ -19,6 +19,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class AppointmentRate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

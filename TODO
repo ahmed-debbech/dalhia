@@ -32,14 +32,15 @@ TODO
 /forum/topics/{id}/comments (POST/GET)
 /forum/comments/{cmt_id} (PUT, DELETE, GET)
 /forum/comments/{cmt_id}/bans (PUT / DELETE)
---> untikl here it is complete
 /forum/comments/{cmt_id}/replies (POST,GET)
 /forum/replies/{rep_id} (PUT, GET, DELETE)
 /forum/comments/{cmt_id}/reactions (GET, POST, DELETE)
 
 ~ ChannelController
 /forum/channels/{type} (GET/ POST)
-/forum/channels/{id} (GET, DELETE, PUT)
+/forum/channels/q/{id} (GET, DELETE, PUT)
+--> until here it is complete
+
 
 ~ MessageController
 /forum/channels/{id}/messages (GET, POST)

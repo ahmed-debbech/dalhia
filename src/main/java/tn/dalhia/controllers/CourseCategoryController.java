@@ -21,7 +21,7 @@ public class CourseCategoryController {
     @Autowired
     private ICourseCategoryService courseCategoryService;
 
-    @GetMapping("/coursesList")
+    @GetMapping("/courseCategoryList")
     public ResponseEntity<List<CourseCategory>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 courseCategoryService.getAll()

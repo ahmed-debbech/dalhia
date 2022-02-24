@@ -1,5 +1,8 @@
 package tn.dalhia.services.implementations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +49,13 @@ public class CommandServiceImpl implements CommandService{
 		BeanUtils.copyProperties(commandDetails,commandEntity);
 		commandEntity.setCommandId(utils.generateCommandId(30));
 		commandEntity.setUsers(userEntity);
-		//commandEntity.getProducts().add(ProductEntity);  //nes2el monsieur
+		if(commandEntity.getProducts() != null) {
+		commandEntity.getProducts().add(ProductEntity);}
+		else{
+			List<Product> lP = new ArrayList<Product>();//nes2el monsieur
+			lP.add(ProductEntity);
+			commandEntity.setProducts(lP);
+		}
 		
 		Command storedCommand = commandRepo.save(commandEntity);
 		ModelMapper modelMapper = new ModelMapper();

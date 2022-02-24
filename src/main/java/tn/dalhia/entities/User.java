@@ -1,6 +1,7 @@
 package tn.dalhia.entities;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -64,9 +65,9 @@ public class User implements Serializable {
    
     private int zipCode;
     
-    private int start_hour; //?? time ? e.g: 19:50
+    private LocalTime start_hour; //?? time ? e.g: 19:50
     
-    private int end_hour; //?? time ? e.g: 19:50
+    private LocalTime end_hour; //?? time ? e.g: 19:50
     
     @Enumerated(EnumType.STRING)
     private Job job;
@@ -203,23 +204,21 @@ public class User implements Serializable {
 		this.zipCode = zipCode;
 	}
 
-	
-	public int getStart_hour() {
+	public LocalTime getStart_hour() {
 		return start_hour;
 	}
 
-	public void setStart_hour(int start_hour) {
+	public void setStart_hour(LocalTime start_hour) {
 		this.start_hour = start_hour;
 	}
 
-	public int getEnd_hour() {
+	public LocalTime getEnd_hour() {
 		return end_hour;
 	}
 
-	public void setEnd_hour(int end_hour) {
+	public void setEnd_hour(LocalTime end_hour) {
 		this.end_hour = end_hour;
 	}
-
 	public Boolean getEmailVerificationStatus() {
 		return emailVerificationStatus;
 	}

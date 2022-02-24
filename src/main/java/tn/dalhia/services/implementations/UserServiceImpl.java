@@ -26,15 +26,17 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDto createUser(UserDto user) {
+		if(userRepo.findByEmail(user.getEmail()) !=null) throw new RuntimeException("Record already exists");
+		
+		
 		User userEntity = new User();
 		BeanUtils.copyProperties(user,userEntity);
-		
+
 		
 		String publicUserId = utils.generateUserId(30);
 	    
 		userEntity.setUserId(publicUserId);
 		User storedUserDetails =userRepo.save(userEntity);
-		
 		
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(storedUserDetails,returnValue);

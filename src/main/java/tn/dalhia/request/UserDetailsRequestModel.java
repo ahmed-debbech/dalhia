@@ -10,37 +10,19 @@ import tn.dalhia.entities.enumerations.Speciality;
 
 public class UserDetailsRequestModel {
 
-    
-    
  
     private String first_name;
-    
-
     private String last_name;
-    
-
     private String email;
-    
-
     private String phone;
-    
-
     private String password;
-    
-
     private Date date_birth;
-    
-   
     private String address;
-    
-
     private String city;
-    
-
     private String state;
-    
-   
     private int zipCode;
+    private SubscriptionRequestModel subscriptions;
+    // zid mtaa product f lkol rest ,req...
     
     
     @Enumerated(EnumType.STRING)
@@ -143,6 +125,14 @@ public class UserDetailsRequestModel {
 
 	public void setSpeciality(Speciality speciality) {
 		this.speciality = speciality;
+	}
+
+	public SubscriptionRequestModel getSubscription() {
+		return subscriptions;
+	}
+
+	public void setSubscription(SubscriptionRequestModel subscription) {
+		this.subscriptions = subscription;
 	}
 	
     

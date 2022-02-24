@@ -1,6 +1,7 @@
  package tn.dalhia.controllers;
 
- import org.springframework.beans.BeanUtils;
+ import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.request.UserDetailsRequestModel;
 import tn.dalhia.response.ErrorMessages;
@@ -24,6 +26,7 @@ import tn.dalhia.shared.dto.UserDto;
 
 @RestController
 @RequestMapping("users")
+@Api(tags ="Gestion des users")
 public class UserController {
 	
 	@Autowired
@@ -33,13 +36,14 @@ public class UserController {
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
 		UserRest returnValue = new UserRest();
 		
-		if(userDetails.getFirst_name().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FILED.getErrorMessage());
+		//UserDto userDto = new UserDto();
+		//BeanUtils.copyProperties(userDetails,userDto);
 		
-		UserDto userDto = new UserDto();
-		BeanUtils.copyProperties(userDetails,userDto);
+		ModelMapper modelMapper = new ModelMapper();
+		UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 		
 		UserDto createdUser = userService.createUser(userDto);
-		BeanUtils.copyProperties(createdUser,returnValue);
+		returnValue = modelMapper.map(createdUser, UserRest.class);
 		
 		return returnValue;
 		

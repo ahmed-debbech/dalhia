@@ -1,7 +1,6 @@
 package tn.dalhia.entities;
 
 import java.io.Serializable;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
@@ -52,21 +52,21 @@ public class User implements Serializable {
     @Column(nullable=false)
     private Date date_birth;
     
-    @Column(nullable=false)
+   
     private String address;
     
-    @Column(nullable=false)
+    
     private String city;
     
-    @Column(nullable=false)
+    
     private String state;
     
    
     private int zipCode;
     
-    private LocalTime start_hour; //?? time ? e.g: 19:50
+    private int start_hour; //?? time ? e.g: 19:50
     
-    private LocalTime end_hour; //?? time ? e.g: 19:50
+    private int end_hour; //?? time ? e.g: 19:50
     
     @Enumerated(EnumType.STRING)
     private Job job;
@@ -86,8 +86,11 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<CourseProgress> courseProgresses;
 
-    //@OneToMany(cascade = CascadeType.ALL) //uni
-    //private List<Subscription> subscriptions;
+    @OneToOne  //kn nheb nzid abonn maa user fard wkt
+    private Subscription subscriptions; //bi
+    
+    @OneToMany(cascade = CascadeType.ALL ,mappedBy="users")
+ 	private List<Command> commands;
 
     //@OneToMany(cascade = CascadeType.ALL) //uni
     //private List<Application> applications;
@@ -200,21 +203,23 @@ public class User implements Serializable {
 		this.zipCode = zipCode;
 	}
 
-	public LocalTime getStart_hour() {
+	
+	public int getStart_hour() {
 		return start_hour;
 	}
 
-	public void setStart_hour(LocalTime start_hour) {
+	public void setStart_hour(int start_hour) {
 		this.start_hour = start_hour;
 	}
 
-	public LocalTime getEnd_hour() {
+	public int getEnd_hour() {
 		return end_hour;
 	}
 
-	public void setEnd_hour(LocalTime end_hour) {
+	public void setEnd_hour(int end_hour) {
 		this.end_hour = end_hour;
 	}
+
 	public Boolean getEmailVerificationStatus() {
 		return emailVerificationStatus;
 	}
@@ -234,6 +239,134 @@ public class User implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
+	}
+
+	public Speciality getSpeciality() {
+		return speciality;
+	}
+
+	public void setSpeciality(Speciality speciality) {
+		this.speciality = speciality;
+	}
+
+	public Subscription getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(Subscription subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+
+	public List<CourseProgress> getCourseProgresses() {
+		return courseProgresses;
+	}
+
+	public void setCourseProgresses(List<CourseProgress> courseProgresses) {
+		this.courseProgresses = courseProgresses;
+	}
+
+	public List<Topic> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(List<Topic> topics) {
+		this.topics = topics;
+	}
+
+	public List<Appointment> getAppointmentLists() {
+		return appointmentLists;
+	}
+
+	public void setAppointmentLists(List<Appointment> appointmentLists) {
+		this.appointmentLists = appointmentLists;
+	}
+
+	public List<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
+	}
+
+	public List<Report> getReports() {
+		return reports;
+	}
+
+	public void setReports(List<Report> reports) {
+		this.reports = reports;
+	}
+
+	public List<Donation> getDonations() {
+		return donations;
+	}
+
+	public void setDonations(List<Donation> donations) {
+		this.donations = donations;
+	}
+
+	public List<Participation> getParticipations() {
+		return participations;
+	}
+
+	public void setParticipations(List<Participation> participations) {
+		this.participations = participations;
+	}
+
+	public List<Certificate> getCertificates() {
+		return certificates;
+	}
+
+	public void setCertificates(List<Certificate> certificates) {
+		this.certificates = certificates;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<Command> getCommands() {
+		return commands;
+	}
+
+	public void setCommands(List<Command> commands) {
+		this.commands = commands;
 	}
 
 

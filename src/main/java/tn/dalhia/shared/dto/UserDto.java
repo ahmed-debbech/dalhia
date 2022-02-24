@@ -55,6 +55,9 @@ public class UserDto implements Serializable {
 		private Boolean emailVerificationStatus = false;
 		private String emailVerificationToken;
 		
+		// zid mtaa product f lkol rest ,req...
+		
+		
 		public Long getId() {
 			return id;
 		}
@@ -170,6 +173,8 @@ public class UserDto implements Serializable {
 		public void setEmailVerificationToken(String emailVerificationToken) {
 			this.emailVerificationToken = emailVerificationToken;
 		}
+	
+		
 	
 		
 }

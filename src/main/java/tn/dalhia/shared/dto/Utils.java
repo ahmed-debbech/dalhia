@@ -15,6 +15,17 @@ public class Utils {
 		return generateRandomString(length);
 	}
 	
+	public String generateSuscriptionId(int length) {
+		return generateRandomString(length);
+	}
+	
+	public String generateProductId(int length) {
+		return generateRandomString(length);
+	}
+	
+	public String generateCommandId(int length) {
+		return generateRandomString(length);
+	}
 	private String generateRandomString(int length) {
 		StringBuilder returnValue = new StringBuilder(length);
 		

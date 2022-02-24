@@ -7,6 +7,7 @@ import tn.dalhia.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
-	User findUserByEmail(String email);
+	User findByEmail(String email);
 	User findByUserId(String userId);
+	User findBySubscriptionsId(Long id);
 }

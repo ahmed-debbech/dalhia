@@ -116,6 +116,7 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Participation> participations;
 
+
     @OneToMany(mappedBy = "user")
     private List<Certificate> certificates;
 

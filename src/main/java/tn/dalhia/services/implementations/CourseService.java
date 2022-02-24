@@ -48,7 +48,7 @@ public class CourseService implements ICourseService {
     public  boolean delete(Long id){
         Course c = courseRepository.findById(id).orElse(null);
         if(c != null){
-            courseRepository.save(c);
+            courseRepository.delete(c);
             return true;
         }
         return false;

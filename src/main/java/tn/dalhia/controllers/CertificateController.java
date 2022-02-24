@@ -46,7 +46,7 @@ public class CertificateController {
                     certificate1
             );
         }
-        @GetMapping("/{id}")
+        @GetMapping("/certificate/{id}")
         public ResponseEntity<Certificate> get(@PathVariable("id") Long id){
             Certificate c1 = certificateService.get(id);
             if(c1 == null){

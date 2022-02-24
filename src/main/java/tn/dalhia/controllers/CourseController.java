@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/course/course")
 @RequiredArgsConstructor
 @Slf4j
 
@@ -22,7 +22,7 @@ public class CourseController {
     @Autowired
     private ICourseService courseService;
 
-    @GetMapping()
+    @GetMapping("/coursesList")
     public ResponseEntity<List<Course>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 courseService.getAll()

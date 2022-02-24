@@ -47,7 +47,7 @@ public class QuestionService implements IQuestionService {
     public  boolean delete(Long id){
         Question q = questionRepository.findById(id).orElse(null);
         if(q != null){
-            questionRepository.save(q);
+            questionRepository.delete(q);
             return true;
         }
         return false;

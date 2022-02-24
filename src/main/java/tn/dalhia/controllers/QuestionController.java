@@ -21,13 +21,13 @@ public class QuestionController {
     @Autowired
     private IQuestionService questionService;
 
-    @GetMapping()
+    @GetMapping("/questionList")
     public ResponseEntity<List<Question>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 questionService.getAll()
         );
     }
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Question> add(@RequestBody Question question){
         Question q = questionService.add(question);
         return ResponseEntity.status(HttpStatus.OK).body(

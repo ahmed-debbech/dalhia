@@ -21,13 +21,13 @@ public class PhaseController {
     @Autowired
     private IPhaseService phaseService;
 
-    @GetMapping()
+    @GetMapping("/phaseList")
     public ResponseEntity<List<Phase>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 phaseService.getAll()
         );
     }
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Phase> add(@RequestBody Phase phase){
         Phase ph = phaseService.add(phase);
         return ResponseEntity.status(HttpStatus.OK).body(

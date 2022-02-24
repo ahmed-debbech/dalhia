@@ -45,7 +45,7 @@ public class PlaceService implements IPlaceService {
     public  boolean delete(Long id){
         Place p = placeRepository.findById(id).orElse(null);
         if(p != null){
-            placeRepository.save(p);
+            placeRepository.delete(p);
             return true;
         }
         return false;

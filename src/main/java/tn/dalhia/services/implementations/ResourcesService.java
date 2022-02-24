@@ -46,7 +46,7 @@ public class ResourcesService implements IResourcesService {
     public  boolean delete(Long id){
         Resources r = resourcesRepository.findById(id).orElse(null);
         if(r != null){
-            resourcesRepository.save(r);
+            resourcesRepository.delete(r);
             return true;
         }
         return false;

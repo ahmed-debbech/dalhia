@@ -21,13 +21,13 @@ public class QuizController {
     @Autowired
     private IQuizService quizService;
 
-    @GetMapping()
+    @GetMapping("/quizList")
     public ResponseEntity<List<Quiz>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 quizService.getAll()
         );
     }
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Quiz> add(@RequestBody Quiz quiz){
         Quiz q = quizService.add(quiz);
         return ResponseEntity.status(HttpStatus.OK).body(

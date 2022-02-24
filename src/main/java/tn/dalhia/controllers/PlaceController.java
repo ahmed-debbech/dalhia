@@ -21,13 +21,13 @@ public class PlaceController {
     @Autowired
     private IPlaceService placeService;
 
-    @GetMapping()
+    @GetMapping("/placeList")
     public ResponseEntity<List<Place>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 placeService.getAll()
         );
     }
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Place> add(@RequestBody Place place){
         Place p = placeService.add(place);
         return ResponseEntity.status(HttpStatus.OK).body(

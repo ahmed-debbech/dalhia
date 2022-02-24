@@ -47,7 +47,7 @@ public class QuizService implements IQuizService {
     public  boolean delete(Long id){
         Quiz q = quizRepository.findById(id).orElse(null);
         if(q != null){
-            quizRepository.save(q);
+            quizRepository.delete(q);
             return true;
         }
         return false;

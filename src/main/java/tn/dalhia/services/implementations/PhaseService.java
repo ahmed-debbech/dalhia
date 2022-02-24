@@ -45,7 +45,7 @@ public class PhaseService implements IPhaseService {
     public  boolean delete(Long id){
         Phase ph = phaseRepository.findById(id).orElse(null);
         if(ph != null){
-            phaseRepository.save(ph);
+            phaseRepository.delete(ph);
             return true;
         }
         return false;

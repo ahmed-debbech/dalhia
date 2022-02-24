@@ -45,7 +45,7 @@ public class AnswerService implements IAnswerService {
     public  boolean delete(Long id){
         Answer a = answerRepository.findById(id).orElse(null);
         if(a != null){
-            answerRepository.save(a);
+            answerRepository.delete(a);
             return true;
         }
         return false;

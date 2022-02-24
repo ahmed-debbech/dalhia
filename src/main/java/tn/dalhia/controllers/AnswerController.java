@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.dalhia.entities.Answer;
+import tn.dalhia.services.IAnswerService;
 
 import java.util.List;
 
@@ -17,16 +18,16 @@ import java.util.List;
 @Slf4j
 public class AnswerController {
 
-   /* @Autowired
+   @Autowired
     private IAnswerService answerService;
 
-    @GetMapping()
+    @GetMapping("/answerList")
     public ResponseEntity<List<Answer>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 answerService.getAll()
         );
     }
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Answer> add(@RequestBody Answer answer){
         Answer a = answerService.add(answer);
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -35,7 +36,7 @@ public class AnswerController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Answer> modify(@RequestBody Answer answer, @PathVariable("id") Long id){
-        Answer answer1 = answerService.modify(certificate, id);
+        Answer answer1 = answerService.modify(answer, id);
         if(answer == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     null
@@ -68,6 +69,6 @@ public class AnswerController {
         return ResponseEntity.status(HttpStatus.OK).body(
                 true
         );
-    }*/
+    }
 
 }

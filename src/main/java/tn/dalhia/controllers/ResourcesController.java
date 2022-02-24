@@ -22,13 +22,13 @@ public class ResourcesController {
     @Autowired
     private IResourcesService resourcesService;
 
-    @GetMapping()
+    @GetMapping("/resourcesList")
     public ResponseEntity<List<Resources>> get(){
         return ResponseEntity.status(HttpStatus.OK).body(
                 resourcesService.getAll()
         );
     }
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<Resources> add(@RequestBody Resources resources){
         Resources r = resourcesService.add(resources);
         return ResponseEntity.status(HttpStatus.OK).body(

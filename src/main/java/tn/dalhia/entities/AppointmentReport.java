@@ -22,6 +22,7 @@ public class AppointmentReport {
 	
     private String report;
 
+
     @OneToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;

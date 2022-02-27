@@ -9,6 +9,7 @@ import tn.dalhia.entities.enumerations.ReportStatus;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +30,9 @@ public class Report {
 
     @Enumerated(EnumType.STRING)
     private ReportStatus status;
+    
+    @OneToMany
+    private List<User> suggestions;
     
     
 

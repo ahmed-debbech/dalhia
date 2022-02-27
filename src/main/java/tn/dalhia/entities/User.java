@@ -2,6 +2,7 @@ package tn.dalhia.entities;
 
 import tn.dalhia.entities.enumerations.AppointmentStatus;
 import tn.dalhia.entities.enumerations.Job;
+import tn.dalhia.entities.enumerations.ReportCategory;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
 
@@ -47,6 +48,8 @@ public class User {
     private Job job;
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
+    @Enumerated(EnumType.STRING)
+    private ReportCategory activity;
 
     @OneToMany(cascade = CascadeType.ALL) //uniderectional
     private List<Course> courses;

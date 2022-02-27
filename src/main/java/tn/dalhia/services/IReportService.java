@@ -10,4 +10,5 @@ public interface IReportService {
 	public void updateReport(Report rp, int id);
 	public void addReport(Report rp);
 	public void deleteReport(int id);
+	public void manageReportStatus(Report rp, int id);
 }

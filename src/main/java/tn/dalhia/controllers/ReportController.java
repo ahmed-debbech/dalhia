@@ -49,4 +49,10 @@ public class ReportController {
 		public void editReport(@RequestBody Report rp,@PathVariable("rp-id") Integer RpId) {
 			 rs.updateReport(rp, RpId);
 			}
+		
+	// http://localhost:8089/Dahlia/report/manage-report-status/{rp-id}
+		@PutMapping("/manage-report-status/{rp-id}")
+		public void manageReportStatus(@RequestBody Report rp,@PathVariable("rp-id") Integer RpId) {
+					 rs.manageReportStatus(rp, RpId);
+					}
 }

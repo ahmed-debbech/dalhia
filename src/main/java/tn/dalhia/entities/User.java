@@ -15,11 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.ToString;
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
 
 @Entity
+@ToString
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

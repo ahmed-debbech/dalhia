@@ -51,6 +51,8 @@ public class UserDto implements Serializable {
 	    @Enumerated(EnumType.STRING)
 	    private Speciality speciality;
 
+	    
+		private String encryptedPaswword;
 	   
 		private Boolean emailVerificationStatus = false;
 		private String emailVerificationToken;
@@ -172,6 +174,12 @@ public class UserDto implements Serializable {
 		}
 		public void setEmailVerificationToken(String emailVerificationToken) {
 			this.emailVerificationToken = emailVerificationToken;
+		}
+		public String getEncryptedPaswword() {
+			return encryptedPaswword;
+		}
+		public void setEncryptedPaswword(String encryptedPaswword) {
+			this.encryptedPaswword = encryptedPaswword;
 		}
 	
 		

@@ -1,10 +1,16 @@
 package tn.dalhia.services.implementations;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import tn.dalhia.entities.User;
+import tn.dalhia.entities.UserEntity;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.response.ErrorMessages;
@@ -23,20 +29,23 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	Utils utils;
 	
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Override
 	public UserDto createUser(UserDto user) {
 		if(userRepo.findByEmail(user.getEmail()) !=null) throw new RuntimeException("Record already exists");
 		
 		
-		User userEntity = new User();
+		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user,userEntity);
 
 		
 		String publicUserId = utils.generateUserId(30);
 	    
 		userEntity.setUserId(publicUserId);
-		User storedUserDetails =userRepo.save(userEntity);
+		userEntity.setEncryptedPaswword(bCryptPasswordEncoder.encode(user.getPassword()));
+		UserEntity storedUserDetails =userRepo.save(userEntity);
 		
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(storedUserDetails,returnValue);
@@ -46,14 +55,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUser(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		UserEntity userEntity = userRepo.findByEmail(email);
+		
+		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		UserDto returnValue = new UserDto();
+		BeanUtils.copyProperties(userEntity,returnValue);
+		return returnValue;
 	}
 
 	@Override
 	public UserDto getUserByUserId(String userId) {
 		UserDto returnValue = new UserDto();
-		User userEntity = userRepo.findByUserId(userId);
+		UserEntity userEntity = userRepo.findByUserId(userId);
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		BeanUtils.copyProperties(userEntity,returnValue);
@@ -63,7 +76,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto updateUser(String id, UserDto userDto) {
 		UserDto returnValue = new UserDto();
-		User userEntity = userRepo.findByUserId(id);
+		UserEntity userEntity = userRepo.findByUserId(id);
 		
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()); //Exception eli aamlneha ahna
 		
@@ -75,9 +88,8 @@ public class UserServiceImpl implements UserService {
 			userEntity.setPhone(userDto.getPhone());
 			userEntity.setState(userDto.getState());
 			userEntity.setDate_birth(userDto.getDate_birth());
-			userEntity.setPassword(userDto.getPassword());
 			userEntity.setZipCode(userDto.getZipCode());
-		User updatedUserDetails = userRepo.save(userEntity);
+			UserEntity updatedUserDetails = userRepo.save(userEntity);
 		
 		BeanUtils.copyProperties(updatedUserDetails,returnValue);
 		return returnValue;
@@ -85,12 +97,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(String userId) {
-		User userEntity = userRepo.findByUserId(userId);
+		UserEntity userEntity = userRepo.findByUserId(userId);
 		
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		userRepo.delete(userEntity);
 		
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		UserEntity userEntity = userRepo.findByEmail(email);
+		if (userEntity == null) throw new UsernameNotFoundException(email);
+		
+		return new User(userEntity.getEmail(), userEntity.getEncryptedPaswword() , new ArrayList<>());
 	}
 
 }

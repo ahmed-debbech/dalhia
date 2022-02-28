@@ -21,7 +21,7 @@ import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
 
 @Entity
-public class User implements Serializable {
+public class UserEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -47,8 +47,6 @@ public class User implements Serializable {
     @Column(nullable=false,length=9)
     private String phone;
     
-    @Column(nullable = false)
-    private String password;
     
     @Column(nullable=false)
     private Date date_birth;
@@ -74,6 +72,9 @@ public class User implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
+    
+    @Column(nullable=false)
+	private String encryptedPaswword;
 
     
     @Column(nullable=false)
@@ -156,13 +157,6 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public Date getDate_birth() {
 		return date_birth;
@@ -368,6 +362,15 @@ public class User implements Serializable {
 		this.commands = commands;
 	}
 
+	public String getEncryptedPaswword() {
+		return encryptedPaswword;
+	}
+
+	public void setEncryptedPaswword(String encryptedPaswword) {
+		this.encryptedPaswword = encryptedPaswword;
+	}
+
+	
 
 
 }

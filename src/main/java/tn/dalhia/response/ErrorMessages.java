@@ -9,7 +9,9 @@ public enum ErrorMessages {
 	AUTHENTICTION_FAILED("Authentication failed"),
 	COULD_NOT_UPDATE_RECORD("Could not update record"),
 	COULD_NOT_DELETE_RECORD("Could not delete record"),
-	EMAIL_ADDRESS_NOT_VERIFIED("Email adress could not verified");
+	EMAIL_ADDRESS_NOT_VERIFIED("Email adress could not verified"),
+	QUANTITY_OVER("We re sorry , this product is currently out of stock");
+	
 	
 	private String errorMessage;
 	

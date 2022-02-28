@@ -21,6 +21,6 @@ public class Channel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
 }

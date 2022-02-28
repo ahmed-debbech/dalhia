@@ -25,7 +25,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Donation> donations;

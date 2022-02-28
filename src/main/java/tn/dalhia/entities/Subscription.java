@@ -29,7 +29,7 @@ public class Subscription implements Serializable {
 	private String subscritpionId;
 	
 	@OneToOne(mappedBy="subscriptions") //bi
-	private User userDetails;
+	private UserEntity userDetails;
 	
 	@ManyToOne
 	private Plan plans ; 
@@ -58,11 +58,11 @@ public class Subscription implements Serializable {
 		this.date_fin = date_fin;
 	}
 
-	public User getUserDetails() {
+	public UserEntity getUserDetails() {
 		return userDetails;
 	}
 
-	public void setUserDetails(User userDetails) {
+	public void setUserDetails(UserEntity userDetails) {
 		this.userDetails = userDetails;
 	}
 

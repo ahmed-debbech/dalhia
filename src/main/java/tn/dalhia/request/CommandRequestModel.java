@@ -1,5 +1,9 @@
 package tn.dalhia.request;
 
+import java.util.List;
+
+import tn.dalhia.entities.Product;
+
 public class CommandRequestModel {
 
 
@@ -8,7 +12,7 @@ public class CommandRequestModel {
 	private String email;
 	private int card;
 	private int code;
-	private String productId;
+	private List<Product> products;
 	public String getName() {
 		return name;
 	}
@@ -33,12 +37,13 @@ public class CommandRequestModel {
 	public void setCode(int code) {
 		this.code = code;
 	}
-	public String getProductId() {
-		return productId;
+	public List<Product> getProducts() {
+		return products;
 	}
-	public void setProductId(String productId) {
-		this.productId = productId;
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
+	
 	
 	
 }

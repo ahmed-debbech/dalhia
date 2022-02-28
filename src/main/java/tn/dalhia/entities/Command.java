@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Command implements Serializable {
@@ -31,10 +31,10 @@ public class Command implements Serializable {
 	private int code;
 	
 	@ManyToOne
-	User users;
+	UserEntity users;
 	
-	 @OneToMany(mappedBy="commands")
-	 private List<Product> products;	
+	@ManyToMany()
+	private List<Product> products;
 	
 	
 	public Long getId() {
@@ -74,10 +74,10 @@ public class Command implements Serializable {
 	public void setCode(int code) {
 		this.code = code;
 	}
-	public User getUsers() {
+	public UserEntity getUsers() {
 		return users;
 	}
-	public void setUsers(User users) {
+	public void setUsers(UserEntity users) {
 		this.users = users;
 	}
 	public List<Product> getProducts() {

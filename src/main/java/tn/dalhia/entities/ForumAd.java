@@ -23,7 +23,7 @@ public class ForumAd {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
     @OneToOne
     @JoinColumn(name = "forum_ad_id")

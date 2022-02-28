@@ -134,6 +134,15 @@ public class UserDetailsRequestModel {
 	public void setSubscription(SubscriptionRequestModel subscription) {
 		this.subscriptions = subscription;
 	}
+
+
+	public SubscriptionRequestModel getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(SubscriptionRequestModel subscriptions) {
+		this.subscriptions = subscriptions;
+	}
 	
     
 	

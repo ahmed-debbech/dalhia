@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tn.dalhia.entities.Plan;
 import tn.dalhia.entities.Subscription;
-import tn.dalhia.entities.User;
+import tn.dalhia.entities.UserEntity;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.PlanRepository;
 import tn.dalhia.repositories.SubscriptionRepository;
@@ -39,7 +39,7 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 	@Override
 	@Transactional
 	public SubscriptionDto createSubscription(SubscriptionRequestModel subscription) {
-		User userEntity = userRepo.findByUserId(subscription.getUserId());
+		UserEntity userEntity = userRepo.findByUserId(subscription.getUserId());
 		Plan plan = planRepo.findById(subscription.getPlanId()).orElse(null);
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		if (plan == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
@@ -92,7 +92,7 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 		Subscription sub = subscriptionRepo.findBySubscritpionId(id);
 		if (sub == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
-		User user = userRepo.findBySubscriptionsId(sub.getId());
+		UserEntity user = userRepo.findBySubscriptionsId(sub.getId());
 		if (user == null) {
 		subscriptionRepo.delete(sub);
 		} 

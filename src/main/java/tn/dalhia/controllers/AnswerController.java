@@ -28,16 +28,16 @@ public class AnswerController {
         );
     }
 
-    /*@GetMapping("/answerListByQuestion/{id}")
-    public ResponseEntity<List<Answer>> get1(){
+    @GetMapping("/answerListByQuestion/{id}")
+    public ResponseEntity<List<Answer>> get1(@PathVariable("id") Long id){
         return ResponseEntity.status(HttpStatus.OK).body(
                 answerService.getAllByQuestion(id)
         );
-    }*/
+    }
 
-    @PostMapping("/add")
-    public ResponseEntity<Answer> add(@RequestBody Answer answer){
-        Answer a = answerService.add(answer);
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Answer> add(@RequestBody Answer answer, @PathVariable("id") Long id){
+        Answer a = answerService.add(answer,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 a
         );

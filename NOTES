@@ -1,0 +1,22 @@
+ANSWER:
+add --> answer yenzed fi question mou3ayyen (par defaut "correct=false")
+==> yelzem kif yajouty answer avec correct==true lazem ytesty famachy wahda okhra true sinon ynajjem tzid wa9tha (answer wahda true)
+get
+getAllByQuestion --> liste des answers (propositions) ta3 question mou3ayen
+delete
+modify
+
+PHASE:
+add --> phase tenzed fi course mou3ayen
+get
+getAllByCourse --> liste des phases ta3 course mou3ayen
+delete
+modify
+
+QUIZ:
+add --> quiz yenzed fi course mou3ayyen (ken el course maandouch hatta phase une phase finale tetesna3 automatiquement w yet7att feha el quiz)
+==> ken bech naamlou kol course fih akther min quiz fil phase finale lazemna wa9t nzidou quiz ntestyw aala l'attribut finalPhase lazem ykoun true bech najjjmou nzid el quiz el jdid fil course adheka fil phase finale illi deja mawjouda
+get
+getAllByCourse --> liste ta3 les quizs illi teb3in course mou3ayyen
+delete
+modify

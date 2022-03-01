@@ -20,5 +20,5 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String proposition;
-    private boolean correct;
+    private Boolean correct;
 }

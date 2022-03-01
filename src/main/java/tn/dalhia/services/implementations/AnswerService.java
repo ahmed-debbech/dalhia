@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Answer;
+import tn.dalhia.entities.Course;
+import tn.dalhia.entities.Phase;
 import tn.dalhia.entities.Question;
 import tn.dalhia.repositories.AnswerRepository;
 import tn.dalhia.repositories.QuestionRepository;
@@ -25,17 +27,40 @@ public class AnswerService implements IAnswerService {
     }
 
 
-    /*@Override
+    @Override
     public List<Answer> getAllByQuestion( Long id){
         Question q = questionRepository.findById(id).orElse(null);
         if (q == null)
             return null;
 
         return q.getAnswers();
-    }*/
+    }
+
     @Override
-    public Answer add(Answer answer){
-        return answerRepository.save(answer);
+    public Answer add(Answer answer, Long id){
+        int isTrue = 0;
+        Question q = questionRepository.findById(id).orElse(null);
+        if (q == null)
+        return null;
+        if (q.getNumber() < 4){
+
+            for(Answer a : q.getAnswers()){
+                if(a.getCorrect()==true)
+                    isTrue=1;
+                    break;
+            }
+             if (isTrue == 1 && answer.getCorrect()==true){
+                return null;
+            }else{
+                if (isTrue==0 && q.getNumber()==3 && answer.getCorrect()==false)
+                     return null;
+                q.getAnswers().add(answer);
+                q.setNumber(q.getNumber()+1);
+                questionRepository.save(q);
+            }
+            return answer;
+        }
+        return null;
     }
 
     @Override

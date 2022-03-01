@@ -8,6 +8,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import tn.dalhia.repositories.UserRepository;
+import tn.dalhia.security.AppProperties;
+
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @EnableScheduling
@@ -28,4 +31,9 @@ public class DalhiaApplication {
 	public SpringApplicationContext springApplicationContext () {
 		return new SpringApplicationContext();
 	}
+	@Bean(name="AppProperties")
+	public AppProperties getAppProperties () {
+		return new AppProperties();
+	}
+	
 }

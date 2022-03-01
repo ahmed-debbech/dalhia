@@ -14,6 +14,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import io.jsonwebtoken.Jwts;
+import tn.dalhia.SpringApplicationContext;
+import tn.dalhia.entities.enumerations.Role;
+import tn.dalhia.services.UserService;
+import tn.dalhia.shared.dto.UserDto;
 
 
 public class AuthorizationFilter extends BasicAuthenticationFilter{
@@ -23,13 +27,15 @@ public class AuthorizationFilter extends BasicAuthenticationFilter{
 		// TODO Auto-generated constructor stub
 	}
 
-	
+
+
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest req,
-									HttpServletResponse res,
-									FilterChain chain)throws IOException,ServletException {
+			HttpServletResponse res,
+			FilterChain chain)throws IOException,ServletException {
 		String header = req.getHeader(SecurityConstants.HEADER_STRING); //copy token eli jeya mel header
-		
+
 		if(header==null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)){
 			chain.doFilter(req, res);
 			return;
@@ -38,23 +44,26 @@ public class AuthorizationFilter extends BasicAuthenticationFilter{
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		chain.doFilter(req, res);
 	}
-	
+
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req) {
 		String token =req.getHeader(SecurityConstants.HEADER_STRING);
 		if(token != null) {
 			token = token.replace(SecurityConstants.TOKEN_PREFIX, ""); //tna7i bearer
-			
+
 			String user = Jwts.parser()
-					.setSigningKey(SecurityConstants.TOKEN_SECRET) //parse token , decripted , get details user (email)
+					.setSigningKey(SecurityConstants.getTokenSecret()) //parse token , decripted , get details user (email)
 					.parseClaimsJws(token)
 					.getBody()
 					.getSubject();
+																										//khater authenticationfilter mahich bean donc manjmou autowirdiw chay
+			UserService userService = (UserService)SpringApplicationContext.getBean("userServiceImpl"); // nestaamlou springapplicationcontext bch njmou njibou userimpl bean bch njmou nkharjou user details
+			UserDto userDto = userService.getUser(user);
 			
-			if (user!=null) {
+			if (user!=null ){
 				return new UsernamePasswordAuthenticationToken(user,null,new ArrayList<>());
 			}
 		}
 		return null;
 	}
-	
+
 }

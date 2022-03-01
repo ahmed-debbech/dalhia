@@ -44,8 +44,8 @@ TODO
 
 ~ MessageController
 /forum/channels/{id}/messages (GET, POST)
-/forum/channels/messages/{usr_a}/{usr_b} (POST)
-/forum/channels/{id}/messages/{id} (DELETE)
+/forum/channels/messages/{usr} (POST)
+/forum/channels/messages/q/{id_msg} (DELETE)
 
 ~ ForumAdsController
 /forum/ads (GET, POST)

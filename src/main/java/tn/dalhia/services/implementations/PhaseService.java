@@ -3,7 +3,9 @@ package tn.dalhia.services.implementations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.dalhia.entities.Course;
 import tn.dalhia.entities.Phase;
+import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.repositories.PhaseRepository;
 import tn.dalhia.services.IPhaseService;
 
@@ -14,6 +16,8 @@ public class PhaseService implements IPhaseService {
 
     @Autowired
     PhaseRepository phaseRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     @Override
     public List<Phase> getAll(){
@@ -21,9 +25,14 @@ public class PhaseService implements IPhaseService {
     }
 
     @Override
-    public Phase add(Phase phase){
+    public Phase add(Phase phase, Long id){
+        Course c = courseRepository.findById(id).orElse(null);
+        if (c == null)
+            return null;
 
-        return phaseRepository.save(phase);
+        c.getPhases().add(phase);
+        courseRepository.save(c);
+        return phase;
     }
 
     @Override
@@ -38,6 +47,15 @@ public class PhaseService implements IPhaseService {
     @Override
     public Phase get(Long id){
         return phaseRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Phase> getAllByCourse(Long id){
+        Course c = courseRepository.findById(id).orElse(null);
+        if (c == null)
+            return null;
+
+        return c.getPhases();
     }
 
     @Override

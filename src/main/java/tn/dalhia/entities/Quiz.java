@@ -20,5 +20,5 @@ public class Quiz {
     @NonNull private Date dateRemoved;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Answer> answers;
+    private List<Question> questions;
 }

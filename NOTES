@@ -20,3 +20,10 @@ get
 getAllByCourse --> liste ta3 les quizs illi teb3in course mou3ayyen
 delete
 modify
+
+RESOURCES:
+add --> resource yenzed fi phase mou3ayna
+get
+getAllByPhase
+delete
+modify

@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Answer;
-import tn.dalhia.entities.Course;
-import tn.dalhia.entities.Phase;
 import tn.dalhia.entities.Question;
 import tn.dalhia.repositories.AnswerRepository;
 import tn.dalhia.repositories.QuestionRepository;

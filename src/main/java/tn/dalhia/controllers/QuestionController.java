@@ -21,10 +21,10 @@ public class QuestionController {
     @Autowired
     private IQuestionService questionService;
 
-    @GetMapping("/questionList")
-    public ResponseEntity<List<Question>> get(){
+    @GetMapping("/{id}/questionListByQuiz")
+    public ResponseEntity<List<Question>> getAllByQuiz(@PathVariable("id") Long id){
         return ResponseEntity.status(HttpStatus.OK).body(
-                questionService.getAll()
+                questionService.getAllByQuiz(id)
         );
     }
     @PostMapping("/add")

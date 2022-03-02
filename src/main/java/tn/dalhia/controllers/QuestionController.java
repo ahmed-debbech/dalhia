@@ -27,9 +27,9 @@ public class QuestionController {
                 questionService.getAllByQuiz(id)
         );
     }
-    @PostMapping("/add")
-    public ResponseEntity<Question> add(@RequestBody Question question){
-        Question q = questionService.add(question);
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Question> add(@RequestBody Question question, @PathVariable("id") Long id){
+        Question q = questionService.add(question,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 q
         );

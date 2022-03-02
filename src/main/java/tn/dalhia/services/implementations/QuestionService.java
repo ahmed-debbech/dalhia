@@ -3,6 +3,7 @@ package tn.dalhia.services.implementations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.dalhia.entities.Phase;
 import tn.dalhia.entities.Question;
 import tn.dalhia.entities.Quiz;
 import tn.dalhia.repositories.QuestionRepository;
@@ -31,9 +32,14 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public Question add(Question question){
+    public Question add(Question question, Long id){
+        Quiz q = quizRepository.findById(id).orElse(null);
+        if (q == null)
+            return null;
 
-        return questionRepository.save(question);
+        q.getQuestions().add(question);
+        quizRepository.save(q);
+        return question;
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.dalhia.entities.Phase;
 import tn.dalhia.entities.Quiz;
 import tn.dalhia.services.IQuizService;
 
@@ -27,9 +28,9 @@ public class QuizController {
                 quizService.getAll()
         );
     }
-    @PostMapping("/add")
-    public ResponseEntity<Quiz> add(@RequestBody Quiz quiz){
-        Quiz q = quizService.add(quiz);
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Quiz> add(@RequestBody Quiz quiz , @PathVariable("id") Long id , @RequestBody Phase phase){
+        Quiz q = quizService.add(quiz,id,phase);
         return ResponseEntity.status(HttpStatus.OK).body(
                 q
         );

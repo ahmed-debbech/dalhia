@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Certificate;
 import tn.dalhia.entities.Course;
+import tn.dalhia.entities.Phase;
+import tn.dalhia.entities.enumerations.CertificateType;
 import tn.dalhia.repositories.CertificateRepository;
 import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.services.ICertificateService;
@@ -30,6 +32,11 @@ public class CertificateService implements ICertificateService {
     public Certificate add(Certificate certificate , Long courseId){
         Course cc = courseRepository.findById(courseId).orElse(null);
         if(cc != null) {
+            if(cc.getPrice()==0)
+                certificate.setCertificateType(CertificateType.HOBBY);
+            else
+                certificate.setCertificateType(CertificateType.PROFESSIONAL);
+            certificate.setTitle(cc.getName());
             certificate.setDateAffection(LocalDateTime.now());
             certificate.setDateAdded(LocalDateTime.now());
             certificate.setCourse(cc);

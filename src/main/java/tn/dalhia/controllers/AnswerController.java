@@ -66,9 +66,9 @@ public class AnswerController {
                 a1
         );
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id){
-        boolean b = answerService.delete(id);
+    @DeleteMapping("/{id}/{idQuestion}")
+    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id,@PathVariable("idQuestion") Long idQuestion){
+        boolean b = answerService.delete(id,idQuestion);
         if(!b){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     false

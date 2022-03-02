@@ -11,5 +11,5 @@ public interface IAnswerService {
     Answer add(Answer answer, Long id);
     Answer modify(Answer answer, Long id);
     Answer get(Long id);
-    boolean delete(Long id);
+    boolean delete(Long id,Long idQuestion);
 }

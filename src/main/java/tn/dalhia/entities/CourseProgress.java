@@ -20,7 +20,7 @@ public class CourseProgress {
     private Date enrollDate;
     private Date unrollDate;
     private int duration;
-    private String status;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "course_id")

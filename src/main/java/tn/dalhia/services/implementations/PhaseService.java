@@ -30,7 +30,9 @@ public class PhaseService implements IPhaseService {
         if (c == null)
             return null;
 
+        phase.setNumber(c.getNbrPhases()+1);
         c.getPhases().add(phase);
+        c.setNbrPhases(c.getNbrPhases()+1);
         courseRepository.save(c);
         return phase;
     }
@@ -59,9 +61,13 @@ public class PhaseService implements IPhaseService {
     }
 
     @Override
-    public  boolean delete(Long id){
+    public  boolean delete(Long id, Long idCourse){
         Phase ph = phaseRepository.findById(id).orElse(null);
-        if(ph != null){
+        Course c = courseRepository.findById(idCourse).orElse(null);
+
+        if(ph != null && c!=null){
+            c.setNbrPhases(c.getNbrPhases()-1);
+            courseRepository.save(c);
             phaseRepository.delete(ph);
             return true;
         }

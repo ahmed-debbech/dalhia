@@ -40,7 +40,7 @@ public class AnswerService implements IAnswerService {
         Question q = questionRepository.findById(id).orElse(null);
         if (q == null)
         return null;
-        if (q.getNumber() < 4){
+        if (q.getAnswers().size() < 4){
 
             for(Answer a : q.getAnswers()){
                 if(a.getCorrect()==true)
@@ -50,10 +50,10 @@ public class AnswerService implements IAnswerService {
              if (isTrue == 1 && answer.getCorrect()==true){
                 return null;
             }else{
-                if (isTrue==0 && q.getNumber()==3 && answer.getCorrect()==false)
+                if (isTrue==0 && q.getAnswers().size()==3 && answer.getCorrect()==false)
                      return null;
                 q.getAnswers().add(answer);
-                q.setNumber(q.getNumber()+1);
+                q.setNumber(q.getAnswers().size());
                 questionRepository.save(q);
             }
             return answer;
@@ -76,9 +76,12 @@ public class AnswerService implements IAnswerService {
     }
 
     @Override
-    public  boolean delete(Long id){
+    public  boolean delete(Long id, Long idQuestion){
         Answer a = answerRepository.findById(id).orElse(null);
-        if(a != null){
+        Question q = questionRepository.findById(idQuestion).orElse(null);
+        if(a != null && q!=null){
+            q.setNumber(q.getNumber()-1);
+            questionRepository.save(q);
             answerRepository.delete(a);
             return true;
         }

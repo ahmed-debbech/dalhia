@@ -23,6 +23,7 @@ public class Course {
     private LocalDateTime dateAdded;
     private LocalDateTime datePublished;
     private LocalDateTime dateRemoved;
+    private int nbrPhases;
     private float rate;
 
     @Enumerated(EnumType.STRING)

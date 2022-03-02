@@ -66,9 +66,9 @@ public class PhaseController {
         );
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id){
-        boolean b = phaseService.delete(id);
+    @DeleteMapping("/{id}/{idCourse}")
+    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id,@PathVariable("idCourse") Long idCourse ){
+        boolean b = phaseService.delete(id,idCourse);
         if(!b){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     false

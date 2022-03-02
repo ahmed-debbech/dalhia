@@ -8,7 +8,7 @@ import java.util.List;
 public interface IQuizService {
 
     List<Quiz> getAll();
-    Quiz add(Quiz quiz, Long id, Phase phase);
+    Quiz add(Quiz quiz, Long id);
     Quiz modify(Quiz quiz, Long id);
     Quiz get(Long id);
     boolean delete(Long id);

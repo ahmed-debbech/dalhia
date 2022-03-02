@@ -29,8 +29,8 @@ public class QuizController {
         );
     }
     @PostMapping("/{id}/add")
-    public ResponseEntity<Quiz> add(@RequestBody Quiz quiz , @PathVariable("id") Long id , @RequestBody Phase phase){
-        Quiz q = quizService.add(quiz,id,phase);
+    public ResponseEntity<Quiz> add(@RequestBody Quiz quiz , @PathVariable("id") Long id){
+        Quiz q = quizService.add(quiz,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 q
         );

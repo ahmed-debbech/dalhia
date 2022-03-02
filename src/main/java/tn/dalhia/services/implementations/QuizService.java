@@ -11,6 +11,8 @@ import tn.dalhia.repositories.PhaseRepository;
 import tn.dalhia.repositories.QuizRepository;
 import tn.dalhia.services.IQuizService;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,28 +33,28 @@ public class QuizService implements IQuizService {
     }
 
     @Override
-    public Quiz add(Quiz quiz,Long id,Phase phase){
+    public Quiz add(Quiz quiz,Long id){
         Course c = courseRepository.findById(id).orElse(null);
         if(c == null)
             return null;
-        for (Phase p : c.getPhases())
-        {
-            if (c.getPhases()==null)
-                return null;
-            else
-            if (p.getFinalPhase()== false){
-                phase.setFinalPhase(true);
-                phase.setTitle("QUIZ");
-                phase.setNumber(p.getNumber()+1);
-                phase.setDuration(30);
-                c.getPhases().add(phase);
-                phase.getQuiz().add(quiz);
-                courseRepository.save(c);
-                phaseRepository.save(phase);
-            }
-            return quiz;
+        if (c.getPhases()==null)
+            return null;
+        for(Phase p : c.getPhases()){
+            if(p.getFinalPhase() == true) return null;
         }
-        return null;
+
+        Phase phase = new Phase();
+        phase.setQuiz(new ArrayList<>());
+        phase.setFinalPhase(true);
+        phase.setTitle("QUIZ");
+        phase.setNumber(c.getNbrPhases()+1);
+        phase.setDuration(30);
+        quiz.setDateAdded(LocalDateTime.now());
+        phase.getQuiz().add(quiz);
+        c.getPhases().add(phase);
+        courseRepository.save(c);
+
+        return quiz;
     }
 
     @Override

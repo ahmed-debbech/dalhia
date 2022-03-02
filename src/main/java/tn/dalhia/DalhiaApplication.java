@@ -7,8 +7,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
-import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.security.AppProperties;
 
 @SpringBootApplication
@@ -17,6 +17,11 @@ import tn.dalhia.security.AppProperties;
 @EnableWebMvc
 public class DalhiaApplication {
 	
+	
+	
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/email-verification").setViewName("email-verification");
+	}
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DalhiaApplication.class, args);

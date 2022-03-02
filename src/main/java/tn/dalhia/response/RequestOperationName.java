@@ -1,5 +1,6 @@
 package tn.dalhia.response;
 
 public enum RequestOperationName {
-	DELETE
+	DELETE,
+	VERIFY_EMAIL
 }

@@ -28,8 +28,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure (HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST , SecurityConstants.SIGN_UP_URL)
-		.permitAll().anyRequest().authenticated() //sign up authorized be9i lkol le
-		.and().addFilter(getAuthenticationFilter())
+		.permitAll()
+		.antMatchers(HttpMethod.GET , SecurityConstants.VERIFICATION_EMAIL_URL)
+		.permitAll()
+		.antMatchers(HttpMethod.GET , SecurityConstants.VERIFICATION_EMAIL_URL_2)
+		.permitAll()
+		.anyRequest().authenticated() //sign up authorized be9i lkol le
+		.and()
+		.addFilter(getAuthenticationFilter())
 		.addFilter(new AuthorizationFilter(authenticationManager())) //lkool lezem iconectiw ken sign up
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // bch nkoulou l spring security eli rest api te3na lezem ikounou stateless
 //	}				// maghir matsir http session

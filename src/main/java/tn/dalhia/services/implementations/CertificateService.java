@@ -3,12 +3,11 @@ package tn.dalhia.services.implementations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.dalhia.entities.Certificate;
-import tn.dalhia.entities.Course;
-import tn.dalhia.entities.Phase;
+import tn.dalhia.entities.*;
 import tn.dalhia.entities.enumerations.CertificateType;
 import tn.dalhia.repositories.CertificateRepository;
 import tn.dalhia.repositories.CourseRepository;
+import tn.dalhia.repositories.QuizRepository;
 import tn.dalhia.services.ICertificateService;
 
 import java.time.LocalDateTime;
@@ -22,6 +21,8 @@ public class CertificateService implements ICertificateService {
     CertificateRepository certificateRepository;
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    QuizRepository quizRepository;
 
     @Override
     public List<Certificate> getAll(){
@@ -29,13 +30,36 @@ public class CertificateService implements ICertificateService {
     }
 
     @Override
-    public Certificate add(Certificate certificate , Long courseId){
+    public Certificate add(Certificate certificate , Long courseId, Quiz quizUser , Long idQuiz){
         Course cc = courseRepository.findById(courseId).orElse(null);
+        Quiz q = quizRepository.findById(idQuiz).orElse(null);
+        boolean resC = true, resU=true;
+        int note=0;
         if(cc != null) {
-            if(cc.getPrice()==0)
+            if(cc.getPrice()==0){
                 certificate.setCertificateType(CertificateType.HOBBY);
-            else
-                certificate.setCertificateType(CertificateType.PROFESSIONAL);
+            } else {
+                for (Question question : q.getQuestions()){
+                    for(Answer answer : question.getAnswers()){
+                        resC = answer.getCorrect();
+
+                        for (Question questionUser : quizUser.getQuestions()) {
+                            for (Answer answerUser : questionUser.getAnswers()) {
+                                resU = answerUser.getCorrect();
+                            }
+                        }
+                    }
+                }
+
+                if (resC == resU){
+                    note = note + 2;
+                }
+                if (note > 15){
+                    certificate.setCertificateType(CertificateType.PROFESSIONAL);
+                }else {
+                    return null;
+                }
+            }
             certificate.setTitle(cc.getName());
             certificate.setDateAffection(LocalDateTime.now());
             certificate.setDateAdded(LocalDateTime.now());
@@ -71,5 +95,6 @@ public class CertificateService implements ICertificateService {
         }
         return false;
     }
+
 
 }

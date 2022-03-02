@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.dalhia.entities.Certificate;
+import tn.dalhia.entities.Quiz;
 import tn.dalhia.services.ICertificateService;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class CertificateController {
             );
         }
         @PostMapping("/{id}/certificate")
-        public ResponseEntity<Certificate> add(@PathVariable("id") Long id,@RequestBody Certificate certificate){
-            Certificate c = certificateService.add(certificate, id);
+        public ResponseEntity<Certificate> add(@PathVariable("id") Long id, @RequestBody Certificate certificate, @RequestBody Quiz quizUser, @PathVariable("idQuiz") Long idQuiz){
+            Certificate c = certificateService.add(certificate, id , quizUser, idQuiz);
             return ResponseEntity.status(HttpStatus.OK).body(
                     c
             );

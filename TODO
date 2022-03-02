@@ -1,53 +1,14 @@
 TODO
- * CRUD
- - Topic (mod, del, add, show, ban)
- - Topic comment (add, ,del, mod, ban, show)
- -COmment reaction (add, del)
- - topic claim (add),
 
- - add new channel for group (add, delete, mod, show)
- - show all group channels
- - creat channel invdiv ( add , show)
- - messages ( add )
-
- - ads(add, remove, mod, show all)
-
- ROUTES:
-
-~ TopicController
-/forum (GET)
-/forum/topics (POST/GET)
-/forum/topics/{id} (PUT/ GET/ DELETE)
-/forum/topics/{id}/bans/{bool} (PUT)
-/forum/topics/{id}/rate/{action} (POST)
-/forum/topics/{id}/rate (DELETE)
-/forum/topics/{id}/rate (GET)
-
-~ TopicClaimController
-/forum/topics/{id}/claims (POST/GET)
-/forum/claims/{id} (GET)
-/forum/claims/{id}/approvals/{action} (PUT)
-
-~ ForumCommentController
-/forum/topics/{id}/comments (POST/GET)
-/forum/comments/{cmt_id} (PUT, DELETE, GET)
-/forum/comments/{cmt_id}/bans (PUT / DELETE)
-/forum/comments/{cmt_id}/replies (POST,GET)
-/forum/replies/{rep_id} (PUT, GET, DELETE)
-/forum/comments/{cmt_id}/reactions (GET, POST, DELETE)
-
-~ ChannelController
-/forum/channels/{type} (GET/ POST)
-/forum/channels/q/{id} (GET, DELETE, PUT)
---> until here it is complete
-
-
-~ MessageController
-/forum/channels/{id}/messages (GET, POST)
-/forum/channels/messages/{usr} (POST)
-/forum/channels/messages/q/{id_msg} (DELETE)
-
-~ ForumAdsController
-/forum/ads (GET, POST)
-/forum/ads/{id} (DELETE, PUT, GET)
-/forum/ads/{id}/clicks (POST)
+* web socket
+* delete comments and ban them automatically when a curse word is used
+* delete topics with 0 reactions after 2 days
+* algorithm of showing ads based on aspects
+* post of the day
+* active users
+    * stop chat
+* rich text editor in html
+* sort and search
+    * sort by most upvoted
+    * sort by most commented
+* api pagination

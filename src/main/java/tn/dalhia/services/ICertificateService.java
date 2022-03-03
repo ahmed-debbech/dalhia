@@ -2,7 +2,6 @@ package tn.dalhia.services;
 
 import tn.dalhia.entities.Certificate;
 import tn.dalhia.entities.Quiz;
-
 import java.util.List;
 
 public interface ICertificateService {

@@ -1,5 +1,6 @@
 package tn.dalhia.services.implementations;
 
+import com.google.zxing.WriterException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,9 @@ import tn.dalhia.repositories.CertificateRepository;
 import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.repositories.QuizRepository;
 import tn.dalhia.services.ICertificateService;
+import tn.dalhia.utils.QRCodeGenerator;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class CertificateService implements ICertificateService {
         return certificateRepository.findAll();
     }
 
-    @Override
+    /*@Override
     public Certificate add(Certificate certificate , Long courseId, Quiz quizUser , Long idQuiz){
         Course cc = courseRepository.findById(courseId).orElse(null);
         Quiz q = quizRepository.findById(idQuiz).orElse(null);
@@ -67,6 +70,27 @@ public class CertificateService implements ICertificateService {
             return certificateRepository.save(certificate);
         }
         return null;
+    }*/
+    @Override
+    public Certificate add(Long id){
+        Course c = courseRepository.findById(id).orElse(null);
+        String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/QRCode.png";
+        if (c==null)
+            return null;
+
+        String qrText= c.getName(); //el donnée elli bech ykoun fi tkhalbiza ta3 el QR
+        try {
+            // Generate and Save Qr Code Image in static/image folder
+            QRCodeGenerator.generateQRCodeImage(qrText,250,250,QR_CODE_IMAGE_PATH);
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+        }
+        Certificate certificate = new Certificate();
+        certificate.setTitle(c.getName());
+        certificate.setDateAffection(LocalDateTime.now());
+        certificate.setDateAdded(LocalDateTime.now());
+        certificate.setCourse(c);
+        return certificateRepository.save(certificate);
     }
 
     @Override

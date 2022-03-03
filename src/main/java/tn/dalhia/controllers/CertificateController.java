@@ -28,9 +28,17 @@ public class CertificateController {
                     certificateService.getAll()
             );
         }
-        @PostMapping("/{id}/certificate")
+        /*@PostMapping("/{id}/certificate")
         public ResponseEntity<Certificate> add(@PathVariable("id") Long id, @RequestBody Certificate certificate, @RequestBody Quiz quizUser, @PathVariable("idQuiz") Long idQuiz){
             Certificate c = certificateService.add(certificate, id , quizUser, idQuiz);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    c
+            );
+        }*/
+
+        @PostMapping("/{id}/certificate")
+        public ResponseEntity<Certificate> add(@PathVariable("id") Long id){
+            Certificate c = certificateService.add(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     c
             );
@@ -71,5 +79,7 @@ public class CertificateController {
                     true
             );
         }
+
+
 
 }

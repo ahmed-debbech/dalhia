@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,11 +16,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import tn.dalhia.entities.enumerations.Job;
+import tn.dalhia.entities.enumerations.ReportCategory;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
 
+@Getter
+@Setter
 @Entity
 @ToString
 public class User implements Serializable {
@@ -65,16 +71,17 @@ public class User implements Serializable {
     
    
     private int zipCode;
-    
     private int start_hour; //?? time ? e.g: 19:50
-    
     private int end_hour; //?? time ? e.g: 19:50
-    
     @Enumerated(EnumType.STRING)
     private Job job;
-    
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
+    @Enumerated(EnumType.STRING)
+    private ReportCategory activity;
+    private boolean ban;
+
+
 
     
     @Column(nullable=false)
@@ -87,6 +94,7 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<CourseProgress> courseProgresses;
+
 
     @OneToOne  //kn nheb nzid abonn maa user fard wkt
     private Subscription subscriptions; //bi
@@ -106,8 +114,7 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Request> requests;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
-    //private List<Review> reviews; // ?? to ask
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Report> reports;
@@ -117,6 +124,7 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Participation> participations;
+
 
 
     @OneToMany(mappedBy = "user")
@@ -371,7 +379,6 @@ public class User implements Serializable {
 	public void setCommands(List<Command> commands) {
 		this.commands = commands;
 	}
-
 
 
 }

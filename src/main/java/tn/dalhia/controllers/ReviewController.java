@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.dalhia.entities.Request;
 import tn.dalhia.entities.Review;
+import tn.dalhia.entities.User;
 import tn.dalhia.implementations.RequestService;
 import tn.dalhia.implementations.ReviewService;
 
@@ -36,6 +37,12 @@ public class ReviewController {
 			 
 			 List <Review> listRvs = rvs.getAllReviews();
 			 return listRvs;
+		 }
+		 
+	//http://localhost:8089/Dahlia/review/retrieve-all-reviews
+		 @GetMapping("/retrieve-best&worst-expert-with-score")
+		 public void retrieveBestAndWorstExpertWithScore(){
+			 rvs.getBestAndWorstExpertWithScore();
 		 }
 		 
 	// http://localhost:8089/Dahlia/review/remove-review/{rv-id}

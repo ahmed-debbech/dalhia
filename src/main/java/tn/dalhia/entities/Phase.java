@@ -1,10 +1,14 @@
 package tn.dalhia.entities;
 
+<<<<<<< HEAD
+=======
 import lombok.*;
 
+>>>>>>> dev
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
 
 @Getter
 @Setter

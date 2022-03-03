@@ -53,7 +53,7 @@ public class AppointmentReportService implements IAppointmentReportService {
 		rp.setReport(rp.getReport());
 		rp.setAppointment(app);
 		AppReportRepo.save(rp);
-		log.info("Appointment Report of Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+"added successfully.");
+		log.info("Appointment Report of Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+" added successfully.");
 		
 	}
 

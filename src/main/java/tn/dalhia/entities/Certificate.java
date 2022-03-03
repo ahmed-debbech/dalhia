@@ -19,7 +19,6 @@ public class Certificate {
     private String title;
     private LocalDateTime dateAffection;
     private LocalDateTime dateAdded;
-
     @Enumerated(EnumType.STRING)
     private CertificateType certificateType;
 

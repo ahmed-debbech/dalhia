@@ -1,6 +1,5 @@
 package tn.dalhia.entities;
 
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -83,11 +82,6 @@ public class Subscription implements Serializable {
 	public void setPlans(Plan plans) {
 		this.plans = plans;
 	} 
-
-	
-
-
-
 
 
 }

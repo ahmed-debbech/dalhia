@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.dalhia.entities.Report;
+import tn.dalhia.entities.User;
 import tn.dalhia.repositories.ReportRepository;
 import tn.dalhia.services.IReportService;
 
@@ -18,6 +19,7 @@ public class ReportService implements IReportService{
 	private ReportRepository rr;
 	
 	public List<Report> getAllReports() {
+
 		List<Report> apps = (List<Report>) rr.findAll();
 		return apps;
 	}
@@ -44,6 +46,24 @@ public class ReportService implements IReportService{
 		rr.deleteById(id);
 		log.info("Report removed.");
 		
+	}
+
+	@Override
+	public void manageReportStatus(Report report, int id) {
+		//int nbr = 0;
+		Report Rp = rr.findById(id).get();
+		Rp.setStatus(report.getStatus());
+		if( report.getStatus().getValue()==1){
+			List<User> suggests = rr.getSuggestions(Rp.getCategory());
+			Rp.getSuggestions().addAll(suggests);
+			//nbr = rr.countSuggestions(id);
+			log.info("Report is CONFIRMED by Admin and list of Report Category Matched suggestions assigned.");
+		}
+		else{
+			log.info("Report is DECLINED by Admin.");	
+		}
+		rr.save(Rp);
+		log.info("end of process.");	
 	}
 
 }

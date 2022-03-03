@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+
 import lombok.*;
 import tn.dalhia.entities.enumerations.ReactionType;
 
@@ -17,7 +18,6 @@ public class CommentReaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private LocalDateTime date;
     @Enumerated(EnumType.STRING)
     private ReactionType reactionType;

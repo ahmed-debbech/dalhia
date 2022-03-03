@@ -1,10 +1,7 @@
 package tn.dalhia.entities;
 
-<<<<<<< HEAD
-=======
 import lombok.*;
 
->>>>>>> dev
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

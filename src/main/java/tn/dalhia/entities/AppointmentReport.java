@@ -1,10 +1,6 @@
 package tn.dalhia.entities;
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> dev
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,10 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> dev
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;

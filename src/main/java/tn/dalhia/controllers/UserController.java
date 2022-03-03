@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import tn.dalhia.exceptions.UserServiceException;
+import tn.dalhia.request.PasswordResetModel;
+import tn.dalhia.request.PasswordResetRequestModel;
 import tn.dalhia.request.UserDetailsRequestModel;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.response.OperationStatusModel;
@@ -23,6 +25,8 @@ import tn.dalhia.response.RequestOperationStatus;
 import tn.dalhia.response.UserRest;
 import tn.dalhia.services.UserService;
 import tn.dalhia.shared.dto.UserDto;
+
+
 
 
 @RestController
@@ -102,8 +106,46 @@ public OperationStatusModel verifyEmailToken(@RequestParam(value="token") String
 		return returnValue;
 	}
 	
-	@GetMapping
+	@GetMapping(path="/hello")
 	String getaa() {
-		return "email-verification";
+		return "hello";
 	}
+	
+	@PostMapping(path="/password-reset-request")
+	
+	public OperationStatusModel requestReset(@RequestBody PasswordResetRequestModel passwordResetRequestModel) throws Exception {
+		
+		OperationStatusModel returnValue = new OperationStatusModel();
+		
+		boolean operationResult = userService.requestPasswordReset(passwordResetRequestModel.getEmail());
+		
+		returnValue.setOperationName(RequestOperationName.REQUEST_PASSWORD_RESET.name());
+		returnValue.setOperationResult(RequestOperationStatus.ERROR.name());
+		
+		if(operationResult) {
+			returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+		}
+				
+			return returnValue;
+				}
+	
+	@PostMapping(path="/password-reset")
+	public OperationStatusModel resetPassword(@RequestBody PasswordResetModel passwordResetModel)  {
+	
+		OperationStatusModel returnValue = new OperationStatusModel();
+		
+		boolean operationResult = userService.resetPassword(
+				passwordResetModel.getToken(),
+				passwordResetModel.getPassword());
+		
+		returnValue.setOperationName(RequestOperationName.PASSWORD_RESET.name());
+		returnValue.setOperationResult(RequestOperationStatus.ERROR.name());
+
+
+		if(operationResult) {
+			returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+		}
+				
+			return returnValue;
+				}
 }

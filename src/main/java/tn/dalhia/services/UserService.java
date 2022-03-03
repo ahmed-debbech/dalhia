@@ -15,4 +15,8 @@ public interface UserService extends UserDetailsService  {
 	UserDto updateUser(String id, UserDto userDto);
 	void deleteUser(String userId);
 	boolean verifyEmailToken(String token);
+	boolean requestPasswordReset(String email) throws Exception;
+	boolean resetPasswordMail(String firstName, String email, String token)
+			throws UnsupportedEncodingException, MessagingException;
+	boolean resetPassword(String token, String password);
 }

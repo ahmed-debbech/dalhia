@@ -1,6 +1,5 @@
 package tn.dalhia.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import tn.dalhia.entities.enumerations.Tag;
@@ -11,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +20,6 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String title;
     private String text;
     @Enumerated(EnumType.STRING)

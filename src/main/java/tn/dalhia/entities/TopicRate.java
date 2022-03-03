@@ -18,7 +18,6 @@ public class TopicRate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private LocalDateTime date;
     private VoteType voteType;
 

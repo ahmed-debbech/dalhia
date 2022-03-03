@@ -31,7 +31,7 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private ReportStatus status;
     
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<User> suggestions;
     
     

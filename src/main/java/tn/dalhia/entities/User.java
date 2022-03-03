@@ -50,6 +50,7 @@ public class User {
     private Speciality speciality;
     @Enumerated(EnumType.STRING)
     private ReportCategory activity;
+    private boolean ban;
 
     @OneToMany(cascade = CascadeType.ALL) //uniderectional
     private List<Course> courses;

@@ -19,6 +19,7 @@ public class ReportService implements IReportService{
 	private ReportRepository rr;
 	
 	public List<Report> getAllReports() {
+		
 		List<Report> apps = (List<Report>) rr.findAll();
 		return apps;
 	}
@@ -49,19 +50,23 @@ public class ReportService implements IReportService{
 
 	@Override
 	public void manageReportStatus(Report report, int id) {
+		//int nbr = 0;
 		Report Rp = rr.findById(id).get();
 		Rp.setStatus(report.getStatus());
 		if( report.getStatus().getValue()==1){
 			List<User> suggests = rr.getSuggestions(Rp.getCategory());
 			Rp.getSuggestions().addAll(suggests);
-			log.info("Report Status CONFIRMED by Admin and list of Report Category Matched associations displayed.");
+			//nbr = rr.countSuggestions(id);
+			log.info("Report is CONFIRMED by Admin and list of Report Category Matched suggestions assigned.");
 		}
 		else{
-			log.info("Report Status DECLINED by Admin.");	
+			log.info("Report is DECLINED by Admin.");	
 		}
 		rr.save(Rp);
 		log.info("end of process.");	
 	}
+
+	
 
 	
 	

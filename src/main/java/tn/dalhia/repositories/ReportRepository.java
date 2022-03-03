@@ -19,4 +19,7 @@ public interface ReportRepository extends CrudRepository<Report,Integer> {
 
 	@Query(value = "SELECT user FROM User user WHERE user.role LIKE 'ASSOCIATION' AND user.activity= :category")
 	public List<User> getSuggestions(@Param("category")ReportCategory RpCat);
+	
+	@Query(value = "SELECT count(report_suggestions.suggestions_id) FROM report_suggestions WHERE report_suggestions.report_report_id = :id", nativeQuery = true)
+    public int countSuggestions(@Param("id")Integer RpId);
 }

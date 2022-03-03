@@ -28,16 +28,16 @@ public class AnswerController {
         );
     }
 
-    /*@GetMapping("/answerListByQuestion/{id}")
-    public ResponseEntity<List<Answer>> get1(){
+    @GetMapping("/answerListByQuestion/{id}")
+    public ResponseEntity<List<Answer>> get1(@PathVariable("id") Long id){
         return ResponseEntity.status(HttpStatus.OK).body(
                 answerService.getAllByQuestion(id)
         );
-    }*/
+    }
 
-    @PostMapping("/add")
-    public ResponseEntity<Answer> add(@RequestBody Answer answer){
-        Answer a = answerService.add(answer);
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Answer> add(@RequestBody Answer answer, @PathVariable("id") Long id){
+        Answer a = answerService.add(answer,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 a
         );
@@ -66,9 +66,9 @@ public class AnswerController {
                 a1
         );
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id){
-        boolean b = answerService.delete(id);
+    @DeleteMapping("/{id}/{idQuestion}")
+    public ResponseEntity<Boolean> delete(@PathVariable("id") Long id,@PathVariable("idQuestion") Long idQuestion){
+        boolean b = answerService.delete(id,idQuestion);
         if(!b){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                     false

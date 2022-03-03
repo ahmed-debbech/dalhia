@@ -3,8 +3,11 @@ package tn.dalhia.services.implementations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.dalhia.entities.Phase;
 import tn.dalhia.entities.Question;
+import tn.dalhia.entities.Quiz;
 import tn.dalhia.repositories.QuestionRepository;
+import tn.dalhia.repositories.QuizRepository;
 import tn.dalhia.services.IQuestionService;
 
 import java.util.List;
@@ -16,16 +19,28 @@ public class QuestionService implements IQuestionService {
 
     @Autowired
     QuestionRepository questionRepository;
+    @Autowired
+    QuizRepository quizRepository;
 
     @Override
-    public List<Question> getAll(){
-        return questionRepository.findAll();
+    public List<Question> getAllByQuiz(Long id) {
+        Quiz q =quizRepository.findById(id).orElse(null);
+        if(q == null)
+            return null;
+
+            return q.getQuestions();
     }
 
     @Override
-    public Question add(Question question){
+    public Question add(Question question, Long id){
+        Quiz q = quizRepository.findById(id).orElse(null);
+        if (q == null)
+            return null;
 
-        return questionRepository.save(question);
+        q.getQuestions().add(question);
+        quizRepository.save(q);
+        return question;
+
     }
 
     @Override

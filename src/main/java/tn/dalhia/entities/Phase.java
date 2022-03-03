@@ -20,7 +20,7 @@ public class Phase {
     private int number;
     private int duration;
     private Date dateAdded;
-    private boolean finalPhase;
+    private Boolean finalPhase;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Quiz> quiz;

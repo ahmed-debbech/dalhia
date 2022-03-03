@@ -22,15 +22,15 @@ public class ResourcesController {
     @Autowired
     private IResourcesService resourcesService;
 
-    @GetMapping("/resourcesList")
-    public ResponseEntity<List<Resources>> get(){
+    @GetMapping("/{id}/resourcesListByPhase")
+    public ResponseEntity<List<Resources>> getAllByPhase(@PathVariable("id") Long id){
         return ResponseEntity.status(HttpStatus.OK).body(
-                resourcesService.getAll()
+                resourcesService.getAllByPhase(id)
         );
     }
-    @PostMapping("/add")
-    public ResponseEntity<Resources> add(@RequestBody Resources resources){
-        Resources r = resourcesService.add(resources);
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Resources> add(@RequestBody Resources resources , @PathVariable Long id){
+        Resources r = resourcesService.add(resources,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 r
         );

@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.dalhia.entities.Course;
+import tn.dalhia.entities.Phase;
 import tn.dalhia.services.ICourseService;
+import tn.dalhia.services.IPhaseService;
 
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class CourseController {
 
     @Autowired
     private ICourseService courseService;
+
+    @Autowired
+    private IPhaseService phaseService;
 
     @GetMapping("/coursesList")
     public ResponseEntity<List<Course>> get(){
@@ -59,6 +64,7 @@ public class CourseController {
                 c1
         );
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id){
         boolean b = courseService.delete(id);

@@ -6,7 +6,6 @@ import tn.dalhia.entities.enumerations.ResourceType;
 
 import javax.persistence.*;
 
-
 @Getter
 @Setter
 @AllArgsConstructor

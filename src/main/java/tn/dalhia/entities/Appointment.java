@@ -30,7 +30,7 @@ public class Appointment {
 
     @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
     private AppointmentRate appointmentRate;
-    
+
     @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
 
     private AppointmentReport appointmentReport;

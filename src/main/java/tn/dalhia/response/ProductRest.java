@@ -6,6 +6,7 @@ public class ProductRest {
 	private String productId;
  	private String description;
  	private int price;
+ 	private int quantity;
 	public String getTitle() {
 		return title;
 	}
@@ -29,6 +30,12 @@ public class ProductRest {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
  	
  	

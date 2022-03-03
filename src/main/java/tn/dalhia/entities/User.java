@@ -1,7 +1,7 @@
 package tn.dalhia.entities;
 
-
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import tn.dalhia.entities.enumerations.Job;
+import tn.dalhia.entities.enumerations.Role;
+import tn.dalhia.entities.enumerations.Speciality;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -53,9 +56,8 @@ public class User implements Serializable {
     
     @Column(nullable=false,length=9)
     private String phone;
-    
-    @Column(nullable = false)
-    private String password;
+
+
     
     @Column(nullable=false)
     private Date date_birth;
@@ -75,15 +77,20 @@ public class User implements Serializable {
     private int end_hour; //?? time ? e.g: 19:50
     @Enumerated(EnumType.STRING)
     private Job job;
+    
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
+
+    @Column(nullable=false)
+	private String encryptedPaswword;
+
+
+
     @Enumerated(EnumType.STRING)
     private ReportCategory activity;
     private boolean ban;
 
 
-
-    
     @Column(nullable=false)
 	private Boolean emailVerificationStatus = false;
 	private String emailVerificationToken;
@@ -94,7 +101,6 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<CourseProgress> courseProgresses;
-
 
     @OneToOne  //kn nheb nzid abonn maa user fard wkt
     private Subscription subscriptions; //bi
@@ -166,13 +172,6 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public Date getDate_birth() {
 		return date_birth;
@@ -214,7 +213,8 @@ public class User implements Serializable {
 		this.zipCode = zipCode;
 	}
 
-	
+
+
 	public int getStart_hour() {
 		return start_hour;
 	}
@@ -230,6 +230,7 @@ public class User implements Serializable {
 	public void setEnd_hour(int end_hour) {
 		this.end_hour = end_hour;
 	}
+
 
 	public Boolean getEmailVerificationStatus() {
 		return emailVerificationStatus;
@@ -379,6 +380,16 @@ public class User implements Serializable {
 	public void setCommands(List<Command> commands) {
 		this.commands = commands;
 	}
+
+	public String getEncryptedPaswword() {
+		return encryptedPaswword;
+	}
+
+	public void setEncryptedPaswword(String encryptedPaswword) {
+		this.encryptedPaswword = encryptedPaswword;
+	}
+
+
 
 
 }

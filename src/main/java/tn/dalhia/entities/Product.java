@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
 
 @Entity
 public class Product implements Serializable{
@@ -28,9 +28,8 @@ public class Product implements Serializable{
  	private String description;
  	@Column(nullable=false)
  	private int price;
- 	
- 	@ManyToOne
- 	Command commands;
+ 	@Column(nullable=false)
+ 	private int quantity;
 
 	public Long getId() {
 		return id;
@@ -74,16 +73,15 @@ public class Product implements Serializable{
 		this.price = price;
 	}
 
-	public Command getCommands() {
-		return commands;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setCommands(Command commands) {
-		this.commands = commands;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 
- 	
  	
  	
 

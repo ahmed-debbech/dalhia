@@ -23,4 +23,8 @@ public class Review {
     private String ReviewHeader;
     private String ReviewBody;
     private Float Stars;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

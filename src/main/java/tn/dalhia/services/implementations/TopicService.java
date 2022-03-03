@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.time.temporal.ChronoUnit.DAYS;
-
 @Service
 @RequiredArgsConstructor
 @Transactional

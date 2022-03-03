@@ -31,7 +31,7 @@ public class Command implements Serializable {
 	private int code;
 	
 	@ManyToOne
-	UserEntity users;
+	User users;
 	
 	@ManyToMany()
 	private List<Product> products;
@@ -74,10 +74,10 @@ public class Command implements Serializable {
 	public void setCode(int code) {
 		this.code = code;
 	}
-	public UserEntity getUsers() {
+	public User getUsers() {
 		return users;
 	}
-	public void setUsers(UserEntity users) {
+	public void setUsers(User users) {
 		this.users = users;
 	}
 	public List<Product> getProducts() {

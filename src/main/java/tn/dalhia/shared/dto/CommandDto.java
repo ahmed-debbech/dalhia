@@ -3,7 +3,7 @@ package tn.dalhia.shared.dto;
 import java.util.List;
 
 import tn.dalhia.entities.Product;
-import tn.dalhia.entities.UserEntity;
+import tn.dalhia.entities.User;
 
 public class CommandDto {
 
@@ -14,7 +14,7 @@ public class CommandDto {
 	private int card;
 	private int code;
 	private List<Product> products;
-	private UserEntity users;
+	private User users;
 	public Long getId() {
 		return id;
 	}
@@ -57,10 +57,10 @@ public class CommandDto {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-	public UserEntity getUsers() {
+	public User getUsers() {
 		return users;
 	}
-	public void setUsers(UserEntity users) {
+	public void setUsers(User users) {
 		this.users = users;
 	}
 	

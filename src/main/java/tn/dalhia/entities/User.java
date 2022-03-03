@@ -21,7 +21,7 @@ import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
 
 @Entity
-public class UserEntity implements Serializable {
+public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

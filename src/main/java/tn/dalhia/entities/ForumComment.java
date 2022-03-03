@@ -17,7 +17,7 @@ public class ForumComment {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<CommentReaction> commentReactionList;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.Command;
 import tn.dalhia.entities.Product;
-import tn.dalhia.entities.UserEntity;
+import tn.dalhia.entities.User;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.CommandRepository;
 import tn.dalhia.repositories.ProductRepository;
@@ -38,7 +38,7 @@ public class CommandServiceImpl implements CommandService{
 	@Override
 	@Transactional
 	public CommandDto createCommand(CommandRequestModel commandDetails, String id) {
-		UserEntity userEntity = userRepo.findByUserId(id);
+		User userEntity = userRepo.findByUserId(id);
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		if (commandDetails.getProducts() == null) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FILED.getErrorMessage());
 		

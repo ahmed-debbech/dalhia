@@ -10,14 +10,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.PasswordResetTokenEntity;
-import tn.dalhia.entities.UserEntity;
+import tn.dalhia.entities.User;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.PasswordResetTokenRepository;
 import tn.dalhia.repositories.UserRepository;
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 		if(userRepo.findByEmail(user.getEmail()) !=null) throw new RuntimeException("Record already exists");
 		
 		
-		UserEntity userEntity = new UserEntity();
+		User userEntity = new User();
 		BeanUtils.copyProperties(user,userEntity);
 
 		
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 		userEntity.setEncryptedPaswword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(publicUserId));
 		
-		UserEntity storedUserDetails =userRepo.save(userEntity);
+		User storedUserDetails =userRepo.save(userEntity);
 		
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(storedUserDetails,returnValue);
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUser(String email) {
-		UserEntity userEntity = userRepo.findByEmail(email);
+		User userEntity = userRepo.findByEmail(email);
 		
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		UserDto returnValue = new UserDto();
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto getUserByUserId(String userId) {
 		UserDto returnValue = new UserDto();
-		UserEntity userEntity = userRepo.findByUserId(userId);
+		User userEntity = userRepo.findByUserId(userId);
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		BeanUtils.copyProperties(userEntity,returnValue);
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto updateUser(String id, UserDto userDto) {
 		UserDto returnValue = new UserDto();
-		UserEntity userEntity = userRepo.findByUserId(id);
+		User userEntity = userRepo.findByUserId(id);
 		
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()); //Exception eli aamlneha ahna
 		
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
 			userEntity.setState(userDto.getState());
 			userEntity.setDate_birth(userDto.getDate_birth());
 			userEntity.setZipCode(userDto.getZipCode());
-			UserEntity updatedUserDetails = userRepo.save(userEntity);
+			User updatedUserDetails = userRepo.save(userEntity);
 		
 		BeanUtils.copyProperties(updatedUserDetails,returnValue);
 		return returnValue;
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(String userId) {
-		UserEntity userEntity = userRepo.findByUserId(userId);
+		User userEntity = userRepo.findByUserId(userId);
 		
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
@@ -150,10 +150,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		UserEntity userEntity = userRepo.findByEmail(email);
+		User userEntity = userRepo.findByEmail(email);
 		if (userEntity == null) throw new UsernameNotFoundException(email);
 		
-		return new User(userEntity.getEmail(), userEntity.getEncryptedPaswword(), userEntity.getEmailVerificationStatus(),true,
+		return new  org.springframework.security.core.userdetails.User(userEntity.getEmail(), userEntity.getEncryptedPaswword(), userEntity.getEmailVerificationStatus(),true,
 				true, true,
 				new ArrayList<>());
 		
@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserService {
 	public boolean verifyEmailToken(String token) {
 		boolean returnValue = false;
 		// find user by token
-		UserEntity userEntity = userRepo.findUserByEmailVerificationToken(token);
+		User userEntity = userRepo.findUserByEmailVerificationToken(token);
 		
 		if(userEntity!=null) {
 			boolean hastokenExpired = Utils.hastokenExpired(token);
@@ -181,7 +181,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean requestPasswordReset(String email) throws Exception{
 		boolean returnValue = false;
-		UserEntity userEntity = userRepo.findByEmail(email);
+		User userEntity = userRepo.findByEmail(email);
 		
 		if(userEntity==null) {
 			return returnValue;
@@ -246,9 +246,9 @@ public class UserServiceImpl implements UserService {
 		String encodedPassword = bCryptPasswordEncoder.encode(password);
 		
 		// Update User password in database 
-		UserEntity userEntity = passwordResetTokenEntity.getUserDetails();
+		User userEntity = passwordResetTokenEntity.getUserDetails();
 		userEntity.setEncryptedPaswword(encodedPassword);
-		UserEntity savedUserEntity = userRepo.save(userEntity);
+		User savedUserEntity = userRepo.save(userEntity);
 		
 		// verify if user password was saved successfully
 		

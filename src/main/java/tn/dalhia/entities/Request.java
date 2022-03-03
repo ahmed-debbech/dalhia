@@ -29,6 +29,6 @@ public class Request {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
 }

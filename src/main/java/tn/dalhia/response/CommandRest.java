@@ -5,7 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import tn.dalhia.entities.Product;
-import tn.dalhia.entities.UserEntity;
+import tn.dalhia.entities.User;
 
 public class CommandRest {
 
@@ -16,7 +16,7 @@ public class CommandRest {
 	private int code;
 	private List<Product> products;
 	@JsonIgnore
-	private UserEntity users;
+	private User users;
 	public String getCommandId() {
 		return commandId;
 	}
@@ -53,10 +53,10 @@ public class CommandRest {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-	public UserEntity getUsers() {
+	public User getUsers() {
 		return users;
 	}
-	public void setUsers(UserEntity users) {
+	public void setUsers(User users) {
 		this.users = users;
 	}
 	

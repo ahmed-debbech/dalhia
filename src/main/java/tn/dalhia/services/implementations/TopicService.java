@@ -5,19 +5,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Topic;
 import tn.dalhia.entities.TopicClaim;
 import tn.dalhia.entities.TopicRate;
 import tn.dalhia.entities.enumerations.VoteType;
-import tn.dalhia.repositories.TopicClaimRepository;
+import java.time.temporal.ChronoUnit;
 import tn.dalhia.repositories.TopicRateRepository;
 import tn.dalhia.repositories.TopicRepository;
 import tn.dalhia.services.ITopicService;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @RequiredArgsConstructor
@@ -93,6 +97,11 @@ public class TopicService implements ITopicService {
             TopicRate tr = new TopicRate();
             tr.setDate(LocalDateTime.now());
             tr.setVoteType(voteType);
+            if(voteType == VoteType.UPVOTE){
+                tt.setScore(tt.getScore()+1);
+            }else{
+                tt.setScore(tt.getScore()-1);
+            }
             tt.getTopicRateList().add(tr);
             topicRepository.save(tt);
             return tr;
@@ -104,6 +113,7 @@ public class TopicService implements ITopicService {
     public boolean RemoveRate(Long id) {
         Topic tt = topicRepository.findById(id).orElse(null);
         if(tt != null){
+            //TODO get the user id to be able to find and delete the rate
             //topicRateRepository.deleteById();
             return true;
         }
@@ -117,6 +127,24 @@ public class TopicService implements ITopicService {
             return tt.getTopicRateList();
         }
         return null;
+    }
+
+    @Scheduled(cron = "0 0 0/1 * * *")
+    //@Scheduled(cron = "0 0 * * * *")
+    public void deleteTopicsWithLowInterest(){
+        log.info("check topics without interaction");
+        List<Topic> topics = topicRepository.findAll();
+        for(Topic tp : topics){
+            LocalDate ld1 = tp.getDatePublished().toLocalDate();
+            LocalDate ld2 = LocalDateTime.now().toLocalDate();
+            if(DAYS.between(ld1, ld2) == 2){
+                if(tp.getScore() <= 0){
+                    tp.setBanned(true);
+                    tp.setDateRemoved(LocalDateTime.now());
+                    topicRepository.save(tp);
+                }
+            }
+        }
     }
 
 }

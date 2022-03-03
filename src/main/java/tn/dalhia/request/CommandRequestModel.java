@@ -44,6 +44,5 @@ public class CommandRequestModel {
 		this.products = products;
 	}
 	
-	
-	
+
 }

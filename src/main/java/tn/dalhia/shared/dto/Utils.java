@@ -10,8 +10,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import tn.dalhia.security.SecurityConstants;
-
-
 @Component // khater bch nautowirdiwha
 public class Utils {
 
@@ -30,13 +28,15 @@ public class Utils {
 		return generateRandomString(length);
 	}
 
+
 	public String generateCommandId(int length) {
 		return generateRandomString(length);
 	}
+
 	private String generateRandomString(int length) {
 		StringBuilder returnValue = new StringBuilder(length);
 
-		for (int i =0; i< length; i++) {
+		for (int i = 0; i < length; i++) {
 			returnValue.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
 		}
 
@@ -55,18 +55,18 @@ public class Utils {
 	public String generateEmailVerificationToken(String publicUserId) {
 		String token = Jwts.builder()
 				.setSubject(publicUserId)
-				.setExpiration(new Date(System.currentTimeMillis()+ SecurityConstants.EXPIRATION_TIME))
+				.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
 
 		return token;
 	}
+
 	public String generatePasswordResetToken(String userId) {
 		String token = Jwts.builder()
 				.setSubject(userId)
-				.setExpiration(new Date(System.currentTimeMillis()+ SecurityConstants.EXPIRATION_TIME))
+				.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
 
 		return token;
 	}
-
 }

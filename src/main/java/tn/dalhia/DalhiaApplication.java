@@ -11,18 +11,18 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 import tn.dalhia.security.AppProperties;
 
-@SpringBootApplication
-@EnableAspectJAutoProxy
 @EnableScheduling
+@EnableAspectJAutoProxy
 @EnableWebMvc
+@SpringBootApplication
 public class DalhiaApplication {
 	
 	
-	
+
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/email-verification").setViewName("email-verification");
 	}
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(DalhiaApplication.class, args);
 	}

@@ -35,6 +35,7 @@ public class Command implements Serializable {
 	
 	@ManyToMany()
 	private List<Product> products;
+
 	
 	
 	public Long getId() {

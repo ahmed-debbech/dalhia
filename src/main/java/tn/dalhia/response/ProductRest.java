@@ -7,7 +7,6 @@ public class ProductRest {
  	private String description;
  	private int price;
  	private int quantity;
-
 	public String getTitle() {
 		return title;
 	}

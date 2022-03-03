@@ -27,8 +27,6 @@ import tn.dalhia.services.UserService;
 import tn.dalhia.shared.dto.UserDto;
 
 
-
-
 @RestController
 @RequestMapping("users")
 @Api(tags ="Gestion des users")
@@ -87,7 +85,7 @@ public class UserController {
 		
 		return returnValue;
 	}
-	
+
 	@GetMapping(path="/email-verification")
 
 public OperationStatusModel verifyEmailToken(@RequestParam(value="token") String token) {

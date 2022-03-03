@@ -20,12 +20,12 @@ import tn.dalhia.entities.PasswordResetTokenEntity;
 import tn.dalhia.entities.User;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.PasswordResetTokenRepository;
+
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.services.UserService;
 import tn.dalhia.shared.dto.UserDto;
 import tn.dalhia.shared.dto.Utils;
-
 
 
 
@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService {
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPaswword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(publicUserId));
-		
 		User storedUserDetails =userRepo.save(userEntity);
 		
 		UserDto returnValue = new UserDto();
@@ -104,6 +103,7 @@ public class UserServiceImpl implements UserService {
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(userEntity,returnValue);
 		return returnValue;
+
 	}
 
 	@Override
@@ -133,7 +133,6 @@ public class UserServiceImpl implements UserService {
 			userEntity.setDate_birth(userDto.getDate_birth());
 			userEntity.setZipCode(userDto.getZipCode());
 			User updatedUserDetails = userRepo.save(userEntity);
-		
 		BeanUtils.copyProperties(updatedUserDetails,returnValue);
 		return returnValue;
 	}

@@ -19,8 +19,18 @@ import javax.persistence.OneToOne;
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import tn.dalhia.entities.enumerations.Job;
+import tn.dalhia.entities.enumerations.ReportCategory;
+import tn.dalhia.entities.enumerations.Role;
+import tn.dalhia.entities.enumerations.Speciality;
 
+@Getter
+@Setter
 @Entity
+@ToString
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -46,7 +56,8 @@ public class User implements Serializable {
     
     @Column(nullable=false,length=9)
     private String phone;
-    
+
+
     
     @Column(nullable=false)
     private Date date_birth;
@@ -62,21 +73,24 @@ public class User implements Serializable {
     
    
     private int zipCode;
-    
-    private LocalTime start_hour; //?? time ? e.g: 19:50
-    
-    private LocalTime end_hour; //?? time ? e.g: 19:50
-    
+    private int start_hour; //?? time ? e.g: 19:50
+    private int end_hour; //?? time ? e.g: 19:50
     @Enumerated(EnumType.STRING)
     private Job job;
     
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
-    
+
     @Column(nullable=false)
 	private String encryptedPaswword;
 
-    
+
+
+    @Enumerated(EnumType.STRING)
+    private ReportCategory activity;
+    private boolean ban;
+
+
     @Column(nullable=false)
 	private Boolean emailVerificationStatus = false;
 	private String emailVerificationToken;
@@ -106,8 +120,7 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Request> requests;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
-    //private List<Review> reviews; // ?? to ask
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Report> reports;
@@ -117,6 +130,8 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Participation> participations;
+
+
 
     @OneToMany(mappedBy = "user")
     private List<Certificate> certificates;
@@ -198,21 +213,25 @@ public class User implements Serializable {
 		this.zipCode = zipCode;
 	}
 
-	public LocalTime getStart_hour() {
+
+
+	public int getStart_hour() {
 		return start_hour;
 	}
 
-	public void setStart_hour(LocalTime start_hour) {
+	public void setStart_hour(int start_hour) {
 		this.start_hour = start_hour;
 	}
 
-	public LocalTime getEnd_hour() {
+	public int getEnd_hour() {
 		return end_hour;
 	}
 
-	public void setEnd_hour(LocalTime end_hour) {
+	public void setEnd_hour(int end_hour) {
 		this.end_hour = end_hour;
 	}
+
+
 	public Boolean getEmailVerificationStatus() {
 		return emailVerificationStatus;
 	}
@@ -370,7 +389,7 @@ public class User implements Serializable {
 		this.encryptedPaswword = encryptedPaswword;
 	}
 
-	
+
 
 
 }

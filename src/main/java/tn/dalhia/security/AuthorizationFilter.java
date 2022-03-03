@@ -59,7 +59,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter{
 			UserService userService = (UserService)SpringApplicationContext.getBean("userServiceImpl"); // nestaamlou springapplicationcontext bch njmou njibou userimpl bean bch njmou nkharjou user details
 			UserDto userDto = userService.getUser(user);
 			
-			if (user!=null ){
+			if (user!=null && userDto.getRole() == Role.ADMIN){
 				return new UsernamePasswordAuthenticationToken(user,null,new ArrayList<>());
 			}
 		}

@@ -1,7 +1,10 @@
 package tn.dalhia.entities;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> dev
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,6 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +32,7 @@ import tn.dalhia.entities.enumerations.AppReportCategory;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class AppointmentReport {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +42,6 @@ public class AppointmentReport {
     private AppReportCategory category;
 	
     private String report;
-    
     
     @JsonIgnore
     @OneToOne

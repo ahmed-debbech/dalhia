@@ -19,7 +19,7 @@ public class ReportService implements IReportService{
 	private ReportRepository rr;
 	
 	public List<Report> getAllReports() {
-		
+
 		List<Report> apps = (List<Report>) rr.findAll();
 		return apps;
 	}
@@ -65,12 +65,5 @@ public class ReportService implements IReportService{
 		rr.save(Rp);
 		log.info("end of process.");	
 	}
-
-	
-
-	
-	
-	
-	
 
 }

@@ -24,7 +24,5 @@ public interface AppointmentRepository extends CrudRepository<Appointment,Intege
 
 	@Query(value ="SELECT COUNT(appointment.app_id) FROM appointment GROUP BY appointment.user_id ORDER BY COUNT(appointment.app_id) ASC LIMIT 1",nativeQuery=true)
     public int getLeastVisitedExpertAppNbr();
-	
-	
 }
 

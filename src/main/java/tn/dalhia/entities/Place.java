@@ -1,21 +1,31 @@
 package tn.dalhia.entities;
 
+<<<<<<< HEAD
+=======
+import lombok.*;
+
+>>>>>>> dev
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalTime;
 
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String address;
-    private String phone;
-    private String email;
-    private String image;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private String city;
+    @NonNull private Long id;
+    @NonNull private String address;
+    @NonNull private String phone;
+    @NonNull private String email;
+    @NonNull private String image;
+    @NonNull private LocalTime startTime;
+    @NonNull private LocalTime endTime;
+    @NonNull private String city;
 }

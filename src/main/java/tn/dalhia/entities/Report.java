@@ -34,6 +34,8 @@ public class Report {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<User> suggestions;
     
-    
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

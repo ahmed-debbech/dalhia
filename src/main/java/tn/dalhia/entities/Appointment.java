@@ -32,6 +32,7 @@ public class Appointment {
     private AppointmentRate appointmentRate;
     
     @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
+
     private AppointmentReport appointmentReport;
 
     @ManyToOne

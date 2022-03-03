@@ -13,11 +13,9 @@ import tn.dalhia.entities.User;
 
 
 
-
 @Repository
 public interface ReviewRepository extends CrudRepository<Review,Integer> {
 
-	
 	
 	@Query(value="SELECT AVG(review.stars) FROM review JOIN user GROUP BY review.user_id ORDER BY AVG(review.stars) DESC LIMIT 1", nativeQuery= true)
 	public Float getBestExpertScore();
@@ -34,5 +32,5 @@ public interface ReviewRepository extends CrudRepository<Review,Integer> {
 	@Query(value="SELECT review.user_id FROM review JOIN user GROUP BY review.user_id ORDER BY AVG(review.stars) ASC LIMIT 1", nativeQuery= true)
 	public Long getWorstExpertId();
 	
-	
+
 }

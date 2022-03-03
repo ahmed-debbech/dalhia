@@ -28,7 +28,6 @@ public class ReviewService implements IReviewService {
 	
 	@Autowired
 	private OffensiveWordRepository offensivewordRp;
-	
 	public List<Review> getAllReviews() {
 		List<Review> rvs = (List<Review>) rvr.findAll();
 		return rvs;
@@ -37,7 +36,7 @@ public class ReviewService implements IReviewService {
 	@Override
 	public void updateReview(Review rv, int id) {
 		Review Rv = rvr.findById(id).get();
-		
+
 		String Body = rv.getReviewBody();
 		String Header = rv.getReviewHeader();
 		List<OffensiveWord> offensivewords = (List<OffensiveWord>) offensivewordRp.findAll();
@@ -51,7 +50,6 @@ public class ReviewService implements IReviewService {
 		}
 		else if (checkBody == false && checkHeader == false ) 
 		{
-		
 		Rv.setReviewHeader(rv.getReviewHeader());
 		Rv.setReviewBody(rv.getReviewBody());
 		Rv.setReviewDate(rv.getReviewDate());
@@ -64,7 +62,7 @@ public class ReviewService implements IReviewService {
 	@Override
 	public void addReview(Review rv, Long ExpertId) {
 		User user = userRepo.findById(ExpertId).get();
-		
+
 		String Body = rv.getReviewBody();
 		String Header = rv.getReviewHeader();
 		List<OffensiveWord> offensivewords = (List<OffensiveWord>) offensivewordRp.findAll();
@@ -83,7 +81,7 @@ public class ReviewService implements IReviewService {
 		rv.setReviewDate(rv.getReviewDate());
 		rv.setStars(rv.getStars());
 		rv.setUser(user);
-		
+
 		rvr.save(rv);
 		log.info("Review submitted and assigned to: "+user.getJob()+": "+user.getFirst_name()+" "+user.getLast_name()+" successfully.");
 		   }
@@ -96,7 +94,7 @@ public class ReviewService implements IReviewService {
 		
 	}
 
-	
+
 	public boolean checkBadWords(List<OffensiveWord> words, String message) 
 	{
 		
@@ -137,6 +135,5 @@ public class ReviewService implements IReviewService {
 		log.info("The Least Recommanded Expert is : "+user2.getFirst_name()+" "+user2.getLast_name()+" ,Profession: "+user2.getJob()+" ,Address: "+user2.getAddress()+" ,Phone: "+user2.getPhone()+" with a total score of: "+score2+"/5 based on "+nbr2+" reviews.");
        }
 
-	
 
 }

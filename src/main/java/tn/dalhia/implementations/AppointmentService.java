@@ -55,7 +55,7 @@ public class AppointmentService implements IAppointmentService {
 			System.out.println(mailException);
 		}
 		log.info("Appointment Mail has been sent to Expert successfully.");
-		
+
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class AppointmentService implements IAppointmentService {
 		AppRepo.deleteById(AppId);
 		
 	}
-	
+
 	
 
 }

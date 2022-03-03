@@ -29,7 +29,7 @@ public class AppointmentService implements IAppointmentService {
 		User user = userRepo.findById(ExpertId).get();
 		app.setAppHour(app.getAppHour());
 		app.setAppDate(app.getAppDate());
-		
+		//log.info(user.toString());
 		app.setUser(user);
 		AppRepo.save(app);
 		log.info("Appointment with"+user.getJob()+": "+user.getFirst_name()+" "+user.getLast_name()+" is taken successfully.");

@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.CommentReaction;
 import tn.dalhia.entities.ForumComment;
+import tn.dalhia.entities.OffensiveWord;
 import tn.dalhia.entities.Topic;
-import tn.dalhia.repositories.CommentReactionRepository;
-import tn.dalhia.repositories.ForumCommentRepository;
-import tn.dalhia.repositories.TopicClaimRepository;
-import tn.dalhia.repositories.TopicRepository;
+import tn.dalhia.repositories.*;
 import tn.dalhia.services.IForumCommentService;
+import tn.dalhia.utils.CommentUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -29,7 +28,8 @@ public class ForumCommentService implements IForumCommentService {
     private TopicRepository topicRepository;
     @Autowired
     private CommentReactionRepository commentReactionRepository;
-
+    @Autowired
+    private OffensiveWordRepository offensiveWordRepository;
 
     @Override
     public ForumComment add(ForumComment comment, Long id) {
@@ -37,8 +37,15 @@ public class ForumCommentService implements IForumCommentService {
         if(c == null){
             return null;
         }
-        comment.setBanned(false);
-        comment.setDatePublished(LocalDateTime.now());
+        if(!CommentUtils.isFine(comment.getText(), offensiveWordRepository.findAll())){
+            comment.setBanned(true);
+            LocalDateTime now = LocalDateTime.now();
+            comment.setDateRemoved(now);
+            comment.setDatePublished(now);
+        }else {
+            comment.setBanned(false);
+            comment.setDatePublished(LocalDateTime.now());
+        }
         c.getForumComments().add(comment);
         topicRepository.save(c);
         return comment;

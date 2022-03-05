@@ -2,6 +2,7 @@ package tn.dalhia.services.implementations;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -24,7 +25,7 @@ import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.services.UserService;
 import tn.dalhia.shared.dto.UserDto;
-import tn.dalhia.shared.dto.Utils;
+import tn.dalhia.shared.tools.Utils;
 
 
 
@@ -260,6 +261,16 @@ public class UserServiceImpl implements UserService {
 		passwordResetTokenRepository.delete(passwordResetTokenEntity);
 		return returnValue;
 	
+	}
+
+	@Override
+	public List<User> getUsers() {
+
+		List<User> userEntities = userRepo.findAll();
+		if (userEntities == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		
+		
+		return userEntities;
 	}
 
 }

@@ -18,7 +18,7 @@ import tn.dalhia.request.CommandRequestModel;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.services.CommandService;
 import tn.dalhia.shared.dto.CommandDto;
-import tn.dalhia.shared.dto.Utils;
+import tn.dalhia.shared.tools.Utils;
 
 @Service
 public class CommandServiceImpl implements CommandService{

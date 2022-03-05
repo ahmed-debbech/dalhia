@@ -12,6 +12,8 @@ public class SecurityConstants {
 	public static final String HELLO = "/users/hello" ;
 	public static final String PASSWORD_RESET_REQUEST_URL = "/users/password-reset-request" ;
 	public static final String PASSWORD_RESET_URL = "/users/password-reset" ;
+	public static final String EXPORT_PDF = "/users/get-users-pdf" ;
+
 	
 	public static String getTokenSecret() {
 		AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("AppProperties"); //bch njmou naccediw l component tant que manech autowirdiw 

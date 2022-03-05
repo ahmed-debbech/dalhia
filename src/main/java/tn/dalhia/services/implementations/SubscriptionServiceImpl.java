@@ -19,7 +19,7 @@ import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.response.RequestOperationStatus;
 import tn.dalhia.services.SubscriptionService;
 import tn.dalhia.shared.dto.SubscriptionDto;
-import tn.dalhia.shared.dto.Utils;
+import tn.dalhia.shared.tools.Utils;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService  {

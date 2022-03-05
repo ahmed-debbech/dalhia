@@ -1,4 +1,4 @@
-package tn.dalhia.shared.dto;
+package tn.dalhia.shared.tools;
 
 import java.security.SecureRandom;
 import java.util.Date;

@@ -11,7 +11,7 @@ import tn.dalhia.request.ProductRequestModel;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.services.ProductService;
 import tn.dalhia.shared.dto.ProductDto;
-import tn.dalhia.shared.dto.Utils;
+import tn.dalhia.shared.tools.Utils;
 
 @Service
 public class ProductServiceImpl implements ProductService{

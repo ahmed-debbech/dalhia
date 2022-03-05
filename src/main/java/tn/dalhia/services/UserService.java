@@ -1,11 +1,13 @@
 package tn.dalhia.services;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.mail.MessagingException;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import tn.dalhia.entities.User;
 import tn.dalhia.shared.dto.UserDto;
 
 public interface UserService extends UserDetailsService  {
@@ -19,4 +21,5 @@ public interface UserService extends UserDetailsService  {
 	boolean resetPasswordMail(String firstName, String email, String token)
 			throws UnsupportedEncodingException, MessagingException;
 	boolean resetPassword(String token, String password);
+	List<User> getUsers();
 }

@@ -14,7 +14,6 @@ import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfGState;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -81,9 +80,7 @@ public class UserPDFExporter {
 		
 		String imageSrc = "ImagePdf/Logo_ESPRIT_Ariana.jpg";
 		String imageSrc2 = "ImagePdf/dalhia.png";
-//		ImageData data = ImageDataFactory.create(imageSrc);
-//		Image image1 = new Image(data);
-//		HeaderFooter footer = image1;
+
 		
 		
 		
@@ -101,7 +98,6 @@ public class UserPDFExporter {
 	
 		dalhia.scalePercent(50);
 		dalhia.setAbsolutePosition(120, 300);
-		dalhia.setTransparency(new int[] { 10, 10 });
        
         document.add(dalhia);
 		

@@ -2,10 +2,19 @@ package tn.dalhia.services.implementations;
 
 
 
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 
 import tn.dalhia.entities.Plan;
 import tn.dalhia.entities.Subscription;
@@ -102,6 +111,39 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 			userRepo.save(user);
 		}
 		
+		
+	}
+
+	@Override
+	@Scheduled(cron = "0 1 0 * * * ") //kolyoum maa nos lil o d9i9a
+	public void checkSubscription() throws ParseException {
+		List<Subscription> subs = subscriptionRepo.findAll();
+		
+		
+		Date today = new Date();
+		Calendar earlier = Calendar.getInstance();
+	    Calendar later = Calendar.getInstance();
+	    later.setTime(today);
+	
+		for(Subscription sub : subs) {
+			earlier.setTime(sub.getDate_fin());
+			int tempDifference = earlier.get(Calendar.DAY_OF_YEAR) - later.get(Calendar.DAY_OF_YEAR);
+			if(tempDifference<=7) {
+				
+				final String ACCOUNT_SID ="AC228e60b8a2ebb67be77e99883a9ce3fa";
+			    final String AUTH_TOKEN = "40e87a192b2f6779dbd40fcc49bace35";
+				
+				  Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+			        Message message = Message.creator(
+			                new com.twilio.type.PhoneNumber("+21654649865"), //to
+			                new com.twilio.type.PhoneNumber("+16812525336"), //from
+			                "Our Dear client your subscription in our website is about to be expired")
+			            .create();
+
+			        System.out.println(message.getBody());
+			}
+			
+		}
 		
 	}
 

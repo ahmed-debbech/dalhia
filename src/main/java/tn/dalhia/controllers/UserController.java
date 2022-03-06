@@ -178,12 +178,6 @@ public class UserController {
 		UserPDFExporter exporter = new UserPDFExporter(users);
 		exporter.export(response);
 
-//		for(UserDto userDto : users) {
-//			BeanUtils.copyProperties(userDto,returnValue);
-//		}
-
-		
-		
 
 	}
 }

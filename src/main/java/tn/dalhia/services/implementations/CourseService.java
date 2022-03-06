@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Course;
+import tn.dalhia.entities.CourseCategory;
+import tn.dalhia.repositories.CourseCategoryRepository;
 import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.services.ICourseService;
 
@@ -16,6 +18,8 @@ public class CourseService implements ICourseService {
 
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    CourseCategoryRepository courseCategoryRepository;
 
     @Override
     public List<Course> getAll(){
@@ -23,10 +27,15 @@ public class CourseService implements ICourseService {
     }
 
     @Override
-    public Course add(Course course){
+    public Course add(Course course, Long id){
+        CourseCategory cc = courseCategoryRepository.findById(id).orElse(null);
+        if(cc==null)
+            return null;
         course.setDateAdded(LocalDateTime.now());
         course.setDatePublished(LocalDateTime.now());
-        return courseRepository.save(course);
+        cc.getCourseList().add(course);
+        courseCategoryRepository.save(cc);
+        return course;
     }
 
     @Override

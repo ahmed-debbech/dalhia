@@ -33,9 +33,9 @@ public class CourseController {
                 courseService.getAll()
         );
     }
-    @PostMapping("/add")
-    public ResponseEntity<Course> add(@RequestBody Course course){
-        Course c = courseService.add(course);
+    @PostMapping("/{idCourse}/add")
+    public ResponseEntity<Course> add(@RequestBody Course course, @PathVariable("idCourse") Long id){
+        Course c = courseService.add(course,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 c
         );

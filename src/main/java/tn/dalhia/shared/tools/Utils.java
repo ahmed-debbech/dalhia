@@ -6,6 +6,9 @@ import java.util.Random;
 
 import org.springframework.stereotype.Component;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -51,11 +54,19 @@ public class Utils {
 		Date todayDate = new Date();
 		return tokenExpirationDate.before(todayDate);
 	}
+	
+	public static boolean hastokenExpired2(String token) {
+		DecodedJWT jwt = JWT.decode(token);
+		if( jwt.getExpiresAt().before(new Date())) {
+		    return true;
+		}
+		return false;
+	}
 
 	public String generateEmailVerificationToken(String publicUserId) {
 		String token = Jwts.builder()
 				.setSubject(publicUserId)
-				.setExpiration(new Date(System.currentTimeMillis()+ SecurityConstants.EXPIRATION_TIME))
+				.setExpiration(new Date(System.currentTimeMillis()+ SecurityConstants.EXPIRATION_TIME_EMAIL))
 				.signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
 
 		return token;

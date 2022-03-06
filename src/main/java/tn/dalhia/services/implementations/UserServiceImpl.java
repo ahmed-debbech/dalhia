@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -232,7 +233,9 @@ public class UserServiceImpl implements UserService {
 	public boolean resetPassword(String token, String password) {
 		boolean returnValue = false;
 		
-		if(Utils.hastokenExpired(token)){
+		if(Utils.hastokenExpired2(token)){
+			PasswordResetTokenEntity passwordResetTokenEntity =passwordResetTokenRepository.findByToken(token);
+			passwordResetTokenRepository.delete(passwordResetTokenEntity);
 			return returnValue;
 		}
 		
@@ -270,5 +273,23 @@ public class UserServiceImpl implements UserService {
 		
 		
 		return userEntities;
+	}
+
+	@Override
+	//@Scheduled(fixedRate = 60000/60)
+	public void checktokenExpiration() throws UnsupportedEncodingException, MessagingException {
+		List<User> userEntities = userRepo.findAll();
+		
+		for(User user : userEntities ) {
+		if(Utils.hastokenExpired2(user.getEmailVerificationToken())){
+			user.setEmailVerificationToken(utils.generateEmailVerificationToken(user.getUserId()));
+			User updatedUserDetails = userRepo.save(user);
+			
+			UserDto returnValue = new UserDto();
+			BeanUtils.copyProperties(updatedUserDetails,returnValue);
+			
+			sendVerificationEmail(returnValue);
+		}
+		}
 	}
 }

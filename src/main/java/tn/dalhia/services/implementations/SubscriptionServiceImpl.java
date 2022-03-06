@@ -115,7 +115,7 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 	}
 
 	@Override
-	@Scheduled(cron = "0 1 0 * * * ") //kolyoum maa nos lil o d9i9a
+	//@Scheduled(cron = "0 1 0 * * * ") //kolyoum maa nos lil o d9i9a
 	public void checkSubscription() throws ParseException {
 		List<Subscription> subs = subscriptionRepo.findAll();
 		

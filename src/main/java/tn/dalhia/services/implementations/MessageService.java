@@ -1,5 +1,6 @@
 package tn.dalhia.services.implementations;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@AllArgsConstructor
 @Slf4j
 public class MessageService implements IMessageService {
 
@@ -36,13 +38,9 @@ public class MessageService implements IMessageService {
     @Autowired
     private ChannelRepository channelRepository;
 
-    private final SimpMessagingTemplate simpMessagingTemplate;
-    //repo of user
-
     @Autowired
-    public MessageService(SimpMessagingTemplate messagingTemplate) {
-        this.simpMessagingTemplate = messagingTemplate;
-    }
+    private SimpMessagingTemplate simpMessagingTemplate;
+    //repo of user
 
     @Override
     public List<Message> getAllFromChannel(Long id_channel) {
@@ -69,7 +67,7 @@ public class MessageService implements IMessageService {
     @Override
     public void postNewMessageViaWebSocket(Message message) {
         System.err.println(message.toString());
-        this.simpMessagingTemplate.convertAndSend("/main/g", message);
+        this.simpMessagingTemplate.convertAndSend("/main", message);
     }
 
     @Override

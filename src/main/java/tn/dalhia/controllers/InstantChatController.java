@@ -9,9 +9,16 @@ import tn.dalhia.entities.Message;
 @Controller
 public class InstantChatController {
 
-    @MessageMapping("/g")
-    @SendTo("/general")
+    @MessageMapping("/hello")
+    @SendTo("/ws")
     public Message broadcastNews(@Payload Message message) {
+        try {
+            Thread.sleep(1000); // simulated delay
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.err.println("ghghghghhghghghg");
+        System.err.println(message.toString());
         return message;
     }
 }

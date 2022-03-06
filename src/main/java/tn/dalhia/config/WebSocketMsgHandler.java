@@ -10,6 +10,6 @@ public class WebSocketMsgHandler extends TextWebSocketHandler {
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String request = message.getPayload();
 
-        session.sendMessage(new TextMessage("hello"));
+        session.sendMessage(new TextMessage(request));
     }
 }

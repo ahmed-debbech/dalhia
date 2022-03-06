@@ -16,9 +16,9 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NonNull private String title;
-    @NonNull private LocalDateTime dateAdded;
-    @NonNull private LocalDateTime dateRemoved;
+    private String title;
+    private LocalDateTime dateAdded;
+    private LocalDateTime dateRemoved;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;

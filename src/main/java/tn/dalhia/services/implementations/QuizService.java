@@ -52,10 +52,12 @@ public class QuizService implements IQuizService {
         quiz.setDateAdded(LocalDateTime.now());
         phase.getQuiz().add(quiz);
         c.getPhases().add(phase);
+        c.setNbrPhases(c.getNbrPhases()+1);
         courseRepository.save(c);
 
         return quiz;
     }
+
 
     @Override
     public Quiz modify(Quiz quiz , Long id){

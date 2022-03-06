@@ -36,10 +36,12 @@ public class QuestionService implements IQuestionService {
         Quiz q = quizRepository.findById(id).orElse(null);
         if (q == null)
             return null;
-
-        q.getQuestions().add(question);
-        quizRepository.save(q);
-        return question;
+        if (q.getQuestions().size() < 10) {
+            q.getQuestions().add(question);
+            quizRepository.save(q);
+            return question;
+        }
+        return null;
     }
 
     @Override

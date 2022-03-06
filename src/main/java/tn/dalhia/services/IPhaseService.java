@@ -11,5 +11,5 @@ public interface IPhaseService {
     Phase modify(Phase phase, Long id);
     Phase get(Long id);
     List<Phase> getAllByCourse (Long id);
-    boolean delete(Long id, Long idCourse);
+    Boolean delete(Long id, Long idCourse);
 }

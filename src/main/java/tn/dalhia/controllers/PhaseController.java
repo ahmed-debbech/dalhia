@@ -66,7 +66,7 @@ public class PhaseController {
         );
     }
 
-    @DeleteMapping("/{id}/{idCourse}")
+    @DeleteMapping("/{idCourse}/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id,@PathVariable("idCourse") Long idCourse ){
         boolean b = phaseService.delete(id,idCourse);
         if(!b){

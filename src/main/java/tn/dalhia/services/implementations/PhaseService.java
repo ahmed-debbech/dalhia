@@ -61,7 +61,7 @@ public class PhaseService implements IPhaseService {
     }
 
     @Override
-    public  boolean delete(Long id, Long idCourse){
+    public  Boolean delete(Long id, Long idCourse){
         Phase ph = phaseRepository.findById(id).orElse(null);
         Course c = courseRepository.findById(idCourse).orElse(null);
 

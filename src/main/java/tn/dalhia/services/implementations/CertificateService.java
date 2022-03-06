@@ -32,65 +32,70 @@ public class CertificateService implements ICertificateService {
         return certificateRepository.findAll();
     }
 
-    /*@Override
-    public Certificate add(Certificate certificate , Long courseId, Quiz quizUser , Long idQuiz){
+    @Override
+    public Certificate add(Long courseId, Quiz quizUser , Long idQuiz){
         Course cc = courseRepository.findById(courseId).orElse(null);
-        Quiz q = quizRepository.findById(idQuiz).orElse(null);
+        Quiz quizC = quizRepository.findById(idQuiz).orElse(null); //correction
+        //Quiz quizU = quizRepository.findById(idQuizUser).orElse(null); //reponse user
         boolean resC = true, resU=true;
         int note=0;
+        int i=0,j=0;
+        Certificate certificate = new Certificate();
         if(cc != null) {
             if(cc.getPrice()==0){
                 certificate.setCertificateType(CertificateType.HOBBY);
             } else {
-                for (Question question : q.getQuestions()){
+                for (Question question : quizC.getQuestions()){
+                    System.err.println("ons1");
                     for(Answer answer : question.getAnswers()){
-                        resC = answer.getCorrect();
-
+                        resC = answer.getCorrect(); //response correct d'une question
+                        System.err.println("ons2");
                         for (Question questionUser : quizUser.getQuestions()) {
-                            for (Answer answerUser : questionUser.getAnswers()) {
-                                resU = answerUser.getCorrect();
+                            System.err.println("ons3");
+                            if (question.getText().equals(questionUser.getText())){ //mouch 9a3ed yodkhol li houni
+                                System.err.println("ons4");
+                                for (Answer answerUser : questionUser.getAnswers()) {
+                                    System.err.println("ons5");
+                                    if (answer.getProposition().equals(answerUser.getProposition())){
+                                        resU = answerUser.getCorrect();
+                                        if(resU == resC){
+                                            note += 1;
+                                            System.err.println(note);
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
                             }
                         }
                     }
                 }
 
-                if (resC == resU){
-                    note = note + 2;
-                }
-                if (note > 15){
+                if (note >= 2){
                     certificate.setCertificateType(CertificateType.PROFESSIONAL);
                 }else {
-                    return null;
+                    return null; // manja7ch
                 }
             }
             certificate.setTitle(cc.getName());
             certificate.setDateAffection(LocalDateTime.now());
             certificate.setDateAdded(LocalDateTime.now());
             certificate.setCourse(cc);
+            this.generateQR(certificate);
             return certificateRepository.save(certificate);
         }
         return null;
-    }*/
-    @Override
-    public Certificate add(Long id){
-        Course c = courseRepository.findById(id).orElse(null);
+    }
+    private void generateQR(Certificate certificate){
         String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/QRCode.png";
-        if (c==null)
-            return null;
 
-        String qrText= c.getName(); //el donnée elli bech ykoun fi tkhalbiza ta3 el QR
+        String qrText= certificate.getTitle(); //el donnée elli bech ykoun fi tkhalbiza ta3 el QR
         try {
             // Generate and Save Qr Code Image in static/image folder
             QRCodeGenerator.generateQRCodeImage(qrText,250,250,QR_CODE_IMAGE_PATH);
         } catch (WriterException | IOException e) {
             e.printStackTrace();
         }
-        Certificate certificate = new Certificate();
-        certificate.setTitle(c.getName());
-        certificate.setDateAffection(LocalDateTime.now());
-        certificate.setDateAdded(LocalDateTime.now());
-        certificate.setCourse(c);
-        return certificateRepository.save(certificate);
     }
 
     @Override

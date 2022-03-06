@@ -30,14 +30,17 @@ public class ApplicationController {
 	}
 
 	// http://localhost:8089/SpringMVC/offer/retrieve-offer/8
-	@GetMapping("/retrieve-offer/{app-id}")
+	@GetMapping("/retrieve-application/{app-id}")
 	public Application retrieveApplication(@PathVariable("app-id") Long id) {
 	return applicationService.retrieveApplication(id);
 	}
 	
-	@PostMapping("/add-application")
-	public Application addApplication (@RequestBody Application c) {
-	return applicationService.addApplication(c);
+	@PostMapping("/add-application/{offer-id}/{user-id}")
+	public boolean addApplication (@PathVariable("offer-id") int Offer_id,@PathVariable("user-id") int user_id,@RequestBody Application c) {
+		Application ap1 = applicationService.addApplication(c);
+		applicationService.affecterApplicationAOffer(Offer_id,ap1.getId().intValue());
+		applicationService.affecterApplicationAUser(user_id,ap1.getId().intValue());
+		return true;
 	}
 
 	// http://localhost:8089/SpringMVC/Offer/remove-Offer/{Offer-id}
@@ -50,5 +53,23 @@ public class ApplicationController {
 	@PutMapping("/modify-application")
 	public Application modifyApplication(@RequestBody Application app) {
 	return applicationService.updateApplication(app);
+	}
+
+	@GetMapping("/applications/{user-id}")
+	public List<Application> getApplications(@PathVariable("user-id") Long userid) {
+		List<Application> listApplications = applicationService.AllApplicationSend(userid);
+		return listApplications;
+	}
+
+	@GetMapping("/applicationsAvailable/{user-id}")
+	public List<Application> getApplicationsAvailable(@PathVariable("user-id") Long userid) {
+		List<Application> listApplications = applicationService.findAvailableApplications(userid);
+		return listApplications;
+	}
+
+	@GetMapping("/applicationsNotAvailable/{user-id}")
+	public List<Application> getApplicationsNotAvailable(@PathVariable("user-id") Long userid) {
+		List<Application> listApplications = applicationService.findNotAvailableApplications(userid);
+		return listApplications;
 	}
 }

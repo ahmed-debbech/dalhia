@@ -7,29 +7,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
-
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Application implements Serializable {
+@Table(name = "category")
+public class JobCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-
-    private String title;
-    private Date date;
-	private boolean etat;
+    private String nom;
     @JsonIgnore
-	@ManyToOne
-    @JoinTable(name = "offer_application",
-            joinColumns = @JoinColumn(name = "application_id"),
-            inverseJoinColumns = @JoinColumn(name = "offer_id"))
-	Offer offer;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="jobCategory")
+    private List<Offer> offers= new ArrayList<>();;
 
 }

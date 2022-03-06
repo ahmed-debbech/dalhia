@@ -38,9 +38,12 @@ public class OfferController {
 	return offerService.retrieveOffer(id);
 	}
 	
-	@PostMapping("/add-offer")
-	public Offer addOffer (@RequestBody Offer c) {
-	return offerService.addOffer(c);
+	@PostMapping("/add-offer/{category-id}")
+	public Offer addOffer (@PathVariable("category-id") Long idCategory,@RequestBody Offer c)
+	{
+		Offer offer =offerService.addOffer(c);
+		offerService.affecterOfferACategory(offer.getId(), idCategory);
+	return offer ;
 	}
 
 	// http://localhost:8089/api/v1/Offer/remove-Offer/{Offer-id}
@@ -54,4 +57,17 @@ public class OfferController {
 	public Offer modifyOffer(@RequestBody Offer offer) {
 	return offerService.updateOffer(offer);
 	}
+
+
+	// http://localhost:8089/api/v1/offer/retrieve-all-offers
+	@GetMapping("/recommandation/{user-id}")
+	public List<Offer> getRecommandation(@PathVariable("user-id") Long userid) {
+		List<Offer> listOffers = offerService.recommandations(userid);
+		return listOffers;
+	}
+
+
+
+
 }
+

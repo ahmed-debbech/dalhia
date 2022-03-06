@@ -1,5 +1,9 @@
 package tn.dalhia.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
@@ -8,7 +12,10 @@ import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class User {
     @Id
@@ -73,6 +80,9 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Review> reviews;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Application> applications;
 
 
 }

@@ -8,6 +8,7 @@ import tn.dalhia.entities.Offer;
 public interface IOfferService {
 	
 	List<Offer> retrieveAllOffers();
+	List<Offer> recommandations(Long userid);
 
 	Offer addOffer(Offer c);
 
@@ -17,6 +18,8 @@ public interface IOfferService {
 
 	
 	Offer retrieveOffer(Long id);
+
+    void affecterOfferACategory(Long idOffer, Long idCategory);
 /*
 	List<Offer> retrieveAllOffersByBirthSQL(Date date1, Date date2);
 

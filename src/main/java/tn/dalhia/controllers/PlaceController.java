@@ -27,9 +27,9 @@ public class PlaceController {
                 placeService.getAll()
         );
     }
-    @PostMapping("/add")
-    public ResponseEntity<Place> add(@RequestBody Place place){
-        Place p = placeService.add(place);
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Place> add(@RequestBody Place place , @PathVariable Long id){
+        Place p = placeService.add(place,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 p
         );

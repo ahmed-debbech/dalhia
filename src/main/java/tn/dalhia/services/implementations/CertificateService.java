@@ -36,7 +36,6 @@ public class CertificateService implements ICertificateService {
     public Certificate add(Long courseId, Quiz quizUser , Long idQuiz){
         Course cc = courseRepository.findById(courseId).orElse(null);
         Quiz quizC = quizRepository.findById(idQuiz).orElse(null); //correction
-        //Quiz quizU = quizRepository.findById(idQuizUser).orElse(null); //reponse user
         boolean resC = true, resU=true;
         int note=0;
         int i=0,j=0;
@@ -46,16 +45,11 @@ public class CertificateService implements ICertificateService {
                 certificate.setCertificateType(CertificateType.HOBBY);
             } else {
                 for (Question question : quizC.getQuestions()){
-                    System.err.println("ons1");
                     for(Answer answer : question.getAnswers()){
                         resC = answer.getCorrect(); //response correct d'une question
-                        System.err.println("ons2");
                         for (Question questionUser : quizUser.getQuestions()) {
-                            System.err.println("ons3");
-                            if (question.getText().equals(questionUser.getText())){ //mouch 9a3ed yodkhol li houni
-                                System.err.println("ons4");
+                            if (question.getText().equals(questionUser.getText())){
                                 for (Answer answerUser : questionUser.getAnswers()) {
-                                    System.err.println("ons5");
                                     if (answer.getProposition().equals(answerUser.getProposition())){
                                         resU = answerUser.getCorrect();
                                         if(resU == resC){
@@ -71,7 +65,7 @@ public class CertificateService implements ICertificateService {
                     }
                 }
 
-                if (note >= 2){
+                if (note >= 30){
                     certificate.setCertificateType(CertificateType.PROFESSIONAL);
                 }else {
                     return null; // manja7ch

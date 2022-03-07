@@ -24,12 +24,18 @@ public class Application implements Serializable {
 
     private String title;
     private Date date;
-	private boolean etat;
+    private boolean etat;
     @JsonIgnore
-	@ManyToOne
+    @ManyToOne
     @JoinTable(name = "offer_application",
             joinColumns = @JoinColumn(name = "application_id"),
             inverseJoinColumns = @JoinColumn(name = "offer_id"))
-	Offer offer;
+    Offer offer;
 
+    public Application (String title , Date date , boolean etat , String email){
+        this.title=title;
+        this.etat=etat;
+        this.date=date;
+        this.email=email;
+    }
 }

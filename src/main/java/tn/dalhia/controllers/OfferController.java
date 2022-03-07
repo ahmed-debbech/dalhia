@@ -42,34 +42,34 @@ public class OfferController{
 	// http://localhost:8089/api/v1/offer/retrieve-all-offers
 	@GetMapping("/retrieve-all-offers")
 	public List<Offer> getOffers() {
-	List<Offer> listOffers = offerService.retrieveAllOffers();
-	return listOffers;
+		List<Offer> listOffers = offerService.retrieveAllOffers();
+		return listOffers;
 	}
 
 	// http://localhost:8089/api/v1/offer/retrieve-offer/8
 	@GetMapping("/retrieve-offer/{offer-id}")
 	public Offer retrieveOffer(@PathVariable("offer-id") Long id) {
-	return offerService.retrieveOffer(id);
+		return offerService.retrieveOffer(id);
 	}
-	
+
 	@PostMapping("/add-offer/{category-id}")
 	public Offer addOffer (@PathVariable("category-id") Long idCategory,@RequestBody Offer c)
 	{
 		Offer offer =offerService.addOffer(c);
 		offerService.affecterOfferACategory(offer.getId(), idCategory);
-	return offer ;
+		return offer ;
 	}
 
 	// http://localhost:8089/api/v1/Offer/remove-Offer/{Offer-id}
 	@DeleteMapping("/remove-offer/{offer-id}")
 	public void removeOffer(@PathVariable("offer-id") Long id) {
-	offerService.deleteOffer(id);
+		offerService.deleteOffer(id);
 	}
 
 	// http://localhost:8089/api/v1/offer/modify-offer
 	@PutMapping("/modify-offer")
 	public Offer modifyOffer(@RequestBody Offer offer) {
-	return offerService.updateOffer(offer);
+		return offerService.updateOffer(offer);
 	}
 
 
@@ -84,7 +84,7 @@ public class OfferController{
 	@PostMapping("/searchOffer/{user_id}/{search_text}")
 	public List<Offer> searchOffer (@PathVariable("search_text") String search_text,
 									@PathVariable("user_id") int userId) {
-
+		System.out.println(new Date());
 		List<Offer> listOffers = offerService.searchOffer(search_text);
 		User userEntity = userRepo.findById((long) userId).get();
 
@@ -118,27 +118,16 @@ public class OfferController{
 					matchingObject.get().getDate());
 			historyService.updateHistory(historyUpdated);
 
-			}
-			/*listHistory.forEach(l -> {
-				System.out.println("-"+l.getName());
-				if (l.getName().equalsIgnoreCase(search_text) ) {
-					System.out.println("+"+l.getName());
-					int count = l.getNb() + 1;
-					HistoryOffer historyUpdated = new HistoryOffer(l.getId(), count, l.getName(),l.getDate());
-					historyService.updateHistory(historyUpdated);
-
-				} else {
-					Date date = new Date();
-					HistoryOffer h = new HistoryOffer(search_text, date, 0);
-					HistoryOffer history = historyService.addHistory(h);
-					offerService.affecterHistoryAUser(userId, history.getId().intValue());
-				}
-			});*/
-
+		}
 
 		return listOffers;
 	}
 
-
+	// http://localhost:8089/api/v1/offer/retrieve-all-offers
+	@GetMapping("/recommandationHistory/{user-id}")
+	public List<Offer> getRecommandationHistory(@PathVariable("user-id") Long userid) {
+		List<Offer> listOffers = offerService.recommandationsHistory(userid);
+		return listOffers;
+	}
 }
 

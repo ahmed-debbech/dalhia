@@ -1,6 +1,7 @@
 package tn.dalhia.services.implementations;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,15 +56,18 @@ public class ApplicationService implements IApplicationService {
 	}
 
 	public Application addApplication(Application c) {
-		return applicationRepo.save(c);
+
+		Application a = new Application(c.getTitle(),new Date(), true, c.getEmail());
+		return applicationRepo.save(a);
 	}
 
 	public void deleteApplication(Long id) {
 		applicationRepo.deleteById(id);
-		
+
 	}
 
 	public Application updateApplication(Application c) {
+
 		return applicationRepo.save(c);
 	}
 

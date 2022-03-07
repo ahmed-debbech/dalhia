@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.dalhia.entities.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -19,7 +20,8 @@ public interface OfferRepository extends CrudRepository<Offer, Long> {
 
     @Query("SELECT o FROM Offer o "
             + "WHERE lower(o.title) like lower(:searchText) "
-            + "OR lower(o.description) like lower(:searchText)  ")
-            public List<Offer> searchOfferByText(@Param("searchText") String searchText);
+            + "OR lower(o.description) like lower(:searchText) AND o.startDate > :CURRENT_DATE ")
+    public List<Offer> searchOfferByText(@Param("searchText") String searchText,
+                                         @Param("CURRENT_DATE") Date CURRENT_DATE);
 
 }

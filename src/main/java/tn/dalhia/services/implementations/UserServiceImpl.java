@@ -9,6 +9,9 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,10 +22,12 @@ import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.PasswordResetTokenEntity;
 import tn.dalhia.entities.User;
+import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.PasswordResetTokenRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.response.ErrorMessages;
+import tn.dalhia.response.UserRest;
 import tn.dalhia.services.UserService;
 import tn.dalhia.shared.dto.UserDto;
 import tn.dalhia.shared.tools.Utils;
@@ -62,6 +67,7 @@ public class UserServiceImpl implements UserService {
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPaswword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(publicUserId));
+		userEntity.setRole(Role.WOMAN);
 		
 		User storedUserDetails =userRepo.save(userEntity);
 		
@@ -233,13 +239,13 @@ public class UserServiceImpl implements UserService {
 	public boolean resetPassword(String token, String password) {
 		boolean returnValue = false;
 		
+		PasswordResetTokenEntity passwordResetTokenEntity =passwordResetTokenRepository.findByToken(token);
 		if(Utils.hastokenExpired2(token)){
-			PasswordResetTokenEntity passwordResetTokenEntity =passwordResetTokenRepository.findByToken(token);
 			passwordResetTokenRepository.delete(passwordResetTokenEntity);
 			return returnValue;
 		}
 		
-		PasswordResetTokenEntity passwordResetTokenEntity =passwordResetTokenRepository.findByToken(token);
+		
 		
 		if(passwordResetTokenEntity==null){
 			return returnValue;
@@ -291,5 +297,24 @@ public class UserServiceImpl implements UserService {
 			sendVerificationEmail(returnValue);
 		}
 		}
+	}
+
+	@Override
+	public List<UserDto> getUsersPagination(int page, int limit) {
+		List<UserDto> returnValue = new ArrayList<>();
+		
+		if(page>0) page = page-1;
+		
+		Pageable pageableRequest = PageRequest.of(page, limit);
+		Page<User>  usersPage= userRepo.findAll(pageableRequest);
+		
+		List<User> users = usersPage.getContent();
+		
+		for (User user : users) {
+			 UserDto userDto = new UserDto();
+			 BeanUtils.copyProperties(user, userDto);
+			 returnValue.add(userDto);
+		}
+		return returnValue;
 	}
 }

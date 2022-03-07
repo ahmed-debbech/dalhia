@@ -1,6 +1,10 @@
 package tn.dalhia.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -53,6 +58,21 @@ public class CommandController {
 		
 		return returnValue;
 	}
+	
+	@GetMapping("/get-commands-pagination")
+	public List<CommandRest> getCommands(@RequestParam(value="page",defaultValue="0") int page ,
+			@RequestParam(value="limit",defaultValue="3") int limit) {
+		List<CommandRest> returnValue = new ArrayList<>();
+		 List<CommandDto> commands = commandService.getCommandsPagination(page,limit);
+		 
+		 for(CommandDto commandDto : commands) {
+			 CommandRest commandModel = new CommandRest();
+			 BeanUtils.copyProperties(commandDto, commandModel);
+			 returnValue.add(commandModel);
+		 }
+		return returnValue;
+	}
+	
 	@DeleteMapping("/{id}")
 	public OperationStatusModel deleteCommand(@PathVariable String id) {
 		OperationStatusModel returnValue = new OperationStatusModel();

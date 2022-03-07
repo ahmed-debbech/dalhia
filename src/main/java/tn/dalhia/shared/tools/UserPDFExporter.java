@@ -79,7 +79,7 @@ public class UserPDFExporter {
 		Document document = new Document(PageSize.A4);
 		
 		String imageSrc = "ImagePdf/Logo_ESPRIT_Ariana.jpg";
-		String imageSrc2 = "ImagePdf/dalhia.png";
+		String imageSrc2 = "ImagePdf/dalhia4.png";
 
 		
 		

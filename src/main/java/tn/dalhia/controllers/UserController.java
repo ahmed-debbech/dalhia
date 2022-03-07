@@ -3,6 +3,7 @@ package tn.dalhia.controllers;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -179,5 +180,20 @@ public class UserController {
 		exporter.export(response);
 
 
+	}
+	
+	@GetMapping(path="/get-users-pagination")
+	public List<UserRest> getUsersPagination(@RequestParam(value="page",defaultValue="0") int page ,
+			@RequestParam(value="limit",defaultValue="3") int limit)
+	{
+		List<UserRest> returnValue = new ArrayList<>();
+		 List<UserDto> users = userService.getUsersPagination(page,limit);
+		 
+		 for(UserDto userDto : users) {
+			 UserRest userModel = new UserRest();
+			 BeanUtils.copyProperties(userDto, userModel);
+			 returnValue.add(userModel);
+		 }
+		return returnValue;
 	}
 }

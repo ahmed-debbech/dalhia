@@ -23,5 +23,6 @@ public interface UserService extends UserDetailsService  {
 	boolean resetPassword(String token, String password);
 	List<User> getUsers();
 	void checktokenExpiration() throws UnsupportedEncodingException, MessagingException;
+	List<UserDto> getUsersPagination(int page, int limit);
 	
 }

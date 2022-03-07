@@ -1,10 +1,16 @@
 package tn.dalhia.services.implementations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.Command;
@@ -102,6 +108,27 @@ public class CommandServiceImpl implements CommandService{
 		Command command = commandRepo.findByCommandId(id) ;
 		if (command == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		commandRepo.delete(command);
+	}
+
+	@Override
+	public List<CommandDto> getCommandsPagination(int page, int limit) {
+		List<CommandDto> returnValue = new ArrayList<>();
+		
+		if(page>0) page = page-1;
+		
+		Pageable pageableRequest = PageRequest.of(page, limit);
+		Page<Command>  commandsPage= commandRepo.findAll(pageableRequest);
+		
+		List<Command> commands = commandsPage.getContent();
+		
+		for (Command command : commands) {
+			
+			ModelMapper modelMapper = new ModelMapper();
+			CommandDto commandDto = modelMapper.map(command,CommandDto.class);
+			 //BeanUtils.copyProperties(command, commandDto);
+			 returnValue.add(commandDto);
+		}
+		return returnValue;
 	}
 
 }

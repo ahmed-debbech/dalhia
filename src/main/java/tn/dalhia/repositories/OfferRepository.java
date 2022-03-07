@@ -16,4 +16,10 @@ public interface OfferRepository extends CrudRepository<Offer, Long> {
     List<Offer> findAllOfferBySpecialty(
             @Param("SpecialiteUser") String SpecialiteUser);
 
+
+    @Query("SELECT o FROM Offer o "
+            + "WHERE lower(o.title) like lower(:searchText) "
+            + "OR lower(o.description) like lower(:searchText)  ")
+            public List<Offer> searchOfferByText(@Param("searchText") String searchText);
+
 }

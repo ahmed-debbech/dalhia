@@ -1,6 +1,9 @@
 package tn.dalhia.controllers;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,17 +16,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.dalhia.entities.HistoryOffer;
 import tn.dalhia.entities.Offer;
+import tn.dalhia.entities.User;
+import tn.dalhia.repositories.UserRepository;
+import tn.dalhia.services.IHistoryOfferService;
 import tn.dalhia.services.IOfferService;
 
 
 @RestController
 @RequestMapping("/Offer")
+
 @Slf4j
-public class OfferController {
+public class OfferController{
 
 	@Autowired
 	IOfferService offerService;
+
+	@Autowired
+	IHistoryOfferService historyService;
+
+	@Autowired
+	UserRepository userRepo;
 
 	// http://localhost:8089/api/v1/offer/retrieve-all-offers
 	@GetMapping("/retrieve-all-offers")
@@ -66,7 +80,64 @@ public class OfferController {
 		return listOffers;
 	}
 
+	// http://localhost:8089/api/v1/offer/retrieve-all-offers
+	@PostMapping("/searchOffer/{user_id}/{search_text}")
+	public List<Offer> searchOffer (@PathVariable("search_text") String search_text,
+									@PathVariable("user_id") int userId) {
 
+		List<Offer> listOffers = offerService.searchOffer(search_text);
+		User userEntity = userRepo.findById((long) userId).get();
+
+		List<HistoryOffer> listHistory = userEntity.getHistory();
+
+
+		boolean found = listHistory.stream()
+				.anyMatch(p -> p.getName().equals(search_text));
+		System.out.println(found);
+
+		if (listHistory.size()==0 || !(found) ){
+			Date date = new Date();
+			HistoryOffer h = new HistoryOffer(search_text,date,0);
+			HistoryOffer history =  historyService.addHistory(h);
+			offerService.affecterHistoryAUser(userId,history.getId().intValue());
+			System.out.println("add");
+
+		}
+		else  {
+
+			Optional<HistoryOffer> matchingObject = listHistory.stream().
+					filter(p -> p.getName().equals(search_text)).
+					findFirst();
+			System.out.println(matchingObject.get().getName());
+
+			int count = matchingObject.get().getNb()+1;
+			HistoryOffer historyUpdated = new HistoryOffer(
+					matchingObject.get().getId(),
+					count,
+					matchingObject.get().getName(),
+					matchingObject.get().getDate());
+			historyService.updateHistory(historyUpdated);
+
+			}
+			/*listHistory.forEach(l -> {
+				System.out.println("-"+l.getName());
+				if (l.getName().equalsIgnoreCase(search_text) ) {
+					System.out.println("+"+l.getName());
+					int count = l.getNb() + 1;
+					HistoryOffer historyUpdated = new HistoryOffer(l.getId(), count, l.getName(),l.getDate());
+					historyService.updateHistory(historyUpdated);
+
+				} else {
+					Date date = new Date();
+					HistoryOffer h = new HistoryOffer(search_text, date, 0);
+					HistoryOffer history = historyService.addHistory(h);
+					offerService.affecterHistoryAUser(userId, history.getId().intValue());
+				}
+			});*/
+
+
+		return listOffers;
+	}
 
 
 }

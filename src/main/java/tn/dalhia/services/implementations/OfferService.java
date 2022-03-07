@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tn.dalhia.entities.JobCategory;
-import tn.dalhia.entities.Offer;
-import tn.dalhia.entities.User;
+import tn.dalhia.entities.*;
+import tn.dalhia.repositories.HistoryOfferRepository;
 import tn.dalhia.repositories.JobCategoryRepository;
 import tn.dalhia.repositories.OfferRepository;
 import tn.dalhia.repositories.UserRepository;
@@ -22,6 +21,8 @@ public class OfferService implements IOfferService {
 	private JobCategoryRepository jobRepo ;
 	@Autowired
 	private UserRepository userRepo ;
+	@Autowired
+	private HistoryOfferRepository historyRepo ;
 
 
 
@@ -35,6 +36,12 @@ public class OfferService implements IOfferService {
 		User userEntity = userRepo.findById((long) userid).get();
 		List<Offer> Loffers=	offerRepo.findAllOfferBySpecialty(userEntity.getSpeciality().name());
 		return Loffers;
+	}
+
+	@Override
+	public List<Offer> searchOffer(String text) {
+		String likeExpression = "%"+text+"%";
+		return offerRepo.searchOfferByText(likeExpression);
 	}
 
 	public Offer addOffer(Offer c) {
@@ -69,5 +76,31 @@ public class OfferService implements IOfferService {
 
 
 	}
+	@Override
+	public void affecterOfferAHistory(int idUser,int idHistory) {
+
+
+		HistoryOffer history = historyRepo.findById((long) idHistory).get();
+		System.out.println(history.getName());
+		User userEntity = userRepo.findById((long) idUser).get();
+		System.out.println(userEntity.getId());
+
+		userEntity.getHistory().add(history);
+
+
+		historyRepo.save(history);
+
+	}
+
+	@Override
+	public void affecterHistoryAUser(int idUser, int idHistory) {
+
+			HistoryOffer h = historyRepo.findById((long) idHistory).get();
+			User userEntity = userRepo.findById((long) idUser).get();
+			userEntity.getHistory().add(h);
+			historyRepo.save(h);
+
+	}
+
 
 }

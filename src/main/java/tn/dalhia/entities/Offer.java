@@ -34,7 +34,7 @@ public class Offer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String Description ;
+    private String description ;
     private String address;
     private String email;
     private int Level;

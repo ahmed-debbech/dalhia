@@ -9,6 +9,7 @@ public interface IOfferService {
 	
 	List<Offer> retrieveAllOffers();
 	List<Offer> recommandations(Long userid);
+	List<Offer> searchOffer(String text);
 
 	Offer addOffer(Offer c);
 
@@ -20,6 +21,8 @@ public interface IOfferService {
 	Offer retrieveOffer(Long id);
 
     void affecterOfferACategory(Long idOffer, Long idCategory);
+	void affecterOfferAHistory(int idUser,int idHistory);
+	void affecterHistoryAUser(int idUser, int idHistory);
 /*
 	List<Offer> retrieveAllOffersByBirthSQL(Date date1, Date date2);
 

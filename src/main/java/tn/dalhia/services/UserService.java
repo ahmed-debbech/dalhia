@@ -25,5 +25,4 @@ public interface UserService extends UserDetailsService  {
 	List<User> getUsers();
 	void checktokenExpiration() throws UnsupportedEncodingException, MessagingException;
 	List<UserDto> getUsersPagination(int page, int limit, Authentication authentification);
-	
 }

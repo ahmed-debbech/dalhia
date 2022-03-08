@@ -43,8 +43,6 @@ import tn.dalhia.shared.tools.UserPDFExporter;
 
 
 
-
-
 @RestController
 @RequestMapping("users")
 @Api(tags ="Gestion des users")
@@ -103,7 +101,6 @@ public class UserController {
 
 		userService.deleteUser(id,authentification);
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
-
 		return returnValue;
 	}
 

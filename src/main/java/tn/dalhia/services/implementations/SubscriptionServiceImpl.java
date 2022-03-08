@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,7 @@ import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.response.RequestOperationStatus;
 import tn.dalhia.services.SubscriptionService;
 import tn.dalhia.shared.dto.SubscriptionDto;
-import tn.dalhia.shared.tools.Utils;
+import tn.dalhia.shared.tools.UtilsUser;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService  {
@@ -44,10 +43,11 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 	PlanRepository planRepo;
 	
 	@Autowired
-	Utils utils;
+    UtilsUser utils;
 
 	@Override
 	@Transactional
+
 	public SubscriptionDto createSubscription(SubscriptionRequestModel subscription, Authentication authentification) {
 		User userEntity = userRepo.findByUserId(subscription.getUserId());
 		Plan plan = planRepo.findById(subscription.getPlanId()).orElse(null);
@@ -74,13 +74,14 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 	}
 
 	@Override
+
 	public SubscriptionDto updateSubscription(SubscriptionRequestModel subscription, String id, Authentication authentification) {
 		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		SubscriptionDto returnValue = new SubscriptionDto();
 		Subscription sub = subscriptionRepo.findBySubscritpionId(id);
 		if (sub == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
-		
+
 		sub.setDate_debut(subscription.getDate_debut());
 		sub.setDate_fin(subscription.getDate_fin());
 		
@@ -97,7 +98,7 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 		
 		if (sub == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		if(!utils.connectedUser(authentification,sub.getUserDetails())) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
-		
+
 		BeanUtils.copyProperties(sub,returnValue);
 		returnValue.setMessage(RequestOperationStatus.SUCCESS.name());
 		
@@ -111,6 +112,7 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 		
 		if (sub == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		if(!utils.connectedUser(authentification,sub.getUserDetails())) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
+
 		User user = userRepo.findBySubscriptionsId(sub.getId());
 		if (user == null) {
 		subscriptionRepo.delete(sub);

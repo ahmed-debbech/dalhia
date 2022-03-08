@@ -25,7 +25,7 @@ import tn.dalhia.request.CommandRequestModel;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.services.CommandService;
 import tn.dalhia.shared.dto.CommandDto;
-import tn.dalhia.shared.tools.Utils;
+import tn.dalhia.shared.tools.UtilsUser;
 
 @Service
 public class CommandServiceImpl implements CommandService{
@@ -40,7 +40,7 @@ public class CommandServiceImpl implements CommandService{
 	ProductRepository productRepo;
 	
 	@Autowired
-	Utils utils;
+    UtilsUser utils;
 	
 	@Override
 	@Transactional
@@ -74,7 +74,7 @@ public class CommandServiceImpl implements CommandService{
 //			lP.add(ProductEntity);
 //			commandEntity.setProducts(lP);
 //		}
-		
+
 		Command storedCommand = commandRepo.save(commandEntity);
 		ModelMapper modelMapper = new ModelMapper();
 		CommandDto returnValue = modelMapper.map(storedCommand, CommandDto.class);
@@ -86,7 +86,7 @@ public class CommandServiceImpl implements CommandService{
 		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		Command commandEntity = commandRepo.findByCommandId(id);
 		if (commandEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		
+
 		commandEntity.setCard(commandDetails.getCard());
 		commandEntity.setCode(commandDetails.getCode());
 		commandEntity.setEmail(commandDetails.getEmail());

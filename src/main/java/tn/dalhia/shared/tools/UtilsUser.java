@@ -21,7 +21,7 @@ import tn.dalhia.security.SecurityConstants;
 
 
 @Component // khater bch nautowirdiwha
-public class Utils {
+public class UtilsUser {
 
 	private final Random RANDOM = new SecureRandom();
 	private final String ALPHABET = "0123456789AZERTYUIOPQSDFGHJKLMWXCVBNazertyuiopqsdfghjklmwxcvbn";

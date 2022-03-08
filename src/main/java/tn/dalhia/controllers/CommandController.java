@@ -59,7 +59,7 @@ public class CommandController {
 		
 		return returnValue;
 	}
-	
+
 	@GetMapping("/get-commands-pagination")
 	public List<CommandRest> getCommands(@RequestParam(value="page",defaultValue="0") int page ,
 			@RequestParam(value="limit",defaultValue="3") int limit, Authentication authentification) {
@@ -80,6 +80,7 @@ public class CommandController {
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
 		
 		commandService.deleteCommand(id,authentification);
+
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 		
 		return returnValue;

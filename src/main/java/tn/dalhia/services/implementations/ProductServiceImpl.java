@@ -12,7 +12,7 @@ import tn.dalhia.request.ProductRequestModel;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.services.ProductService;
 import tn.dalhia.shared.dto.ProductDto;
-import tn.dalhia.shared.tools.Utils;
+import tn.dalhia.shared.tools.UtilsUser;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -20,7 +20,7 @@ public class ProductServiceImpl implements ProductService{
 	@Autowired
 	ProductRepository productRepo;
 	@Autowired
-	Utils utils;
+    UtilsUser utils;
 	
 	@Override
 	public ProductDto createProduct(ProductRequestModel product, Authentication authentification) {
@@ -36,6 +36,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+
 	public ProductDto updateProduct(ProductRequestModel product, String id, Authentication authentification) {
 		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		ProductDto returnValue = new ProductDto();
@@ -53,6 +54,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+
 	public ProductDto getProductById(String id, Authentication authentification) {
 		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		ProductDto returnValue = new ProductDto();

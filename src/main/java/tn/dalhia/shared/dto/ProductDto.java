@@ -45,8 +45,6 @@ public class ProductDto {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
-	
 
 	// zid mtaa command f lkol rest ,req...
  	

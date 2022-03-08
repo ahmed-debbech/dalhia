@@ -35,7 +35,6 @@ public class PlanController {
 		
 		ModelMapper modelMapper = new ModelMapper();
 		PlanDto createPlan = planService.createPlan(planDetails,authentification);
-		
 		returnValue = modelMapper.map(createPlan, PlanRest.class);
 		return returnValue;
 	}

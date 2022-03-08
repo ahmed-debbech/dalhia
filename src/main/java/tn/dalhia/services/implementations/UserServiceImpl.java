@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,10 +27,9 @@ import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.PasswordResetTokenRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.response.ErrorMessages;
-import tn.dalhia.response.UserRest;
 import tn.dalhia.services.UserService;
 import tn.dalhia.shared.dto.UserDto;
-import tn.dalhia.shared.tools.Utils;
+import tn.dalhia.shared.tools.UtilsUser;
 
 
 
@@ -43,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepo;
 	
 	@Autowired
-	Utils utils;
+    UtilsUser utils;
 	
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -69,7 +67,6 @@ public class UserServiceImpl implements UserService {
 		userEntity.setEncryptedPaswword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(publicUserId));
 		userEntity.setRole(Role.WOMAN);
-		
 		User storedUserDetails =userRepo.save(userEntity);
 		
 		UserDto returnValue = new UserDto();
@@ -122,11 +119,12 @@ public class UserServiceImpl implements UserService {
 		UserDto returnValue = new UserDto();
 		User userEntity = userRepo.findByUserId(userId);
 		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
+
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		BeanUtils.copyProperties(userEntity,returnValue);
 		return returnValue;
-		
+
 	
 		 
 	}
@@ -149,7 +147,6 @@ public class UserServiceImpl implements UserService {
 			userEntity.setDate_birth(userDto.getDate_birth());
 			userEntity.setZipCode(userDto.getZipCode());
 			User updatedUserDetails = userRepo.save(userEntity);
-		
 		BeanUtils.copyProperties(updatedUserDetails,returnValue);
 		return returnValue;
 	}
@@ -183,7 +180,7 @@ public class UserServiceImpl implements UserService {
 		User userEntity = userRepo.findUserByEmailVerificationToken(token);
 		
 		if(userEntity!=null) {
-			boolean hastokenExpired = Utils.hastokenExpired(token);
+			boolean hastokenExpired = UtilsUser.hastokenExpired(token);
 			if (!hastokenExpired) { // netfakdou token expired wla not expired yet
 				userEntity.setEmailVerificationToken(null);
 				userEntity.setEmailVerificationStatus(Boolean.TRUE);
@@ -203,7 +200,7 @@ public class UserServiceImpl implements UserService {
 			return returnValue;
 		}
 		
-		String token =  new Utils().generatePasswordResetToken(userEntity.getUserId()); //wala nrodhha static f utils
+		String token =  new UtilsUser().generatePasswordResetToken(userEntity.getUserId()); //wala nrodhha static f utils
 		
 		PasswordResetTokenEntity passwordResetTokenEntity = new PasswordResetTokenEntity();
 		passwordResetTokenEntity.setToken(token);
@@ -249,12 +246,12 @@ public class UserServiceImpl implements UserService {
 		boolean returnValue = false;
 		
 		PasswordResetTokenEntity passwordResetTokenEntity =passwordResetTokenRepository.findByToken(token);
-		if(Utils.hastokenExpired2(token)){
+		if(UtilsUser.hastokenExpired2(token)){
 			passwordResetTokenRepository.delete(passwordResetTokenEntity);
 			return returnValue;
 		}
 		
-		
+
 		
 		if(passwordResetTokenEntity==null){
 			return returnValue;
@@ -296,7 +293,7 @@ public class UserServiceImpl implements UserService {
 		List<User> userEntities = userRepo.findAll();
 		
 		for(User user : userEntities ) {
-		if(Utils.hastokenExpired2(user.getEmailVerificationToken())){
+		if(UtilsUser.hastokenExpired2(user.getEmailVerificationToken())){
 			user.setEmailVerificationToken(utils.generateEmailVerificationToken(user.getUserId()));
 			User updatedUserDetails = userRepo.save(user);
 			

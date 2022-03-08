@@ -13,9 +13,7 @@ import tn.dalhia.entities.enumerations.Speciality;
 
 public class UserDto implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -43,9 +41,8 @@ public class UserDto implements Serializable {
 
 	private int zipCode;
 
-	private LocalTime start_hour; 	    
-	private LocalTime end_hour; 
-
+	private LocalTime start_hour;
+	private LocalTime end_hour;
 	@Enumerated(EnumType.STRING)
 	private Job job;
 
@@ -64,6 +61,7 @@ public class UserDto implements Serializable {
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -179,12 +177,9 @@ public class UserDto implements Serializable {
 	public String getEncryptedPaswword() {
 		return encryptedPaswword;
 	}
+
 	public void setEncryptedPaswword(String encryptedPaswword) {
 		this.encryptedPaswword = encryptedPaswword;
 	}
-
-
-
-
 
 }

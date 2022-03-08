@@ -38,8 +38,8 @@ public class MessageService implements IMessageService {
     @Autowired
     private ChannelRepository channelRepository;
 
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+    //@Autowired
+    //private SimpMessagingTemplate simpMessagingTemplate;
     //repo of user
 
     @Override
@@ -67,7 +67,7 @@ public class MessageService implements IMessageService {
     @Override
     public void postNewMessageViaWebSocket(Message message) {
         System.err.println(message.toString());
-        this.simpMessagingTemplate.convertAndSend("/main", message);
+        //this.simpMessagingTemplate.convertAndSend("/chat", message);
     }
 
     @Override

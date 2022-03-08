@@ -19,6 +19,7 @@ public class Quiz {
     private String title;
     private LocalDateTime dateAdded;
     private LocalDateTime dateRemoved;
+    private int note;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;

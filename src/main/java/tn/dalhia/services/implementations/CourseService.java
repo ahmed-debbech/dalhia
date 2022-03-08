@@ -3,13 +3,12 @@ package tn.dalhia.services.implementations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.dalhia.entities.Course;
-import tn.dalhia.entities.CourseCategory;
-import tn.dalhia.repositories.CourseCategoryRepository;
-import tn.dalhia.repositories.CourseRepository;
+import tn.dalhia.entities.*;
+import tn.dalhia.repositories.*;
 import tn.dalhia.services.ICourseService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +19,12 @@ public class CourseService implements ICourseService {
     CourseRepository courseRepository;
     @Autowired
     CourseCategoryRepository courseCategoryRepository;
+    @Autowired
+    CertificateRepository certificateRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    CourseProgressRepository courseProgressRepository;
 
     @Override
     public List<Course> getAll(){
@@ -66,5 +71,34 @@ public class CourseService implements ICourseService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public MyCourses getMyCourses (Long id){
+        MyCourses myCourses = new MyCourses();
+        List<Course> FCWithCertificates = new ArrayList<>();
+        List<Course> FCWithoutCertificates = new ArrayList<>();
+        List<Course> coursesInProgress = new ArrayList<>();
+        User user = userRepository.findById(id).orElse(null);
+
+        List<Certificate> certificates = certificateRepository.findAll();
+        for (Certificate certificate: certificates) {
+            if (certificate.getUser().getId() == user.getId()) {
+                FCWithCertificates.add(certificate.getCourse());
+            }
+        }
+        List<CourseProgress> UCP = user.getCourseProgresses();
+        for (CourseProgress courseProgress: UCP){
+            if (courseProgress.getCourseProgressStatus().equals("F")){// status=1 maaneha course "FINISHED"
+                FCWithoutCertificates.add(courseProgress.getCourse());
+            }
+            else {
+                coursesInProgress.add(courseProgress.getCourse());
+            }
+        }
+        myCourses.setCoursesInProgress(coursesInProgress);
+        myCourses.setFCWithoutCertificates(FCWithoutCertificates);
+        myCourses.setFCWithCertificates(FCWithCertificates);
+        return myCourses;
     }
 }

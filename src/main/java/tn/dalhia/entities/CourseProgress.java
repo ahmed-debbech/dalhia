@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tn.dalhia.entities.enumerations.CourseProgressStatus;
+import tn.dalhia.entities.enumerations.CourseStatus;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -17,10 +20,12 @@ public class CourseProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date enrollDate;
-    private Date unrollDate;
+    private LocalDateTime enrollDate;
+    private LocalDateTime unrollDate;
     private int duration;
-    private int status;
+
+    @Enumerated(EnumType.STRING)
+    private CourseProgressStatus courseProgressStatus;
 
     @ManyToOne
     @JoinColumn(name = "course_id")

@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Course;
 import tn.dalhia.entities.Phase;
+import tn.dalhia.entities.enumerations.CourseStatus;
 import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.repositories.PhaseRepository;
 import tn.dalhia.services.IPhaseService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Service
 @Slf4j
@@ -29,11 +31,14 @@ public class PhaseService implements IPhaseService {
         Course c = courseRepository.findById(id).orElse(null);
         if (c == null)
             return null;
-
-        phase.setNumber(c.getNbrPhases()+1);
-        c.getPhases().add(phase);
-        c.setNbrPhases(c.getNbrPhases()+1);
-        courseRepository.save(c);
+        else if (c.getCourseStatus() == CourseStatus.ACCEPTED){
+            System.err.println("ons");
+            phase.setNumber(c.getNbrPhases()+1);
+            phase.setDateAdded(LocalDateTime.now());
+            c.getPhases().add(phase);
+            c.setNbrPhases(c.getNbrPhases()+1);
+            courseRepository.save(c);
+        }else return null;
         return phase;
     }
 

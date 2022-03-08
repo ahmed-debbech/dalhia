@@ -37,4 +37,5 @@ public class Course {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Phase> phases;
+
 }

@@ -64,7 +64,6 @@ public class CertificateService implements ICertificateService {
                         }
                     }
                 }
-
                 if (note >= 30){
                     certificate.setCertificateType(CertificateType.PROFESSIONAL);
                 }else {
@@ -76,6 +75,7 @@ public class CertificateService implements ICertificateService {
             certificate.setDateAdded(LocalDateTime.now());
             certificate.setCourse(cc);
             this.generateQR(certificate);
+            quizUser.setNote(note);
             return certificateRepository.save(certificate);
         }
         return null;

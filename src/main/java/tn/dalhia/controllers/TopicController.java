@@ -117,7 +117,6 @@ public class TopicController {
     }
     @GetMapping("/{id}/rate")
     public ResponseEntity<List<TopicRate>> getRate(@PathVariable("id") Long id){
-        //TODO get the user id to delete the rate
         List<TopicRate> b = topicService.getRate(id);
         if(b == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

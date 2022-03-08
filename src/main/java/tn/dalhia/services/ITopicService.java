@@ -17,4 +17,5 @@ public interface ITopicService {
     TopicRate addRate(VoteType voteType, Long id);
     boolean RemoveRate(Long id);
     List<TopicRate> getRate(Long id);
+    void getTopicOfTheDay();
 }

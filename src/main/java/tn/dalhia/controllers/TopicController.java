@@ -128,4 +128,9 @@ public class TopicController {
                 b
         );
     }
+
+    @GetMapping("/topicOfTheDay")
+    public void topoftheday(){
+        topicService.getTopicOfTheDay();
+    }
 }

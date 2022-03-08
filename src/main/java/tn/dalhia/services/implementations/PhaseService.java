@@ -27,18 +27,25 @@ public class PhaseService implements IPhaseService {
     }
 
     @Override
-    public Phase add(Phase phase, Long id){
+    public Phase add(Phase phase, Long id) {
         Course c = courseRepository.findById(id).orElse(null);
         if (c == null)
             return null;
-        else if (c.getCourseStatus() == CourseStatus.ACCEPTED){
-            System.err.println("ons");
-            phase.setNumber(c.getNbrPhases()+1);
+        int b=0;
+        for (Phase p : c.getPhases()) {
+            if (p.getFinalPhase() == true) {
+                b = 1;
+                System.err.println("ons");
+            }
+        }
+        if(b==0){
+            System.err.println(b);
+            phase.setNumber(c.getNbrPhases() + 1);
             phase.setDateAdded(LocalDateTime.now());
             c.getPhases().add(phase);
-            c.setNbrPhases(c.getNbrPhases()+1);
+            c.setNbrPhases(c.getNbrPhases() + 1);
             courseRepository.save(c);
-        }else return null;
+        }
         return phase;
     }
 

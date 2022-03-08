@@ -49,7 +49,7 @@ public class QuizService implements IQuizService {
         phase.setTitle("QUIZ");
         phase.setNumber(c.getNbrPhases()+1);
         phase.setDuration(30);
-        quiz.setDateAdded(LocalDateTime.now());
+        phase.setDateAdded(LocalDateTime.now());
         phase.getQuiz().add(quiz);
         c.getPhases().add(phase);
         c.setNbrPhases(c.getNbrPhases()+1);

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.*;
 import tn.dalhia.entities.enumerations.CertificateType;
+import tn.dalhia.entities.enumerations.CourseProgressStatus;
 import tn.dalhia.repositories.CertificateRepository;
 import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.repositories.QuizRepository;
+import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.ICertificateService;
 import tn.dalhia.utils.QRCodeGenerator;
 
@@ -26,6 +28,8 @@ public class CertificateService implements ICertificateService {
     CourseRepository courseRepository;
     @Autowired
     QuizRepository quizRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public List<Certificate> getAll(){
@@ -54,7 +58,6 @@ public class CertificateService implements ICertificateService {
                                         resU = answerUser.getCorrect();
                                         if(resU == resC){
                                             note += 1;
-                                            System.err.println(note);
                                         }
                                         break;
                                     }
@@ -75,7 +78,15 @@ public class CertificateService implements ICertificateService {
             certificate.setDateAdded(LocalDateTime.now());
             certificate.setCourse(cc);
             this.generateQR(certificate);
-            quizUser.setNote(note);
+
+            User user = userRepository.findById(1L).orElse(null);
+            for (CourseProgress courseProgress: user.getCourseProgresses()){
+                    if(cc.getId() == courseProgress.getCourse().getId()){
+                        courseProgress.setNoteQuiz(note);
+                        System.err.println(note);
+                    }
+            }
+
             return certificateRepository.save(certificate);
         }
         return null;

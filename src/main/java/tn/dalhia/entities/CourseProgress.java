@@ -23,6 +23,7 @@ public class CourseProgress {
     private LocalDateTime enrollDate;
     private LocalDateTime unrollDate;
     private int duration;
+    private int noteQuiz;
 
     @Enumerated(EnumType.STRING)
     private CourseProgressStatus courseProgressStatus;

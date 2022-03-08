@@ -9,6 +9,7 @@ public interface IOfferService {
 
 	List<Offer> retrieveAllOffers();
 	List<Offer> recommandations(Long userid);
+	String OfferTranslate (Long offerid);
 	List<Offer> recommandationsHistory(Long userid);
 	List<Offer> searchOffer(String text);
 

@@ -129,5 +129,12 @@ public class OfferController{
 		List<Offer> listOffers = offerService.recommandationsHistory(userid);
 		return listOffers;
 	}
+
+	// http://localhost:8089/api/v1/offer/retrieve-all-offers
+	@GetMapping("/OfferTranslate/{offer-id}")
+	public String getOfferTranslate (@PathVariable("offer-id") Long offerid) {
+		String TextTranslate = offerService.OfferTranslate(offerid);
+		return TextTranslate;
+	}
 }
 

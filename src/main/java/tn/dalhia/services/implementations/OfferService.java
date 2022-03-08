@@ -7,11 +7,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.web.client.RestTemplate;
 import tn.dalhia.entities.*;
 import tn.dalhia.repositories.HistoryOfferRepository;
 import tn.dalhia.repositories.JobCategoryRepository;
@@ -46,34 +48,32 @@ public class OfferService implements IOfferService {
 	}
 
 	@Override
+	public String OfferTranslate (Long offerid) {
+
+		Offer f = offerRepo.findById(offerid).get();
+		String tt = f.getDescription();
+		String uri ="https://translate.hirak.site/?lang=fr-en&txt="+tt+"&token=c3e08f7822533141c2fc66df8993ca32";
+		RestTemplate restTemplate = new RestTemplate();
+		TextTranslate textTranslate = restTemplate.getForObject(uri,TextTranslate.class);
+
+		return textTranslate.getResult();
+	}
+
+	@Override
 	public List<Offer> recommandationsHistory(Long userid) {
 		User userEntity = userRepo.findById((long) userid).get();
 		List<HistoryOffer> LHistory = userEntity.getHistory().stream().sorted( (HistoryOffer h1 , HistoryOffer h2) -> Long.compare(h2.getNb(),h1.getNb())).collect(Collectors.toList());
 		System.out.println(LHistory.stream().findFirst().get().getName());
-		List<Offer> Loffers= offerRepo.findAllOfferBySpecialty(LHistory.stream().findFirst().get().getName());
+		String likeExpression = "%"+LHistory.stream().findFirst().get().getName()+"%";
+		List<Offer> Loffers= offerRepo.searchOfferByText(likeExpression);
 		return Loffers;
 	}
 
 	@Override
 	public List<Offer> searchOffer(String text) {
 		String likeExpression = "%"+text+"%";
-		LocalDateTime ldt = LocalDateTime.now();
-		System.out.println("ldt " +ldt);
 
-		Date date = null ;
-		String d = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(ldt);
-		System.out.println("ddd " +d);
-
-		try {
-			date = new SimpleDateFormat("yyyy-MM-dd").parse(d);
-			System.out.println("yyyy-MM-dd" +date);
-
-			return offerRepo.searchOfferByText(likeExpression,date);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return offerRepo.searchOfferByText(likeExpression,date);
+		return offerRepo.searchOfferByText(likeExpression);
 
 	}
 

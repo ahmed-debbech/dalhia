@@ -1,5 +1,6 @@
 package tn.dalhia.services.implementations;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,7 @@ public class ApplicationService implements IApplicationService {
 
 	public Application addApplication(Application c) {
 
-		Application a = new Application(c.getTitle(),new Date(), true, c.getEmail());
+		Application a = new Application(c.getTitle(), new Date(), false, c.getEmail());
 		return applicationRepo.save(a);
 	}
 

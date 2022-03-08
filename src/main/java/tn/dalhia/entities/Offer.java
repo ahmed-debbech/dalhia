@@ -38,7 +38,7 @@ public class Offer implements Serializable {
     private String address;
     private String email;
     private int Level;
-    private Date startDate;
+    private Date  startDate;
     private Date endDate;
 
 

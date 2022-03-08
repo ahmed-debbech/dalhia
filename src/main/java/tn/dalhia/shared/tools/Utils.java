@@ -4,6 +4,8 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
@@ -12,6 +14,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import tn.dalhia.entities.User;
+import tn.dalhia.entities.enumerations.Role;
+import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.security.SecurityConstants;
 
 
@@ -20,6 +25,9 @@ public class Utils {
 
 	private final Random RANDOM = new SecureRandom();
 	private final String ALPHABET = "0123456789AZERTYUIOPQSDFGHJKLMWXCVBNazertyuiopqsdfghjklmwxcvbn";
+	
+	@Autowired
+	UserRepository userRepository;
 
 	public String generateUserId(int length) {
 		return generateRandomString(length);
@@ -78,6 +86,16 @@ public class Utils {
 				.signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret()).compact();
 
 		return token;
+	}
+	
+	public boolean connectedUser(Authentication authentication , User userEntity) {
+		if (authentication.isAuthenticated()) {
+			String email = authentication.getName();
+			User user = userRepository.findByEmail(email);
+			if(user.equals(userEntity) || user.getRole()==Role.ADMIN)
+			return true;
+		}
+		return false;
 	}
 
 }

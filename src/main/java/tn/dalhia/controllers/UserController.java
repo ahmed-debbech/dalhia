@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ import tn.dalhia.response.OperationStatusModel;
 import tn.dalhia.response.RequestOperationName;
 import tn.dalhia.response.RequestOperationStatus;
 import tn.dalhia.response.UserRest;
+import tn.dalhia.services.CommandService;
 import tn.dalhia.services.UserService;
 import tn.dalhia.shared.dto.UserDto;
 import tn.dalhia.shared.tools.UserPDFExporter;
@@ -50,6 +52,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CommandService commandService;
 
 	@PostMapping()
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
@@ -68,16 +73,16 @@ public class UserController {
 
 	}
 	@GetMapping(path="/{id}")
-	public UserRest getUserByUserId(@PathVariable String id ) {
+	public UserRest getUserByUserId(@PathVariable String id , Authentication authentification ) {
 		UserRest returnValue = new UserRest();
-		UserDto userDto = userService.getUserByUserId(id);
+		UserDto userDto = userService.getUserByUserId(id,authentification);
 
 		BeanUtils.copyProperties(userDto, returnValue);
 		return returnValue;
 	}
 
 	@PutMapping(path="/{id}")
-	public UserRest updateUser (@PathVariable String id , @RequestBody UserDetailsRequestModel userDetails) {
+	public UserRest updateUser (@PathVariable String id , @RequestBody UserDetailsRequestModel userDetails, Authentication authentification) {
 		UserRest returnValue = new UserRest();
 
 		if(userDetails.getFirst_name().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FILED.getErrorMessage());
@@ -85,18 +90,18 @@ public class UserController {
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails,userDto);
 
-		UserDto updateUser = userService.updateUser(id ,userDto);
+		UserDto updateUser = userService.updateUser(id ,userDto,authentification);
 		BeanUtils.copyProperties(updateUser,returnValue);
 
 		return returnValue;
 	}
 
 	@DeleteMapping(path="/{id}")
-	public OperationStatusModel deleteUser(@PathVariable String id) {
+	public OperationStatusModel deleteUser(@PathVariable String id ,Authentication authentification) {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
 
-		userService.deleteUser(id);
+		userService.deleteUser(id,authentification);
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 
 		return returnValue;
@@ -184,10 +189,10 @@ public class UserController {
 	
 	@GetMapping(path="/get-users-pagination")
 	public List<UserRest> getUsersPagination(@RequestParam(value="page",defaultValue="0") int page ,
-			@RequestParam(value="limit",defaultValue="3") int limit)
+			@RequestParam(value="limit",defaultValue="3") int limit, Authentication authentification)
 	{
 		List<UserRest> returnValue = new ArrayList<>();
-		 List<UserDto> users = userService.getUsersPagination(page,limit);
+		 List<UserDto> users = userService.getUsersPagination(page,limit,authentification);
 		 
 		 for(UserDto userDto : users) {
 			 UserRest userModel = new UserRest();
@@ -196,4 +201,25 @@ public class UserController {
 		 }
 		return returnValue;
 	}
+	
+	
+//	@GetMapping(path="/{userId}/subscription/{commandId}")
+//	public CommandRest getUserCommand(@PathVariable String commandId,@PathVariable String userId) {
+//		CommandDto commandDto = commandService.getCommandById(commandId);
+//		
+//		ModelMapper modelMapper= new ModelMapper();
+//		Link commandLink = linkTo(UserController.class).slash(userId).slash("command").slash(commandId).withSelfRel(); //ilinkih maa path eli aana f controller
+//		Link userLink = linkTo(UserController.class).slash(userId).withRel("user");
+//		Link commandsLink = linkTo(UserController.class).withRel("subscriptions");
+//		
+//		
+//		CommandRest commandRestModel = modelMapper.map(commandDto, CommandRest.class);
+//		
+//		commandRestModel.add(commandLink);
+//		commandRestModel.add(userLink);
+//		commandRestModel.add(commandsLink);
+//		return commandRestModel;
+//		
+//	
+//	}
 }

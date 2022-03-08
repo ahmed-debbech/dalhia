@@ -2,6 +2,8 @@ package tn.dalhia.response;
 
 import java.util.Date;
 
+
+
 public class SubscriptionRest {
 	private Date date_debut;
 	private Date date_fin;

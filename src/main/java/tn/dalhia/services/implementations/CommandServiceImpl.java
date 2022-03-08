@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.Command;
@@ -43,10 +44,11 @@ public class CommandServiceImpl implements CommandService{
 	
 	@Override
 	@Transactional
-	public CommandDto createCommand(CommandRequestModel commandDetails, String id) {
+	public CommandDto createCommand(CommandRequestModel commandDetails, String id, Authentication authentification) {
 		User userEntity = userRepo.findByUserId(id);
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		if (commandDetails.getProducts() == null) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FILED.getErrorMessage());
+		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		
 		for (Product product : commandDetails.getProducts()) {
 			Product testProduct = productRepo.getById(product.getId());
@@ -80,9 +82,11 @@ public class CommandServiceImpl implements CommandService{
 	}
 
 	@Override
-	public CommandDto updateCommand(CommandRequestModel commandDetails, String id) {
+	public CommandDto updateCommand(CommandRequestModel commandDetails, String id, Authentication authentification) {
+		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		Command commandEntity = commandRepo.findByCommandId(id);
 		if (commandEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		
 		commandEntity.setCard(commandDetails.getCard());
 		commandEntity.setCode(commandDetails.getCode());
 		commandEntity.setEmail(commandDetails.getEmail());
@@ -96,24 +100,27 @@ public class CommandServiceImpl implements CommandService{
 	}
 
 	@Override
-	public CommandDto getCommandById(String id) {
+	public CommandDto getCommandById(String id, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
 		Command command = commandRepo.findByCommandId(id);
+		if (command == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		if(!utils.connectedUser(authentification,command.getUsers())) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		CommandDto returnValue = modelMapper.map(command,CommandDto.class);
 		return returnValue;
 	}
 
 	@Override
-	public void deleteCommand(String id) {
+	public void deleteCommand(String id, Authentication authentification) {
 		Command command = commandRepo.findByCommandId(id) ;
 		if (command == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		if(!utils.connectedUser(authentification,command.getUsers())) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		commandRepo.delete(command);
 	}
 
 	@Override
-	public List<CommandDto> getCommandsPagination(int page, int limit) {
+	public List<CommandDto> getCommandsPagination(int page, int limit, Authentication authentification) {
 		List<CommandDto> returnValue = new ArrayList<>();
-		
+		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		if(page>0) page = page-1;
 		
 		Pageable pageableRequest = PageRequest.of(page, limit);

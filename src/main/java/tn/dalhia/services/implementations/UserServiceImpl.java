@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -107,27 +108,35 @@ public class UserServiceImpl implements UserService {
 	public UserDto getUser(String email) {
 		User userEntity = userRepo.findByEmail(email);
 		
-		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		UserDto returnValue = new UserDto();
-		BeanUtils.copyProperties(userEntity,returnValue);
-		return returnValue;
+			if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+			UserDto returnValue = new UserDto();
+			BeanUtils.copyProperties(userEntity,returnValue);
+			return returnValue;
+		
+		
+		
 	}
 
 	@Override
-	public UserDto getUserByUserId(String userId) {
+	public UserDto getUserByUserId(String userId, Authentication authentification) {
 		UserDto returnValue = new UserDto();
 		User userEntity = userRepo.findByUserId(userId);
+		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		BeanUtils.copyProperties(userEntity,returnValue);
 		return returnValue;
+		
+	
+		 
 	}
 
 	@Override
-	public UserDto updateUser(String id, UserDto userDto) {
+	public UserDto updateUser(String id, UserDto userDto, Authentication authentification) {
 		UserDto returnValue = new UserDto();
 		User userEntity = userRepo.findByUserId(id);
 		
+		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()); //Exception eli aamlneha ahna
 		
 			userEntity.setAddress(userDto.getAddress());
@@ -146,9 +155,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(String userId) {
+	public void deleteUser(String userId,Authentication authentification) {
 		User userEntity = userRepo.findByUserId(userId);
-		
+		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		userRepo.delete(userEntity);
@@ -300,7 +309,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDto> getUsersPagination(int page, int limit) {
+	public List<UserDto> getUsersPagination(int page, int limit, Authentication authentification) {
+		
+		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		List<UserDto> returnValue = new ArrayList<>();
 		
 		if(page>0) page = page-1;

@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 		String senderName = "Women App Team";
 		String mailContent = "<p>Dear " + user.getFirst_name() + user.getLast_name() + ",</p>";
 		mailContent += "<p> please check the link below to verify your email : </p>";
-		String verifyURL = "http://localhost:8089/pi/users/email-verification?token=" + user.getEmailVerificationToken();
+		String verifyURL = "http://localhost:8089/api/v1/users/email-verification?token=" + user.getEmailVerificationToken();
 		
 		mailContent += "<h2><a href=" + verifyURL + ">Verify your account</a></h2>";
 		

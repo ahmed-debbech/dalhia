@@ -97,6 +97,7 @@ public class CourseProgressService implements ICourseProgressService {
         for (Phase p : c.getPhases()){
             duration = duration + p.getDuration();
             n++;
+            p.setStatus(1);
             if(n == endPhase){
                 break;
             }

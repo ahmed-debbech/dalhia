@@ -15,6 +15,8 @@ public interface IApplicationService {
 	Application addApplication(Application c);
 	public void affecterApplicationAOffer(int idOffer, int idApplication);
 	public void affecterApplicationAUser(int idUser, int idApplication);
+	void ValidCondidat (Long idApplication);
+	void InValidCondidat (Long idApplication);
 	void deleteApplication(Long id);
 
 	Application updateApplication(Application c);

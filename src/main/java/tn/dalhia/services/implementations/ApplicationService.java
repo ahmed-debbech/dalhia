@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.Application;
@@ -100,5 +103,36 @@ public class ApplicationService implements IApplicationService {
 		applicationRepo.save(ApplicationEntity);
 	}
 
+
+
+		/*@Autowired
+		private JavaMailSender emailSender;
+
+		public void sendSimpleMessage(String to, String subject, String text) {
+
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom("ali.alidg55@gmail.com");
+			message.setTo(to);
+			message.setSubject(subject);
+			message.setText(text);
+			emailSender.send(message);
+
+		}*/
+
+		public void ValidCondidat (Long idApplication){
+			Application ApplicationEntity = applicationRepo.findById((long) idApplication).get();
+			ApplicationEntity.setEtat(true);
+			applicationRepo.save(ApplicationEntity);
+			//sendSimpleMessage(ApplicationEntity.getEmail(),"validation","vous etes accepter version test");
+
+		}
+
+	public void InValidCondidat (Long idApplication){
+		Application ApplicationEntity = applicationRepo.findById((long) idApplication).get();
+		ApplicationEntity.setEtat(false);
+		applicationRepo.save(ApplicationEntity);
+		//sendSimpleMessage(ApplicationEntity.getEmail(),"validation","vous etes accepter version test");
+
+	}
 
 }

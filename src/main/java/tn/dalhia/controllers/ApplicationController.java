@@ -72,4 +72,15 @@ public class ApplicationController {
 		List<Application> listApplications = applicationService.findNotAvailableApplications(userid);
 		return listApplications;
 	}
+
+	@PostMapping("/ValidCondidat/{application-id}")
+	public void ValidCondidat(@PathVariable("application-id") Long applicationid) {
+		applicationService.ValidCondidat(applicationid);
+
+	}
+	@PostMapping("/InValidCondidat/{application-id}")
+	public void InValidCondidat(@PathVariable("application-id") Long applicationid) {
+		applicationService.InValidCondidat(applicationid);
+
+	}
 }

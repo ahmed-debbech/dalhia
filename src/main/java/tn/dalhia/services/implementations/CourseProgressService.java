@@ -73,6 +73,7 @@ public class CourseProgressService implements ICourseProgressService {
         CourseProgress courseProgress = courseProgressRepository.findById(id).orElse(null);
         if(courseProgress == null || c == null)
             return  null;
+        int duration = 0;
         int totalDuration = 0; // el durée totale ta3 les phases lkoll illa el phase finale illi feha el quiz
         int totalDurationWC = 0; // el durée totale ta3 les phases lkoll bil phase finale
         int n=0; //houwa el nombre des phases illi
@@ -82,10 +83,12 @@ public class CourseProgressService implements ICourseProgressService {
                     note = courseProgress.getNoteQuiz();
             }else{
                 totalDuration = totalDuration + ph.getDuration();
+                System.err.println(totalDuration);
             }
             totalDurationWC = totalDurationWC + ph.getDuration();
+            System.err.println(totalDurationWC);
         }
-        int duration = courseProgress.getDuration();
+        //int duration = courseProgress.getDuration();
         /*for (Phase p : c.getPhases()){
             if(p.getNumber() == endPhase){
                 duration = duration + p.getDuration();
@@ -99,7 +102,6 @@ public class CourseProgressService implements ICourseProgressService {
             }
         }
         courseProgress.setDuration(duration);
-
         if (duration == totalDuration){
             courseProgress.setCourseProgressStatus(CourseProgressStatus.F);
         }else if ((duration == totalDurationWC) && (note >= 30)){

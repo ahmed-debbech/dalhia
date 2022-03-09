@@ -67,25 +67,31 @@ public class CertificateService implements ICertificateService {
                         }
                     }
                 }
+
+                System.err.println(note);
+                User user = userRepository.findById(1L).orElse(null);
+                System.err.println("ons");
+                for (CourseProgress courseProgress: user.getCourseProgresses()){
+                    if(cc.getId() == courseProgress.getCourse().getId()){
+                        System.err.println("noussa");
+                        System.err.println(note);
+                        courseProgress.setNoteQuiz(note);
+                    }
+                }
+
                 if (note >= 30){
                     certificate.setCertificateType(CertificateType.PROFESSIONAL);
                 }else {
                     return null; // manja7ch
                 }
             }
+
             certificate.setTitle(cc.getName());
             certificate.setDateAffection(LocalDateTime.now());
             certificate.setDateAdded(LocalDateTime.now());
             certificate.setCourse(cc);
+            //certificate.getUser().setId(1L);
             this.generateQR(certificate);
-
-            User user = userRepository.findById(1L).orElse(null);
-            for (CourseProgress courseProgress: user.getCourseProgresses()){
-                    if(cc.getId() == courseProgress.getCourse().getId()){
-                        courseProgress.setNoteQuiz(note);
-                        System.err.println(note);
-                    }
-            }
 
             return certificateRepository.save(certificate);
         }

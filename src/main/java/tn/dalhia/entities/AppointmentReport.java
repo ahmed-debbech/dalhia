@@ -9,9 +9,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tn.dalhia.entities.enumerations.AppReportCategory;
 
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AppointmentReport {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +34,7 @@ public class AppointmentReport {
 	
     private String report;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;

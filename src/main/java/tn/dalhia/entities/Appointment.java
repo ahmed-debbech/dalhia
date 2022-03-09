@@ -27,7 +27,8 @@ public class Appointment {
     @Enumerated(EnumType.STRING)
     private AppointmentStatus AppStatus;
 
-    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
     private AppointmentRate appointmentRate;
     
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
@@ -37,3 +38,4 @@ public class Appointment {
     @JoinColumn(name = "user_id")
     private User user;
 }
+

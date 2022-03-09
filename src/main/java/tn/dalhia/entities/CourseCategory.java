@@ -1,8 +1,15 @@
 package tn.dalhia.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class CourseCategory {
     @Id

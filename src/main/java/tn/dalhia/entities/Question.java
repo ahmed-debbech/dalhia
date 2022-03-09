@@ -1,10 +1,14 @@
 package tn.dalhia.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.*;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Question {
     @Id
@@ -12,4 +16,7 @@ public class Question {
     private Long id;
     private int points;
     private int number;
+    private String text;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Answer> answers;
 }

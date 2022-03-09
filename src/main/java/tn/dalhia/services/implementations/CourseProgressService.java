@@ -47,6 +47,7 @@ public class CourseProgressService implements ICourseProgressService {
         courseProgress.setNoteQuiz(0);
         courseProgress.setEnrollDate(LocalDateTime.now());
         courseProgress.setCourse(c);
+        courseProgress.setAttempts(0);
         user.getCourseProgresses().add(courseProgress);
          userRepository.save(user);
          return  courseProgress;

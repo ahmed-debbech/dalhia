@@ -14,7 +14,8 @@ import java.util.List;
 @Repository
 public interface OfferRepository extends CrudRepository<Offer, Long> {
 
-    @Query("SELECT o FROM Offer o WHERE o.title like :SpecialiteUser")
+    @Query("SELECT o FROM Offer o "
+            +"WHERE  ( lower(o.title) like lower(:SpecialiteUser) OR lower(o.description) like lower(:SpecialiteUser))")
     List<Offer> findAllOfferBySpecialty(
             @Param("SpecialiteUser") String SpecialiteUser);
 

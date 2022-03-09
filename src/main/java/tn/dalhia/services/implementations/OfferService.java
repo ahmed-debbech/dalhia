@@ -42,8 +42,12 @@ public class OfferService implements IOfferService {
 
 	@Override
 	public List<Offer> recommandations(Long userid) {
+
 		User userEntity = userRepo.findById((long) userid).get();
-		List<Offer> Loffers=	offerRepo.findAllOfferBySpecialty(userEntity.getSpeciality().name());
+ 		String text = userEntity.getSpeciality().name();
+		 System.out.println(text);
+		String likeExpression = "%"+text+"%";
+		List<Offer> Loffers=	offerRepo.findAllOfferBySpecialty(likeExpression);
 		return Loffers;
 	}
 

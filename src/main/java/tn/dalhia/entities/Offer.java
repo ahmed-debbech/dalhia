@@ -1,8 +1,5 @@
 package tn.dalhia.entities;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,11 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tn.dalhia.entities.enumerations.CategoryOffer;
 import tn.dalhia.entities.enumerations.JobType;
 
 @Getter

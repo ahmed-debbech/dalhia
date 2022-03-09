@@ -1,6 +1,6 @@
 package tn.dalhia.implementations;
 
-import java.util.Date;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +57,7 @@ public class AppointmentService implements IAppointmentService {
 		}
 		else if(user.isBan())
 		{
+
 			log.info("The following Expert: "+user.getFirst_name()+" "+user.getLast_name()+" ,Profession: "+user.getJob()+" is BANNED by Admin therefore no appointments can be taken.");
 		}
 		else{
@@ -76,7 +77,7 @@ public class AppointmentService implements IAppointmentService {
 		Ss.sendSms(user);
 		log.info("Appointment Mail and SMS are sent to Expert successfully.");
 		
-		}	
+		}
 	}
 
 	@Override
@@ -171,7 +172,7 @@ public class AppointmentService implements IAppointmentService {
 			log.info("No Appointment Reports found therefore no experts to ban.");
 		}
 	}
-	
+
 	
 
 }

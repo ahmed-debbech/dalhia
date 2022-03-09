@@ -45,6 +45,7 @@ public class MailService {
 
 	public void sendAppEmail(User user) throws MailException {
 
+
 		/*
 		 * This JavaMailSender Interface is used to send Mail in Spring Boot. This
 		 * JavaMailSender extends the MailSender Interface which contains send()
@@ -62,7 +63,7 @@ public class MailService {
 		 */
 		javaMailSender.send(mail);
 	}
-	
+
 	public void sendWarningEmail(User user) throws MailException {
 
 		/*

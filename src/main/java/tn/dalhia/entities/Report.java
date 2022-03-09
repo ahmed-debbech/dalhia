@@ -35,7 +35,7 @@ public class Report {
     private ReportStatus status;
     
     @ManyToMany(cascade = CascadeType.ALL)
-    
+
     private List<User> suggestions;
     
     @ManyToOne
@@ -43,4 +43,8 @@ public class Report {
     @JsonIgnore
     private User sender;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

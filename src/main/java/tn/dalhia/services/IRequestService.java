@@ -5,7 +5,6 @@ import java.util.List;
 import tn.dalhia.entities.Request;
 import tn.dalhia.entities.User;
 import tn.dalhia.entities.enumerations.ReportCategory;
-
 public interface IRequestService {
 	public List<Request> getAllRequests();
 	public void updateRequest(Request rq, int id);

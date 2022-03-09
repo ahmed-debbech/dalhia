@@ -39,14 +39,14 @@ public class ReportController {
 			 return listRps;
 		 }
 		 
-	
+
 		 @GetMapping("/retrieve-all-associations-per-activity-count")
 		 public List <User> getAssociationsWithActCount(){
 			 
 			 List <User> Assocs = rs.getAssociationsByActivityCount();
 			 return Assocs;
 		 }
-		 
+
 	// http://localhost:8089/Dahlia/report/remove-report/{rp-id}
 		@DeleteMapping("/remove-report/{rp-id}")
 		public void removeReport(@PathVariable("rp-id") Integer RpId) {

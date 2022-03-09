@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,6 @@ import tn.dalhia.entities.User;
 import tn.dalhia.entities.enumerations.ReportCategory;
 import tn.dalhia.implementations.RequestService;
 
-
 @RestController
 @RequestMapping("/request")
 public class RequestController {
@@ -33,7 +33,7 @@ public class RequestController {
 		public void addRequest(@RequestBody Request rq,@PathVariable("expert-id") Long ExpertId) {
 		 rqs.addRequest(rq, ExpertId);
 		}
-	
+
 		 @GetMapping("/get-most-requestedAssoc-byAct/{activity}")
 			public int getMostRequestedAssocByAct(@PathVariable("activity") ReportCategory activity) {
 			 return rqs.getMostRequestedAssocPerAct(activity);
@@ -58,6 +58,5 @@ public class RequestController {
 		public void editRequest(@RequestBody Request rq,@PathVariable("rq-id") Integer RqId) {
 			 rqs.updateRequest(rq, RqId);
 			}
-		
-		
+
 }

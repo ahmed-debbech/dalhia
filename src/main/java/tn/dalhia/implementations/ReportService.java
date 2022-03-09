@@ -23,7 +23,7 @@ public class ReportService implements IReportService{
 	private UserRepository ur;
 	
 	public List<Report> getAllReports() {
-		
+
 		List<Report> apps = (List<Report>) rr.findAll();
 		return apps;
 	}
@@ -78,12 +78,5 @@ public class ReportService implements IReportService{
 		log.info("List of Associations ordered by Activity: "+Associations.toString());
 		return Associations;
 	}
-
-	
-
-	
-	
-	
-	
 
 }

@@ -5,5 +5,7 @@ public enum Speciality {
     TAILOR,
     HEALTH,
     LANGUAGES,
-    COOKING
+    COOKING,
+    developer,
+    developer1
 }

@@ -37,5 +37,5 @@ public class Review {
     @JoinColumn(name = "sender_id")
     @JsonIgnore
     private User sneder;
-    
+
 }

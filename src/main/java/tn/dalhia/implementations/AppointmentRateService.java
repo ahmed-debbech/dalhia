@@ -47,7 +47,7 @@ public class AppointmentRateService implements IAppointmentRateService {
 		AppRateRepo.save(rate);
 		log.info("Appointment Rate edited.");
 	}
-	
+
 	
 	@Override
 	public void addAppointmentRate(AppointmentRate Ar, Integer AppId) {
@@ -94,6 +94,7 @@ public class AppointmentRateService implements IAppointmentRateService {
 			log.info("Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+" rated successfully.");
 			
 		}
+
 	}
 
 	

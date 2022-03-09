@@ -1,7 +1,6 @@
 package tn.dalhia.entities;
 
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -35,7 +34,7 @@ public class AppointmentReport {
     private AppReportCategory category;
 	
     private String report;
-    
+
     
     @JsonIgnore
     @OneToOne(mappedBy="appointmentReport",cascade = CascadeType.ALL)

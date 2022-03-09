@@ -17,12 +17,9 @@ import tn.dalhia.entities.enumerations.ReportCategory;
 
 
 
-
 @Repository
 public interface RequestRepository extends CrudRepository<Request,Integer> {
-	
-	
-	
+
 	@Transactional
 	@Query(value="SELECT request.user_id FROM request JOIN user WHERE request.user_id=user.id AND user.activity = :Act GROUP BY request.user_id ORDER BY COUNT(request.request_id) DESC LIMIT 1",nativeQuery=true)
 	public int findMostRequestedAssocPerActivity(@Param("Act")ReportCategory Act );

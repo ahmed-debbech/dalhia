@@ -1,6 +1,6 @@
 package tn.dalhia.implementations;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +64,6 @@ public class RequestService implements IRequestService {
 		int associations;
 		associations = rqr.findMostRequestedAssocPerActivity(Act);
 		return associations;
-		
-		
-	}
 
+	}
 }

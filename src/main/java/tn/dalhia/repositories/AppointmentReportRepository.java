@@ -31,6 +31,7 @@ public interface AppointmentReportRepository extends CrudRepository<AppointmentR
 	@Modifying
 	@Transactional
 	@Query(value="UPDATE user SET `ban`= 1 WHERE id = :usrId",nativeQuery=true)
+
 	public void updateBan(@Param("usrId") Long usrId);
 	
 }

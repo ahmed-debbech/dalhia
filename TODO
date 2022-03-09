@@ -1,0 +1,14 @@
+TODO
+
+V * web socket
+V * delete comments and ban them automatically when a curse word is used
+V * delete topics with 0 reactions after 2 days
+* algorithm of showing ads based on aspects
+V * post of the day (by trend)
+* active users
+    * stop chat
+* rich text editor in html
+* sort and search
+    * sort by most upvoted
+    * sort by most commented
+* api pagination

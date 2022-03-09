@@ -39,7 +39,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 		.permitAll()
 		.antMatchers(HttpMethod.GET , SecurityConstants.EXPORT_PDF)
 		.permitAll()
-		.anyRequest().authenticated() //sign up authorized be9i lkol le
+		.anyRequest().permitAll() //sign up authorized be9i lkol le
+				//.anyRequest().authenticated()
 		//.and().oauth2Login()
 		.and()
 		.addFilter(getAuthenticationFilter())

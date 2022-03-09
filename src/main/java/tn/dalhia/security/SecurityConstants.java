@@ -13,8 +13,9 @@ public class SecurityConstants {
 	public static final String PASSWORD_RESET_REQUEST_URL = "/users/password-reset-request" ;
 	public static final String PASSWORD_RESET_URL = "/users/password-reset" ;
 	public static final String EXPORT_PDF = "/users/get-users-pdf" ;
+    public static final String SWAGGER = "/swagger-ui/index.html**";
 
-	public static String getTokenSecret() {
+    public static String getTokenSecret() {
 		AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("AppProperties"); //bch njmou naccediw l component tant que manech autowirdiw 
 		return appProperties.getTokenSecret();
 	}

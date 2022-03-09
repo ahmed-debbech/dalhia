@@ -10,7 +10,8 @@ public enum ErrorMessages {
 	COULD_NOT_UPDATE_RECORD("Could not update record"),
 	COULD_NOT_DELETE_RECORD("Could not delete record"),
 	EMAIL_ADDRESS_NOT_VERIFIED("Email adress could not verified"),
-	QUANTITY_OVER("We re sorry , this product is currently out of stock");
+	QUANTITY_OVER("We re sorry , this product is currently out of stock"),
+	SECURITY_ERROR("you re not allowed to do that");
 	
 	
 	private String errorMessage;

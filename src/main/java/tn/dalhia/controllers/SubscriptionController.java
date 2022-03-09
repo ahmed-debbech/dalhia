@@ -3,6 +3,7 @@ package tn.dalhia.controllers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,39 +31,39 @@ public class SubscriptionController {
 	SubscriptionService subscriptionService;
 	
 	@PostMapping()
-	public SubscriptionRest createSubscription (@RequestBody SubscriptionRequestModel subscription) {
+	public SubscriptionRest createSubscription (@RequestBody SubscriptionRequestModel subscription, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
 		
-		SubscriptionDto createdSubscription = subscriptionService.createSubscription(subscription)	;
+		SubscriptionDto createdSubscription = subscriptionService.createSubscription(subscription,authentification)	;
 		SubscriptionRest returnValue = modelMapper.map(createdSubscription, SubscriptionRest.class);
 		return returnValue;
 	}
 	
 	@PutMapping("/{id}")
-	public SubscriptionRest updateSubscription (@PathVariable String id ,@RequestBody SubscriptionRequestModel subscription ) {
+	public SubscriptionRest updateSubscription (@PathVariable String id ,@RequestBody SubscriptionRequestModel subscription, Authentication authentification ) {
 		ModelMapper modelMapper = new ModelMapper();
 		
 		
-		SubscriptionDto updateSub = subscriptionService.updateSubscription(subscription, id);
+		SubscriptionDto updateSub = subscriptionService.updateSubscription(subscription, id,authentification);
 		SubscriptionRest returnValue = modelMapper.map(updateSub, SubscriptionRest.class);
 		
 		return returnValue;
 	}
 	
 	@GetMapping("/{id}")
-	public SubscriptionRest getSubscription (@PathVariable String id) {
+	public SubscriptionRest getSubscription (@PathVariable String id, Authentication authentification) {
 		SubscriptionRest returnValue = new SubscriptionRest();
-		SubscriptionDto Subscription = subscriptionService.getSubscriptionById(id);
+		SubscriptionDto Subscription = subscriptionService.getSubscriptionById(id,authentification);
 		BeanUtils.copyProperties(Subscription, returnValue);
 		
 		return returnValue;
 	}
 	@DeleteMapping("/{id}")
-	public OperationStatusModel deleteSubscription(@PathVariable String id) {
+	public OperationStatusModel deleteSubscription(@PathVariable String id, Authentication authentification) {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
 		
-		subscriptionService.deleteSubscription(id);
+		subscriptionService.deleteSubscription(id,authentification);
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 		
 		return returnValue;

@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,8 +30,8 @@ import tn.dalhia.entities.enumerations.Speciality;
 
 @Getter
 @Setter
-@Entity
 @ToString
+@Entity
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -57,7 +58,6 @@ public class User implements Serializable {
     @Column(nullable=false,length=9)
     private String phone;
 
-
     
     @Column(nullable=false)
     private Date date_birth;
@@ -73,6 +73,7 @@ public class User implements Serializable {
     
    
     private int zipCode;
+
     private int start_hour; //?? time ? e.g: 19:50
     private int end_hour; //?? time ? e.g: 19:50
     @Enumerated(EnumType.STRING)
@@ -80,20 +81,20 @@ public class User implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
-
+    
     @Column(nullable=false)
 	private String encryptedPaswword;
 
+
+    @Column(nullable=false)
+	private Boolean emailVerificationStatus = false;
+	private String emailVerificationToken;
 
 
     @Enumerated(EnumType.STRING)
     private ReportCategory activity;
     private boolean ban;
 
-
-    @Column(nullable=false)
-	private Boolean emailVerificationStatus = false;
-	private String emailVerificationToken;
 
 
 	@OneToMany(cascade = CascadeType.ALL) //the list of courses of coach
@@ -212,7 +213,6 @@ public class User implements Serializable {
 	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
-
 
 
 	public int getStart_hour() {
@@ -388,8 +388,6 @@ public class User implements Serializable {
 	public void setEncryptedPaswword(String encryptedPaswword) {
 		this.encryptedPaswword = encryptedPaswword;
 	}
-
-
 
 
 }

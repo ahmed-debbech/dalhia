@@ -143,5 +143,5 @@ public class UserDetailsRequestModel {
 	public void setSubscriptions(SubscriptionRequestModel subscriptions) {
 		this.subscriptions = subscriptions;
 	}
-	
+
 }

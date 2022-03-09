@@ -8,6 +8,7 @@ public class ProductDto {
  	private String description;
  	private int price;
  	private int quantity;
+
 	public Long getId() {
 		return id;
 	}

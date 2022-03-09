@@ -30,10 +30,10 @@ public class Appointment {
 
     @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
     private AppointmentRate appointmentRate;
-
-    @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
-
+    
+    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     private AppointmentReport appointmentReport;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

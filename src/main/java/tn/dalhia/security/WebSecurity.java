@@ -1,5 +1,6 @@
 package tn.dalhia.security;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ import tn.dalhia.services.UserService;
 
 
 @EnableWebSecurity
+@Configuration
 public class WebSecurity extends WebSecurityConfigurerAdapter{
 
 	private final UserService userDetailsService;
@@ -31,13 +33,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 		.permitAll()
 		.antMatchers(HttpMethod.GET , SecurityConstants.VERIFICATION_EMAIL_URL)
 		.permitAll()
-		.antMatchers(HttpMethod.GET , SecurityConstants.HELLO)
-		.permitAll()
 		.antMatchers(HttpMethod.POST , SecurityConstants.PASSWORD_RESET_REQUEST_URL)
 		.permitAll()
 		.antMatchers(HttpMethod.POST , SecurityConstants.PASSWORD_RESET_URL)
 		.permitAll()
+		.antMatchers(HttpMethod.GET , SecurityConstants.EXPORT_PDF)
+		.permitAll()
 		.anyRequest().authenticated() //sign up authorized be9i lkol le
+		//.and().oauth2Login()
 		.and()
 		.addFilter(getAuthenticationFilter())
 		.addFilter(new AuthorizationFilter(authenticationManager())) //lkool lezem iconectiw ken sign up

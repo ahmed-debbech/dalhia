@@ -37,7 +37,6 @@ public class Command implements Serializable {
 	private List<Product> products;
 
 	
-	
 	public Long getId() {
 		return id;
 	}

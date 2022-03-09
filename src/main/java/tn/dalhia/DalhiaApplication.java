@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 import tn.dalhia.security.AppProperties;
+import tn.dalhia.security.AppProperties;
 
 @EnableScheduling
 @EnableAspectJAutoProxy

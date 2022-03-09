@@ -1,6 +1,5 @@
 package tn.dalhia.entities;
 
-
 import lombok.*;
 
 import javax.persistence.*;

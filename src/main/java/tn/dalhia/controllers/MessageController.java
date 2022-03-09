@@ -35,6 +35,10 @@ public class MessageController {
                 b
         );
     }
+    @PostMapping("ws/messages")
+    public void wsNewMessage(@RequestBody Message message){
+        messageService.postNewMessageViaWebSocket(message);
+    }
     @GetMapping("/{id}/messages")
     public ResponseEntity<List<Message>> getAllMessages(@PathVariable("id") Long channel_id){
         List<Message> b = messageService.getAllFromChannel(channel_id);

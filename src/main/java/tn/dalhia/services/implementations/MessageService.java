@@ -1,9 +1,11 @@
 package tn.dalhia.services.implementations;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Channel;
 import tn.dalhia.entities.Message;
@@ -22,8 +24,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@AllArgsConstructor
 @Slf4j
 public class MessageService implements IMessageService {
 
@@ -36,6 +38,8 @@ public class MessageService implements IMessageService {
     @Autowired
     private ChannelRepository channelRepository;
 
+    //@Autowired
+    //private SimpMessagingTemplate simpMessagingTemplate;
     //repo of user
 
     @Override
@@ -58,6 +62,12 @@ public class MessageService implements IMessageService {
             return msg;
         }
         return null;
+    }
+
+    @Override
+    public void postNewMessageViaWebSocket(Message message) {
+        System.err.println(message.toString());
+        //this.simpMessagingTemplate.convertAndSend("/chat", message);
     }
 
     @Override

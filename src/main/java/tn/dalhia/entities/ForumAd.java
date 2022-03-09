@@ -33,7 +33,6 @@ public class ForumAd {
     @JoinColumn(name = "user_id")
     private User user;
 
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "forum_ad_id")
     private ForumAdTarget forumAdTarget;

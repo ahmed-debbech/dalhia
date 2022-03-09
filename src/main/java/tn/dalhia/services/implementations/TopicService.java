@@ -15,13 +15,15 @@ import java.time.temporal.ChronoUnit;
 import tn.dalhia.repositories.TopicRateRepository;
 import tn.dalhia.repositories.TopicRepository;
 import tn.dalhia.services.ITopicService;
+import tn.dalhia.utils.GeneralUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
 import static java.time.temporal.ChronoUnit.DAYS;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -146,4 +148,94 @@ public class TopicService implements ITopicService {
         }
     }
 
+    @Scheduled(cron = "0 0 0 * * *")
+    @Override
+    public void getTopicOfTheDay(){
+        //we get all topics of this day
+        List<Topic> topicsOfToday = topicRepository.getTopicsOfToday();
+        System.err.println(topicsOfToday.toString());
+        //we parse each word and put them in lists each
+        List<List<String>> listOfWords = new ArrayList<>();
+        for(Topic t : topicsOfToday){
+            listOfWords.add(GeneralUtils.listWords(t.getTitle() + " " +t.getText()));
+        }
+        System.err.println(listOfWords.toString());
+        //we apply an algorithm to get the highest occurence of words
+        class Ranking implements Comparable{
+            String word;
+            int occ;
+
+            public Ranking(String w){this.word = w; this.occ = 1;}
+            @Override
+            public int hashCode() {
+                Random r = new Random();
+                return r.nextInt(99999) + word.length();
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                Ranking pp = (Ranking) obj;
+                if(this.word.contains(pp.word)){
+                    this.occ++;
+                   return true;
+                }
+                return false;
+            }
+
+            @Override
+            public String toString() {
+                return "{ "+this.word+", "+this.occ+" }";
+            }
+
+            @Override
+            public int compareTo(Object o) {
+                Ranking pp = (Ranking) o;
+                //System.err.println(pp.word);
+                if(pp.word.contains(this.word)){
+                    this.occ++;
+                    return 0;
+                }
+                return 1;
+            }
+        }
+        TreeSet<Ranking> set = new TreeSet<>();
+        for(List<String> list : listOfWords) {
+            for (String w : list) {
+                set.add(new Ranking(w));
+            }
+        }
+        System.err.println(set);
+        System.err.println("total: " + set.size());
+        int max = -1;
+        for(Ranking r : set){
+            if(max < r.occ){
+                max = r.occ;
+            }
+        }
+        System.err.println("most: " + max);
+        //the word found is considered TREND 3
+        List<String> ww = new ArrayList<String>();
+        ww.add(set.pollFirst().word);
+        ww.add(set.pollFirst().word);
+        ww.add(set.pollFirst().word);
+
+        List<Topic> majorTopics = new ArrayList<>();
+        for(int i=0; i<=ww.size()-1; i++) {
+            majorTopics.addAll(topicRepository.getMajorTopics(ww.get(i)));
+            System.err.println("the word is: " + ww.get(i));
+        }
+        System.err.println("final result set: " + majorTopics);
+
+        //we get the highest topic ratings with the trend word
+        Topic postOfTheDay = majorTopics.get(0);
+        for(int i=1; i<= majorTopics.size()-1; i++){
+            if(postOfTheDay.getScore() < majorTopics.get(i).getScore()){
+                postOfTheDay = majorTopics.get(i);
+            }
+        }
+        System.err.println("THE POST OF THE DAY IS: " + postOfTheDay);
+        //we affect that to database
+        postOfTheDay.setLastBeTopicOfTheDay(LocalDateTime.now());
+        topicRepository.save(postOfTheDay);
+    }
 }

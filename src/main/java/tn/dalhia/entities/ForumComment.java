@@ -27,7 +27,6 @@ public class ForumComment {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-
     @JsonIgnore
     private User user;
 

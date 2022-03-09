@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +24,6 @@ import tn.dalhia.entities.enumerations.AppReportCategory;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class AppointmentReport {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

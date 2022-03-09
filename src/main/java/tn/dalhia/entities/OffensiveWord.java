@@ -1,7 +1,7 @@
 package tn.dalhia.entities;
 
-import lombok.*;
 
+import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,4 +18,18 @@ public class OffensiveWord {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String word;
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getWord() {
+		return word;
+	}
+	public void setWord(String word) {
+		this.word = word;
+	}
+
 }

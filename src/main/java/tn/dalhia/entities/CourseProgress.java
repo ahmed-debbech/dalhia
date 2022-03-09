@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

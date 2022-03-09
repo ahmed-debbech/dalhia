@@ -43,7 +43,8 @@ public class MailService {
 	 * @throws MailException
 	 */
 
-	public void sendEmail(User user) throws MailException {
+	public void sendAppEmail(User user) throws MailException {
+
 
 		/*
 		 * This JavaMailSender Interface is used to send Mail in Spring Boot. This
@@ -63,27 +64,46 @@ public class MailService {
 		javaMailSender.send(mail);
 	}
 
-	/**
-	 * This fucntion is used to send mail that contains a attachment.
-	 * 
-	 * @param user
-	 * @throws MailException
-	 * @throws MessagingException
-	 */
-	public void sendEmailWithAttachment(User user) throws MailException, MessagingException {
+	public void sendWarningEmail(User user) throws MailException {
 
-		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-		
-		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+		/*
+		 * This JavaMailSender Interface is used to send Mail in Spring Boot. This
+		 * JavaMailSender extends the MailSender Interface which contains send()
+		 * function. SimpleMailMessage Object is required because send() function uses
+		 * object of SimpleMailMessage as a Parameter
+		 */
 
-		helper.setTo(user.getEmail());
-		helper.setSubject("Testing Mail API with Attachment");
-		helper.setText("Please find the attached document below.");
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(user.getEmail());
+		mail.setSubject("DAHLIA BAN Warning");
+		mail.setText("You have recieved a BAN warning due to an appointment report assigned by a user.");
 
-		ClassPathResource classPathResource = new ClassPathResource("Attachment.pdf");
-		helper.addAttachment(classPathResource.getFilename(), classPathResource);
-
-		javaMailSender.send(mimeMessage);
+		/*
+		 * This send() contains an Object of SimpleMailMessage as an Parameter
+		 */
+		javaMailSender.send(mail);
 	}
+
+	public void sendBanEmail(User user) throws MailException {
+
+		/*
+		 * This JavaMailSender Interface is used to send Mail in Spring Boot. This
+		 * JavaMailSender extends the MailSender Interface which contains send()
+		 * function. SimpleMailMessage Object is required because send() function uses
+		 * object of SimpleMailMessage as a Parameter
+		 */
+
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(user.getEmail());
+		mail.setSubject("DAHLIA BAN Alert");
+		mail.setText("You have been BANNED by Admin due to excessive appointment reports by users.");
+
+		/*
+		 * This send() contains an Object of SimpleMailMessage as an Parameter
+		 */
+		javaMailSender.send(mail);
+	}
+
+	
 
 }

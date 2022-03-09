@@ -3,6 +3,7 @@ package tn.dalhia.services;
 import java.util.List;
 
 import tn.dalhia.entities.Report;
+import tn.dalhia.entities.User;
 
 public interface IReportService {
 	
@@ -12,4 +13,5 @@ public interface IReportService {
 	public void deleteReport(int id);
 	public void manageReportStatus(Report rp, int id);
 	//public List<Report> getReportsWithNbrSuggests();
+	public List<User> getAssociationsByActivityCount();
 }

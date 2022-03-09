@@ -1,10 +1,12 @@
 package tn.dalhia.entities;
 
 
+
 import lombok.*;
 import tn.dalhia.entities.enumerations.ResourceType;
 
 import javax.persistence.*;
+
 
 @Getter
 @Setter

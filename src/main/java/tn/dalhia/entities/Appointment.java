@@ -7,6 +7,9 @@ import lombok.Setter;
 import tn.dalhia.entities.enumerations.AppointmentStatus;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 @Entity
@@ -28,14 +31,22 @@ public class Appointment {
     private AppointmentStatus AppStatus;
 
 
-    @OneToOne(mappedBy = "appointment",cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private AppointmentRate appointmentRate;
     
-    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private AppointmentReport appointmentReport;
-
+   
+   
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
+    
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    @JsonIgnore
+    private User sender;
+
 }
 

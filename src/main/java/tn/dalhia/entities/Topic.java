@@ -40,7 +40,6 @@ public class Topic {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-
     @JsonIgnore
     private User user;
 

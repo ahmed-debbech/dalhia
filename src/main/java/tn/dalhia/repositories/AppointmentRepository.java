@@ -1,8 +1,13 @@
 package tn.dalhia.repositories;
 
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 
 import tn.dalhia.entities.Appointment;
@@ -24,5 +29,12 @@ public interface AppointmentRepository extends CrudRepository<Appointment,Intege
 
 	@Query(value ="SELECT COUNT(appointment.app_id) FROM appointment GROUP BY appointment.user_id ORDER BY COUNT(appointment.app_id) ASC LIMIT 1",nativeQuery=true)
     public int getLeastVisitedExpertAppNbr();
+
+	@Modifying
+	@Transactional
+	@Query(value="DELETE FROM appointment WHERE appointment.user_id = :usrId",nativeQuery=true)
+	public void DeleteAppByUsrId(@Param("usrId") Long usrId);
+
+
 }
 

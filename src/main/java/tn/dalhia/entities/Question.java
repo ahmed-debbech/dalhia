@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Question {
     private Long id;
     private int points;
     private int number;
+
     private String text;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Answer> answers;

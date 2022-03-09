@@ -1,4 +1,5 @@
 package tn.dalhia.entities;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +54,6 @@ public class Offer implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL , mappedBy="offer")
     private List<Application> applicationList= new ArrayList<>();;
-
 
 
 }

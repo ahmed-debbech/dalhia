@@ -28,6 +28,7 @@ public class ReviewService implements IReviewService {
 	
 	@Autowired
 	private OffensiveWordRepository offensivewordRp;
+
 	public List<Review> getAllReviews() {
 		List<Review> rvs = (List<Review>) rvr.findAll();
 		return rvs;
@@ -134,6 +135,7 @@ public class ReviewService implements IReviewService {
 		log.info("The Most Recommanded Expert is : "+user.getFirst_name()+" "+user.getLast_name()+" ,Profession: "+user.getJob()+" ,Address: "+user.getAddress()+" ,Phone: "+user.getPhone()+" with a total score of: "+score+"/5 based on "+nbr+" reviews.");
 		log.info("The Least Recommanded Expert is : "+user2.getFirst_name()+" "+user2.getLast_name()+" ,Profession: "+user2.getJob()+" ,Address: "+user2.getAddress()+" ,Phone: "+user2.getPhone()+" with a total score of: "+score2+"/5 based on "+nbr2+" reviews.");
        }
+
 
 
 }

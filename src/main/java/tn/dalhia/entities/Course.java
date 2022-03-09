@@ -1,4 +1,5 @@
 package tn.dalhia.entities;
+
 import lombok.*;
 import tn.dalhia.entities.enumerations.CourseStatus;
 

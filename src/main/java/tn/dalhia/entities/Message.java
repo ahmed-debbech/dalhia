@@ -17,6 +17,7 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String text;
+
     private LocalDateTime dateSent;
     private LocalDateTime dateRemoved;
     private boolean banned; // when in group chat

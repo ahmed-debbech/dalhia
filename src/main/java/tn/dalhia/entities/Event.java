@@ -1,6 +1,5 @@
 package tn.dalhia.entities;
 
-
 import tn.dalhia.entities.enumerations.EventCategory;
 import tn.dalhia.entities.enumerations.EventStatus;
 

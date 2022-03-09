@@ -1,6 +1,19 @@
 package tn.dalhia.entities;
 
+import tn.dalhia.entities.enumerations.AppointmentStatus;
+import tn.dalhia.entities.enumerations.Job;
+import tn.dalhia.entities.enumerations.ReportCategory;
+import tn.dalhia.entities.enumerations.Role;
+import tn.dalhia.entities.enumerations.Speciality;
 
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 import java.io.Serializable;
@@ -41,7 +54,7 @@ import tn.dalhia.entities.enumerations.Speciality;
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -79,12 +92,11 @@ public class User implements Serializable {
     
    
     private int zipCode;
-
     private int start_hour; //?? time ? e.g: 19:50
     private int end_hour; //?? time ? e.g: 19:50
     @Enumerated(EnumType.STRING)
     private Job job;
-    
+
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
     
@@ -121,12 +133,15 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Topic> topics; //?? to ask about comments
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<Appointment> appointmentLists;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<Request> requests;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+    private List<Review> reviews;
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
@@ -139,13 +154,9 @@ public class User implements Serializable {
     private List<Participation> participations;
 
 
-
     @OneToMany(mappedBy = "user")
     private List<Certificate> certificates;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Review> reviews;
-    
     
     public String getFirst_name() {
 		return first_name;

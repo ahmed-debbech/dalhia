@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.dalhia.entities.Report;
 import tn.dalhia.entities.User;
 import tn.dalhia.repositories.ReportRepository;
+import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.IReportService;
 
 @Service
@@ -17,6 +18,9 @@ public class ReportService implements IReportService{
 
 	@Autowired
 	private ReportRepository rr;
+	
+	@Autowired
+	private UserRepository ur;
 	
 	public List<Report> getAllReports() {
 
@@ -37,6 +41,7 @@ public class ReportService implements IReportService{
 	}
 
 	public void addReport(Report rp) {
+		rp.setStatus(rp.getStatus().PENDING);
 		rr.save(rp);
 		log.info("Report inserted successfully.");
 		
@@ -64,6 +69,14 @@ public class ReportService implements IReportService{
 		}
 		rr.save(Rp);
 		log.info("end of process.");	
+	}
+
+	@Override
+	public List<User> getAssociationsByActivityCount() {
+		
+		List<User> Associations = ur.getAssociationsPerActivityCount();
+		log.info("List of Associations ordered by Activity: "+Associations.toString());
+		return Associations;
 	}
 
 }

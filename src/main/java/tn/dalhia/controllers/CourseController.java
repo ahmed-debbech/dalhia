@@ -88,4 +88,11 @@ public class CourseController {
         );
     }
 
+    @GetMapping("/MRC")
+    public ResponseEntity<List<Course>> mostRelevantCourse(){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                courseService.mostRelevantCourse()
+        );
+    }
+
 }

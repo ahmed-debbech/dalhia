@@ -2,6 +2,7 @@ package tn.dalhia.services.implementations;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tn.dalhia.entities.*;
 import tn.dalhia.repositories.*;
@@ -9,7 +10,10 @@ import tn.dalhia.services.ICourseService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 @Service
 @Slf4j
@@ -100,5 +104,15 @@ public class CourseService implements ICourseService {
         myCourses.setFCWithoutCertificates(FCWithoutCertificates);
         myCourses.setFCWithCertificates(FCWithCertificates);
         return myCourses;
+    }
+
+    @Override
+    public List<Course> mostRelevantCourse (){
+        List<Course> mrc = new ArrayList<>();
+        for (CourseCategory cc : courseCategoryRepository.findAll()){
+            Collections.sort(cc.getCourseList());
+            mrc.add(cc.getCourseList().get(0));
+        }
+        return mrc;
     }
 }

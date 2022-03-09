@@ -49,6 +49,9 @@ public class CourseProgressService implements ICourseProgressService {
         courseProgress.setCourse(c);
         courseProgress.setAttempts(0);
         user.getCourseProgresses().add(courseProgress);
+        int nbrOfEnrolls = c.getNbrOfEnrolls();
+        nbrOfEnrolls = nbrOfEnrolls + 1;
+        c.setNbrOfEnrolls(nbrOfEnrolls);
          userRepository.save(user);
          return  courseProgress;
     }

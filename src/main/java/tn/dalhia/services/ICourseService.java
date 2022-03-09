@@ -8,6 +8,7 @@ import java.util.List;
 public interface ICourseService {
 
     List<Course> getAll();
+    List<Course> mostRelevantCourse ();
     MyCourses getMyCourses(Long id);
     Course add(Course course, Long id);
     Course modify(Course course, Long id);

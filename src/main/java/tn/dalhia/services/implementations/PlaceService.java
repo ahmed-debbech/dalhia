@@ -3,7 +3,10 @@ package tn.dalhia.services.implementations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.dalhia.entities.Course;
 import tn.dalhia.entities.Place;
+import tn.dalhia.repositories.CertificateRepository;
+import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.repositories.PlaceRepository;
 import tn.dalhia.services.IPlaceService;
 
@@ -14,6 +17,8 @@ import java.util.List;
 public class PlaceService implements IPlaceService {
     @Autowired
     PlaceRepository placeRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     @Override
     public List<Place> getAll(){
@@ -21,9 +26,13 @@ public class PlaceService implements IPlaceService {
     }
 
     @Override
-    public Place add(Place place){
-
-        return placeRepository.save(place);
+    public Place add(Place place, Long id){
+        Course c = courseRepository.findById(id).orElse(null);
+        if(c==null)
+            return null;
+        c.getPlaces().add(place);
+        courseRepository.save(c);
+        return place;
     }
 
     @Override

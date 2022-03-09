@@ -17,7 +17,6 @@ import java.time.LocalTime;
 public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     @NonNull private Long id;
     @NonNull private String address;
     @NonNull private String phone;

@@ -1,5 +1,4 @@
 package tn.dalhia.entities;
-
 import lombok.*;
 import tn.dalhia.entities.enumerations.CourseStatus;
 
@@ -11,10 +10,11 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Course {
+public class Course implements Comparable<Course>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,6 +26,7 @@ public class Course {
     private LocalDateTime dateRemoved;
     private int nbrPhases;
     private float rate;
+    private int nbrOfEnrolls;
 
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
@@ -38,4 +39,9 @@ public class Course {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Phase> phases;
+
+    @Override
+    public int compareTo(Course o) {
+        return (o.getNbrOfEnrolls() - this.nbrOfEnrolls) ;
+    }
 }

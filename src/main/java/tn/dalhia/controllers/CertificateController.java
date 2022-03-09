@@ -28,21 +28,14 @@ public class CertificateController {
                     certificateService.getAll()
             );
         }
-        /*@PostMapping("/{id}/certificate")
-        public ResponseEntity<Certificate> add(@PathVariable("id") Long id, @RequestBody Certificate certificate, @RequestBody Quiz quizUser, @PathVariable("idQuiz") Long idQuiz){
-            Certificate c = certificateService.add(certificate, id , quizUser, idQuiz);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    c
-            );
-        }*/
-
-        @PostMapping("/{id}/certificate")
-        public ResponseEntity<Certificate> add(@PathVariable("id") Long id){
-            Certificate c = certificateService.add(id);
+        @PostMapping("/{idCourse}/{idQuiz}/certificate")
+        public ResponseEntity<Certificate> add(@PathVariable("idCourse") Long courseId,  @RequestBody Quiz quizUser, @PathVariable("idQuiz") Long idQuiz){
+            Certificate c = certificateService.add(courseId , quizUser, idQuiz);
             return ResponseEntity.status(HttpStatus.OK).body(
                     c
             );
         }
+
         @PutMapping("/certificate/{id}")
         public ResponseEntity<Certificate> modify(@RequestBody Certificate certificate, @PathVariable("id") Long id){
             Certificate certificate1 = certificateService.modify(certificate, id);

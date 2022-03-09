@@ -3,10 +3,14 @@ package tn.dalhia.services.implementations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.dalhia.entities.Course;
+import tn.dalhia.entities.CourseCategory;
 import tn.dalhia.entities.CourseComment;
 import tn.dalhia.repositories.CourseCommentRepository;
+import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.services.ICourseCommentService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,6 +19,8 @@ public class CourseCommentService implements ICourseCommentService {
 
     @Autowired
     CourseCommentRepository courseCommentRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     @Override
     public List<CourseComment> getAll(){
@@ -22,8 +28,14 @@ public class CourseCommentService implements ICourseCommentService {
     }
 
     @Override
-    public CourseComment add(CourseComment courseComment){
-        return courseCommentRepository.save(courseComment);
+    public CourseComment add(CourseComment courseComment, Long id){
+        Course c = courseRepository.findById(id).orElse(null);
+        if(c==null)
+            return null;
+        c.getCourseComments().add(courseComment);
+        courseRepository.save(c);
+        return courseComment;
+
     }
 
     @Override

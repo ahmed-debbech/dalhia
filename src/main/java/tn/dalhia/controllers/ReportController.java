@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.dalhia.entities.Appointment;
 import tn.dalhia.entities.Report;
+import tn.dalhia.entities.User;
 import tn.dalhia.implementations.AppointmentService;
 import tn.dalhia.implementations.ReportService;
 
@@ -36,6 +37,14 @@ public class ReportController {
 			 
 			 List <Report> listRps = rs.getAllReports();
 			 return listRps;
+		 }
+		 
+	
+		 @GetMapping("/retrieve-all-associations-per-activity-count")
+		 public List <User> getAssociationsWithActCount(){
+			 
+			 List <User> Assocs = rs.getAssociationsByActivityCount();
+			 return Assocs;
 		 }
 		 
 	// http://localhost:8089/Dahlia/report/remove-report/{rp-id}

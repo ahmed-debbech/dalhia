@@ -1,5 +1,6 @@
 package tn.dalhia.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.dalhia.entities.Report;
 import tn.dalhia.entities.Request;
 import tn.dalhia.entities.User;
+import tn.dalhia.entities.enumerations.ReportCategory;
 import tn.dalhia.repositories.RequestRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.IReportService;
@@ -43,10 +45,7 @@ public class RequestService implements IRequestService {
 	@Override
 	public void addRequest(Request rq, Long AssocId) {
 		User user = userRepo.findById(AssocId).get();
-		rq.setRequestBody(rq.getRequestBody());
-		rq.setRequestDate(rq.getRequestDate());
-		rq.setRequestHeader(rq.getRequestHeader());
-
+        rq.setStatus(rq.getStatus().PENDING);
 		rq.setUser(user);
 		rqr.save(rq);
 		log.info("Request sent to: "+user.getRole()+": "+user.getFirst_name()+" successfully.");
@@ -57,6 +56,15 @@ public class RequestService implements IRequestService {
 	public void deleteRequest(int id) {
 		rqr.deleteById(id);
 		log.info("Request removed.");
+		
+	}
+
+	@Override
+	public int getMostRequestedAssocPerAct(ReportCategory Act) {
+		int associations;
+		associations = rqr.findMostRequestedAssocPerActivity(Act);
+		return associations;
+		
 		
 	}
 

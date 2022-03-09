@@ -8,11 +8,14 @@ import tn.dalhia.entities.enumerations.Speciality;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +27,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class User {
+	
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -52,6 +57,7 @@ public class User {
     private ReportCategory activity;
     private boolean ban;
 
+    
     @OneToMany(cascade = CascadeType.ALL) //uniderectional
     private List<Course> courses;
 
@@ -70,13 +76,14 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Topic> topics; //?? to ask about comments
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<Appointment> appointmentLists;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<Request> requests;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<Review> reviews;
 
     @OneToMany(cascade = CascadeType.ALL)

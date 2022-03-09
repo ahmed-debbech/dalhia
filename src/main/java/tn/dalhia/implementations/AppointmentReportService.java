@@ -49,10 +49,9 @@ public class AppointmentReportService implements IAppointmentReportService {
 	@Override
 	public void addAppointmentReport(AppointmentReport rp, Integer AppId) {
 		Appointment app = AppRepo.findById(AppId).get();
-		rp.setCategory(rp.getCategory());
-		rp.setReport(rp.getReport());
-		rp.setAppointment(app);
 		AppReportRepo.save(rp);
+		app.setAppointmentReport(rp);
+		AppRepo.save(app);
 		log.info("Appointment Report of Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+" added successfully.");
 		
 	}

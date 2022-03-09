@@ -1,5 +1,6 @@
 package tn.dalhia.implementations;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,30 @@ public class AppointmentService implements IAppointmentService {
 	@Autowired
 	private MailService Ms;
 	
+	@Autowired
+	private SmsService Ss;
+	
 	@Override
 	public void addAppointment(Appointment app, Long ExpertId) {
-		User user = userRepo.findById(ExpertId).get();
+		//Date today = new Date();
+	
 		
-		if(user.isBan()){
+		//log.info("today:"+today);
+		User user = userRepo.findById(ExpertId).get();
+		if(user == null || user.getRole().getValue()==2|| user.getRole().getValue()==3 || user.getRole().getValue()==4)
+		{
+            log.info("Expert not found, please verify chosen expert id.");
+		}
+		/*else if(app.getAppDate().before(today))
+		{
+			 log.info("chosen Appointment date is before current date, make sure to pick a valid date.");
+		}*/
+		else if(app.getAppHour().compareTo(user.getStart_hour())<0 || app.getAppHour().compareTo(user.getEnd_hour())>0)
+		{
+			log.info("chosen Appointment hour doesn't match expert's business hours.");
+		}
+		else if(user.isBan())
+		{
 			log.info("The following Expert: "+user.getFirst_name()+" "+user.getLast_name()+" ,Profession: "+user.getJob()+" is BANNED by Admin therefore no appointments can be taken.");
 		}
 		else{
@@ -47,15 +67,16 @@ public class AppointmentService implements IAppointmentService {
 		AppRepo.save(app);
 		log.info("Appointment with"+user.getJob()+": "+user.getFirst_name()+" "+user.getLast_name()+" is taken successfully.");
 		
-		}
-		
 		try {
-			Ms.sendEmail(user);
+			Ms.sendAppEmail(user);
+			
 		} catch (MailException mailException) {
 			System.out.println(mailException);
 		}
-		log.info("Appointment Mail has been sent to Expert successfully.");
+		Ss.sendSms(user);
+		log.info("Appointment Mail and SMS are sent to Expert successfully.");
 		
+		}	
 	}
 
 	@Override
@@ -112,15 +133,43 @@ public class AppointmentService implements IAppointmentService {
 	@Override
 	public void banReportedExpert() {
 		
-		Integer AppId = AppRpRepo.retrieveAppId();
-		Long UsrId = AppRpRepo.retrieveUserId(AppId);
-		
-		
+		Long UsrId = AppRpRepo.retrieveUserId();
 		User user = userRepo.findById(UsrId).get();
-		AppRpRepo.updateBan(UsrId);
-		log.info("Reported Expert: "+user.getFirst_name()+" "+user.getLast_name()+" ,Profession: "+user.getJob()+" ,Address: "+user.getAddress()+" ,Phone: "+user.getPhone()+" is BANNED by Admin.");
-		AppRepo.deleteById(AppId);
+		int count = AppRpRepo.getAppReportCountbyUserId(UsrId);
 		
+		if(count==1)
+		{
+			try {
+			
+				Ms.sendWarningEmail(user);
+			} catch (MailException mailException) {
+				System.out.println(mailException);
+			}
+			Ss.sendWarningSms(user);
+			log.info("BAN WARNING Mail and SMS are sent to Expert successfully.");
+			
+			}
+		else if(count>1)
+		{
+			AppRpRepo.updateBan(UsrId);
+			log.info("Reported Expert: "+user.getFirst_name()+" "+user.getLast_name()+" ,Profession: "+user.getJob()+" ,Address: "+user.getAddress()+" ,Phone: "+user.getPhone()+" is BANNED by Admin.");
+			
+			AppRepo.DeleteAppByUsrId(UsrId);
+			
+			try {
+				
+				Ms.sendBanEmail(user);
+			} catch (MailException mailException) {
+				System.out.println(mailException);
+			}
+			Ss.sendBanSms(user);
+			log.info("BAN Mail and SMS are sent to Expert successfully.");
+			
+		}	
+		else
+		{
+			log.info("No Appointment Reports found therefore no experts to ban.");
+		}
 	}
 	
 	

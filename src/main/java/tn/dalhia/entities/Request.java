@@ -7,6 +7,10 @@ import lombok.Setter;
 import tn.dalhia.entities.enumerations.RequestStatus;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -15,6 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Request {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer RequestId;
@@ -26,8 +31,15 @@ public class Request {
 
     @Enumerated(EnumType.STRING)
     private RequestStatus Status;
-
+    
+    
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
+    
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    @JsonIgnore
+    private User sender;
 }

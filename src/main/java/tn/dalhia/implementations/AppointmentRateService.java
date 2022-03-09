@@ -47,15 +47,53 @@ public class AppointmentRateService implements IAppointmentRateService {
 		AppRateRepo.save(rate);
 		log.info("Appointment Rate edited.");
 	}
+	
+	
 	@Override
 	public void addAppointmentRate(AppointmentRate Ar, Integer AppId) {
 		Appointment app = AppRepo.findById(AppId).get();
-		Ar.setStars(Ar.getStars());
-		Ar.setSatisfaction(Ar.getSatisfaction());
-		Ar.setAppointment(app);
-		AppRateRepo.save(Ar);
-		log.info("Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+" rated successfully.");
-		
+		if(Ar.getStars()>5){
+			
+		log.info("Appointment Rate MAX value limit is 5, no values beyond limit can be assigned.");	
+		}
+		else if(Ar.getStars()>=4){
+			Ar.setSatisfaction(Ar.getSatisfaction().EXCELLENT);
+			AppRateRepo.save(Ar);
+			app.setAppointmentRate(Ar);
+			AppRepo.save(app);
+			
+			log.info("Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+" rated successfully.");
+			
+			
+		}else if(Ar.getStars()<=1.5){
+			Ar.setSatisfaction(Ar.getSatisfaction().UNSATISFIED);
+			AppRateRepo.save(Ar);
+			app.setAppointmentRate(Ar);
+			AppRepo.save(app);
+			
+			log.info("Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+" rated successfully.");
+			
+		}
+		else if(Ar.getStars()>=3 && Ar.getStars()<4)
+		{
+			Ar.setSatisfaction(Ar.getSatisfaction().GOOD);
+			AppRateRepo.save(Ar);
+			app.setAppointmentRate(Ar);
+			AppRepo.save(app);
+			
+			log.info("Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+" rated successfully.");
+			
+		}
+		else if(Ar.getStars()>=2 && Ar.getStars()<3)
+		{
+			Ar.setSatisfaction(Ar.getSatisfaction().MODERATE);
+			AppRateRepo.save(Ar);
+			app.setAppointmentRate(Ar);
+			AppRepo.save(app);
+			
+			log.info("Appointment: "+app.getAppDate()+"at: "+app.getAppHour()+"H with: "+app.getUser().getJob()+" "+app.getUser().getFirst_name()+" "+app.getUser().getLast_name()+" rated successfully.");
+			
+		}
 	}
 
 	

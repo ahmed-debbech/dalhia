@@ -91,7 +91,6 @@ public class TopicController {
     }
     @PutMapping("/{id}/rate/{action}")
     public ResponseEntity<TopicRate> rateadd(@PathVariable("id") Long id, @PathVariable("action") VoteType voteType){
-        //TODO cancel a vote if it is already there by the same user
         TopicRate vt = topicService.addRate(voteType, id);
         if(vt == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -104,7 +103,6 @@ public class TopicController {
     }
     @DeleteMapping("/{id}/rate")
     public ResponseEntity<Boolean> deleterate(@PathVariable("id") Long id){
-        //TODO get the user id to delete the rate
         boolean b = topicService.RemoveRate(id);
         if(!b){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

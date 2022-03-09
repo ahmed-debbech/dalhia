@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import tn.dalhia.entities.Topic;
 import tn.dalhia.entities.TopicClaim;
 import tn.dalhia.entities.TopicRate;
+import tn.dalhia.entities.User;
 import tn.dalhia.entities.enumerations.VoteType;
 import java.time.temporal.ChronoUnit;
 import tn.dalhia.repositories.TopicRateRepository;
 import tn.dalhia.repositories.TopicRepository;
 import tn.dalhia.services.ITopicService;
+import tn.dalhia.shared.tools.UtilsUser;
 import tn.dalhia.utils.GeneralUtils;
 
 import javax.transaction.Transactional;
@@ -34,6 +36,8 @@ public class TopicService implements ITopicService {
     private TopicRepository topicRepository;
     @Autowired
     private TopicRateRepository topicRateRepository;
+    @Autowired
+    private UtilsUser utilsUser;
 
     @Override
     public List<Topic> getAll() {
@@ -45,6 +49,8 @@ public class TopicService implements ITopicService {
         topic.setBanned(false);
         topic.setDateRemoved(null);
         topic.setScore(0);
+        User logg = utilsUser.getLoggedInUser();
+        topic.setUser(logg);
         topic.setDatePublished(LocalDateTime.now());
         return topicRepository.save(topic);
     }
@@ -98,6 +104,8 @@ public class TopicService implements ITopicService {
             TopicRate tr = new TopicRate();
             tr.setDate(LocalDateTime.now());
             tr.setVoteType(voteType);
+            User logg = utilsUser.getLoggedInUser();
+            tr.setUser(logg);
             if(voteType == VoteType.UPVOTE){
                 tt.setScore(tt.getScore()+1);
             }else{
@@ -114,8 +122,15 @@ public class TopicService implements ITopicService {
     public boolean RemoveRate(Long id) {
         Topic tt = topicRepository.findById(id).orElse(null);
         if(tt != null){
-            //TODO get the user id to be able to find and delete the rate
-            //topicRateRepository.deleteById();
+            User logg = utilsUser.getLoggedInUser();
+            System.err.println(logg);
+            for(TopicRate tr : tt.getTopicRateList()){
+                if(tr.getUser().getId().equals(logg.getId())){
+                    tt.getTopicRateList().remove(tr);
+                    tt.setScore(tt.getScore() - 1);
+                    topicRepository.save(tt);
+                }
+            }
             return true;
         }
         return false;

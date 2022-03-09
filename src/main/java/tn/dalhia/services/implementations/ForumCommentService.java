@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.dalhia.entities.CommentReaction;
-import tn.dalhia.entities.ForumComment;
-import tn.dalhia.entities.OffensiveWord;
-import tn.dalhia.entities.Topic;
+import tn.dalhia.entities.*;
 import tn.dalhia.repositories.*;
 import tn.dalhia.services.IForumCommentService;
+import tn.dalhia.shared.tools.UtilsUser;
 import tn.dalhia.utils.CommentUtils;
 
 import javax.transaction.Transactional;
@@ -30,6 +28,10 @@ public class ForumCommentService implements IForumCommentService {
     private CommentReactionRepository commentReactionRepository;
     @Autowired
     private OffensiveWordRepository offensiveWordRepository;
+    @Autowired
+    private UserServiceImpl userService;
+    @Autowired
+    private UtilsUser utilsUser;
 
     @Override
     public ForumComment add(ForumComment comment, Long id) {
@@ -46,6 +48,8 @@ public class ForumCommentService implements IForumCommentService {
             comment.setBanned(false);
             comment.setDatePublished(LocalDateTime.now());
         }
+        User logg = utilsUser.getLoggedInUser();
+        comment.setUser(logg);
         c.getForumComments().add(comment);
         topicRepository.save(c);
         return comment;
@@ -113,6 +117,8 @@ public class ForumCommentService implements IForumCommentService {
         ForumComment c = repository.findById(id).orElse(null);
         if(c != null){
             comment.setDatePublished(LocalDateTime.now());
+            User logg = utilsUser.getLoggedInUser();
+            comment.setUser(logg);
             c.getReplies().add(comment);
             return repository.save(c);
         }
@@ -149,6 +155,8 @@ public class ForumCommentService implements IForumCommentService {
         ForumComment fc = repository.findById(id).orElse(null);
         if(fc != null){
             reaction.setDate(LocalDateTime.now());
+            User logg = utilsUser.getLoggedInUser();
+            reaction.setUser(logg);
             fc.getCommentReactionList().add(reaction);
             repository.save(fc);
             return reaction;
@@ -169,7 +177,17 @@ public class ForumCommentService implements IForumCommentService {
     public boolean deleteReaction(Long id) {
         ForumComment fc = repository.findById(id).orElse(null);
         if(fc != null){
-            //TODO CHECK IF A USER HAS ALREADY A REACTION THEN REMOVE IT\
+            User loggedin = utilsUser.getLoggedInUser();
+            CommentReaction found = null;
+            for(CommentReaction cr : fc.getCommentReactionList()){
+                if(cr.getUser().getId() == loggedin.getId()){
+                    found = cr;
+                    break;
+                }
+            }
+            if(found != null){
+                commentReactionRepository.delete(found);
+            }
             return true;
         }
         return false;

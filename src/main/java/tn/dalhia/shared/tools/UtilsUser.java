@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
@@ -98,4 +99,13 @@ public class UtilsUser {
 		return false;
 	}
 
+	public User getLoggedInUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth.isAuthenticated()) {
+			String logged_email = (String) auth.getPrincipal();
+			User logged_in_user = userRepository.findByEmail(logged_email);
+			return logged_in_user;
+		}
+		return null;
+	}
 }

@@ -20,4 +20,7 @@ public class CommentReaction {
     private LocalDateTime date;
     @Enumerated(EnumType.STRING)
     private ReactionType reactionType;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

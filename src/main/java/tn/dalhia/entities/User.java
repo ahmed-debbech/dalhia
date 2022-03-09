@@ -1,5 +1,22 @@
 package tn.dalhia.entities;
 
+
+import tn.dalhia.entities.enumerations.AppointmentStatus;
+import tn.dalhia.entities.enumerations.Job;
+import tn.dalhia.entities.enumerations.ReportCategory;
+import tn.dalhia.entities.enumerations.Role;
+import tn.dalhia.entities.enumerations.Speciality;
+
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Date;
@@ -16,9 +33,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
+
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,49 +49,49 @@ import tn.dalhia.entities.enumerations.Speciality;
 
 @Getter
 @Setter
-@Entity
 @ToString
-public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+@Entity
+public class User implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
     @Column(nullable=false)
     private String userId;
-
+    
     @Enumerated(EnumType.STRING)
     private Role role;
-
+    
     @Column(nullable = false)
     private String first_name;
-
+    
     @Column(nullable=false)
     private String last_name;
-
+    
     @Column(nullable=false ,length=120,unique=true)
     private String email;
-
+    
     @Column(nullable=false,length=9)
     private String phone;
 
-
-
+    
     @Column(nullable=false)
     private Date date_birth;
-
-
+    
+   
     private String address;
-
-
+    
+    
     private String city;
-
-
+    
+    
     private String state;
-
-
+    
+   
     private int zipCode;
     private int start_hour; //?? time ? e.g: 19:50
     private int end_hour; //?? time ? e.g: 19:50
@@ -80,10 +100,14 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Speciality speciality;
+    
+    @Column(nullable=false)
+	private String encryptedPaswword;
+
 
     @Column(nullable=false)
-    private String encryptedPaswword;
-
+	private Boolean emailVerificationStatus = false;
+	private String emailVerificationToken;
 
 
     @Enumerated(EnumType.STRING)
@@ -91,12 +115,8 @@ public class User implements Serializable {
     private boolean ban;
 
 
-    @Column(nullable=false)
-    private Boolean emailVerificationStatus = false;
-    private String emailVerificationToken;
 
-
-    @OneToMany(cascade = CascadeType.ALL) //the list of courses of coach
+	@OneToMany(cascade = CascadeType.ALL) //the list of courses of coach
     private List<Course> courses;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -104,9 +124,9 @@ public class User implements Serializable {
 
     @OneToOne  //kn nheb nzid abonn maa user fard wkt
     private Subscription subscriptions; //bi
-
+    
     @OneToMany(cascade = CascadeType.ALL ,mappedBy="users")
-    private List<Command> commands;
+ 	private List<Command> commands;
 
     //@OneToMany(cascade = CascadeType.ALL) //uni
     //private List<Application> applications;
@@ -114,12 +134,15 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
     private List<Topic> topics; //?? to ask about comments
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<Appointment> appointmentLists;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<Request> requests;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+    private List<Review> reviews;
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
@@ -132,12 +155,16 @@ public class User implements Serializable {
     private List<Participation> participations;
 
 
-
     @OneToMany(mappedBy = "user")
     private List<Certificate> certificates;
 
+
+
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Review> reviews;
+    private List<Application> applications;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<HistoryOffer> history;
 
 
     public String getFirst_name() {

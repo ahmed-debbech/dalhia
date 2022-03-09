@@ -50,7 +50,7 @@ public class AnswerService implements IAnswerService {
              if (isTrue == 1 && answer.getCorrect()==true){
                 return null;
             }else{
-                if (isTrue==0 && q.getAnswers().size()==3 && answer.getCorrect()==false)
+                if (isTrue==0 && q.getAnswers().size()==4 && answer.getCorrect()==false)
                      return null;
                 q.getAnswers().add(answer);
                 q.setNumber(q.getAnswers().size());
@@ -59,6 +59,7 @@ public class AnswerService implements IAnswerService {
             return answer;
         }
         return null;
+
     }
 
     @Override

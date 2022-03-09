@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

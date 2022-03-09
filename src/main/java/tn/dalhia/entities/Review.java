@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 @Entity
@@ -23,4 +26,16 @@ public class Review {
     private String ReviewHeader;
     private String ReviewBody;
     private Float Stars;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    @JsonIgnore
+    private User sneder;
+
 }

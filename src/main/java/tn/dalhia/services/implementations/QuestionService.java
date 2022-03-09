@@ -36,7 +36,7 @@ public class QuestionService implements IQuestionService {
         Quiz q = quizRepository.findById(id).orElse(null);
         if (q == null)
             return null;
-        if (q.getQuestions().size() > 10) {
+        if (q.getQuestions().size() >= 10) {
             return null;
         }else {
             q.getQuestions().add(question);

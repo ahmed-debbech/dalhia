@@ -29,7 +29,6 @@ public class CertificateService implements ICertificateService {
     QuizRepository quizRepository;
     @Autowired
     UserRepository userRepository;
-
     @Override
     public List<Certificate> getAll(){
         return certificateRepository.findAll();
@@ -44,6 +43,7 @@ public class CertificateService implements ICertificateService {
         if(cc.getPrice()==0) {
             certificate.setCertificateType(CertificateType.HOBBY);
         }else if(this.noteQuiz(courseId, quizUser, idQuiz) >= 30){
+            System.err.println("note");
             certificate.setCertificateType(CertificateType.PROFESSIONAL);
         }
 
@@ -59,6 +59,7 @@ public class CertificateService implements ICertificateService {
 
 
     private int noteQuiz (Long courseId, Quiz quizUser , Long idQuiz) {
+        System.err.println(quizUser);
         Course cc = courseRepository.findById(courseId).orElse(null);
         Quiz quizC = quizRepository.findById(idQuiz).orElse(null); //correction
         boolean resC = true, resU = true;
@@ -84,6 +85,7 @@ public class CertificateService implements ICertificateService {
                                     }
                                 }
                                 break;
+
                             }
                         }
                     }
@@ -124,6 +126,7 @@ public class CertificateService implements ICertificateService {
         } catch (WriterException | IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -152,6 +155,5 @@ public class CertificateService implements ICertificateService {
         }
         return false;
     }
-
 
 }

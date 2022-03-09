@@ -13,7 +13,6 @@ import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.ICourseProgressService;
 
-import javax.jws.soap.SOAPBinding;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,18 +41,19 @@ public class CourseProgressService implements ICourseProgressService {
         User user = userRepository.findById(idUser).orElse(null);
         if (c == null)
             return null;
-        courseProgress.setCourseProgressStatus(CourseProgressStatus.IP);
-        courseProgress.setDuration(0);
-        courseProgress.setNoteQuiz(0);
-        courseProgress.setEnrollDate(LocalDateTime.now());
-        courseProgress.setCourse(c);
-        courseProgress.setAttempts(0);
-        user.getCourseProgresses().add(courseProgress);
+        CourseProgress courseProgress1 = new CourseProgress();
+        courseProgress1.setCourseProgressStatus(CourseProgressStatus.IP);
+        courseProgress1.setDuration(0);
+        courseProgress1.setNoteQuiz(0);
+        courseProgress1.setEnrollDate(LocalDateTime.now());
+        courseProgress1.setCourse(c);
+        courseProgress1.setAttempts(0);
+        user.getCourseProgresses().add(courseProgress1);
         int nbrOfEnrolls = c.getNbrOfEnrolls();
         nbrOfEnrolls = nbrOfEnrolls + 1;
         c.setNbrOfEnrolls(nbrOfEnrolls);
          userRepository.save(user);
-         return  courseProgress;
+         return  courseProgress1;
     }
 
     @Override
@@ -117,5 +117,4 @@ public class CourseProgressService implements ICourseProgressService {
         courseProgressRepository.save(courseProgress);
         return courseProgress;
     }
-
 }

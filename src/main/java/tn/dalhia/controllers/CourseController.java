@@ -74,7 +74,6 @@ public class CourseController {
         );
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id){
         boolean b = courseService.delete(id);
@@ -94,5 +93,4 @@ public class CourseController {
                 courseService.mostRelevantCourse()
         );
     }
-
 }

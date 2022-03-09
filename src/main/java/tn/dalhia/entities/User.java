@@ -1,5 +1,8 @@
 package tn.dalhia.entities;
 
+
+
+
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Date;
@@ -16,9 +19,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.entities.enumerations.Speciality;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +36,7 @@ import tn.dalhia.entities.enumerations.Speciality;
 @Getter
 @Setter
 @ToString
+
 @Entity
 public class User implements Serializable {
 	
@@ -388,6 +394,12 @@ public class User implements Serializable {
 	public void setEncryptedPaswword(String encryptedPaswword) {
 		this.encryptedPaswword = encryptedPaswword;
 	}
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Application> applications;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<HistoryOffer> history;
 
 
 }

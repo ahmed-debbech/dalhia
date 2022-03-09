@@ -1,9 +1,16 @@
 package tn.dalhia.entities;
 
+
+import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Phase {
     @Id
@@ -13,7 +20,7 @@ public class Phase {
     private int number;
     private int duration;
     private Date dateAdded;
-    private boolean finalPhase;
+    private Boolean finalPhase;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Quiz> quiz;

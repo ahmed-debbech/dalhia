@@ -14,6 +14,7 @@ import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.ICourseProgressService;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -98,6 +99,7 @@ public class CourseProgressService implements ICourseProgressService {
                 duration = duration + p.getDuration();
             }
         }*/
+        Collections.sort(c.getPhases());
         for (Phase p : c.getPhases()){
             duration = duration + p.getDuration();
             n++;

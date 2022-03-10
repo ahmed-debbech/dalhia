@@ -1,9 +1,6 @@
 package tn.dalhia.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import tn.dalhia.entities.enumerations.CourseProgressStatus;
 import tn.dalhia.entities.enumerations.CourseStatus;
 
@@ -13,6 +10,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

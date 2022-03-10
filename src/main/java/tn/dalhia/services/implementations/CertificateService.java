@@ -94,22 +94,23 @@ public class CertificateService implements ICertificateService {
                 System.err.println(note);
                 User user = userRepository.findById(1L).orElse(null);
                 for (CourseProgress courseProgress : user.getCourseProgresses()) {
-                    int att = courseProgress.getAttempts();
-                    if (att == 3){
-                        System.err.println("NO");
-                        break;
-                    }
-                    if (cc.getId() == courseProgress.getCourse().getId()) {
-                        courseProgress.setNoteQuiz(note);
-                        int diff = courseProgress.getAttDate().plusHours(48).compareTo(LocalDateTime.now());
-                        if ((att == 2) && (diff > 0)){
-                            System.err.println("you have to wait 48 hours !!");
+                    if (cc.getId().equals(courseProgress.getCourse().getId())) {
+                        int att = courseProgress.getAttempts();
+                        if (att == 3){
+                            System.err.println("NO");
                             break;
-                        }else{
-                            att += 1;
-                            courseProgress.setAttempts(att);
-                            courseProgress.setAttDate(LocalDateTime.now());
                         }
+                        if(att != 0) {
+                            int diff = courseProgress.getAttDate().plusHours(48).compareTo(LocalDateTime.now());
+                            if ((att == 2) && (diff > 0)) {
+                                System.err.println("you have to wait 48 hours !!");
+                                break;
+                            }
+                        }
+                        att += 1;
+                        courseProgress.setNoteQuiz(note);
+                        courseProgress.setAttempts(att);
+                        courseProgress.setAttDate(LocalDateTime.now());
                     }
                 }
             }

@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Phase {
+public class Phase implements Comparable<Phase>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,5 +28,10 @@ public class Phase {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Resources> resources;
+
+    @Override
+    public int compareTo(Phase o){
+        return (this.number - o.getNumber());
+    }
 
 }

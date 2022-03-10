@@ -37,11 +37,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 		.permitAll()
 		.antMatchers(HttpMethod.POST , SecurityConstants.PASSWORD_RESET_URL)
 		.permitAll()
-		.antMatchers(HttpMethod.GET , SecurityConstants.EXPORT_PDF)
-		.permitAll()
-		.anyRequest().permitAll() //sign up authorized be9i lkol le
-				//.anyRequest().authenticated()
-		//.and().oauth2Login()
+//		.antMatchers(HttpMethod.GET , SecurityConstants.EXPORT_PDF)
+//		.permitAll()
+		.anyRequest().authenticated() //sign up authorized be9i lkol le
+		.and().oauth2Login()
 		.and()
 		.addFilter(getAuthenticationFilter())
 		.addFilter(new AuthorizationFilter(authenticationManager())) //lkool lezem iconectiw ken sign up

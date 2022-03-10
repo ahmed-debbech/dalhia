@@ -14,8 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -294,7 +294,7 @@ public class UserServiceImpl implements UserService {
 		List<User> userEntities = userRepo.findAll();
 		
 		for(User user : userEntities ) {
-		if(UtilsUser.hastokenExpired2(user.getEmailVerificationToken())){
+		if(user.getEmailVerificationToken()!=null && UtilsUser.hastokenExpired2(user.getEmailVerificationToken())){
 			user.setEmailVerificationToken(utils.generateEmailVerificationToken(user.getUserId()));
 			User updatedUserDetails = userRepo.save(user);
 			
@@ -326,5 +326,4 @@ public class UserServiceImpl implements UserService {
 		}
 		return returnValue;
 	}
-
 }

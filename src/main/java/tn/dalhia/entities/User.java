@@ -19,6 +19,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -165,6 +166,9 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<HistoryOffer> history;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private List<Event> event = new ArrayList<>();
 
 
     public String getFirst_name() {
@@ -416,6 +420,9 @@ public class User implements Serializable {
         this.encryptedPaswword = encryptedPaswword;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER,optional = true)
+    @JoinColumn(name = "donation_id", nullable = true)
+    private Donation donation;
 
 
 

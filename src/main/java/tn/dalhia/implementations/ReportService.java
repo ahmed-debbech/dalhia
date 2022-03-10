@@ -11,6 +11,7 @@ import tn.dalhia.entities.User;
 import tn.dalhia.repositories.ReportRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.IReportService;
+import tn.dalhia.shared.tools.UtilsUser;
 
 @Service
 @Slf4j
@@ -21,6 +22,9 @@ public class ReportService implements IReportService{
 	
 	@Autowired
 	private UserRepository ur;
+
+	@Autowired
+	private UtilsUser utilsUser;
 	
 	public List<Report> getAllReports() {
 
@@ -41,6 +45,9 @@ public class ReportService implements IReportService{
 	}
 
 	public void addReport(Report rp) {
+		User logg = utilsUser.getLoggedInUser();
+		rp.setSender(logg);
+
 		rp.setStatus(rp.getStatus().PENDING);
 		rr.save(rp);
 		log.info("Report inserted successfully.");

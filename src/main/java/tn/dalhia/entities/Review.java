@@ -36,6 +36,6 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "sender_id")
     @JsonIgnore
-    private User sneder;
+    private User sender;
 
 }

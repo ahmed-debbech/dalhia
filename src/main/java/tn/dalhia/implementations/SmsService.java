@@ -24,7 +24,7 @@ public class SmsService {
 
 	public void sendSms(User user){
 		/*if(isPhoneNumberValid(user.getPhone())){*/
-				PhoneNumber to = new PhoneNumber(user.getPhone());
+				PhoneNumber to = new PhoneNumber("+216"+user.getPhone());
 				PhoneNumber from = new PhoneNumber("+15617638595");
 				String sms = "You have recieved an appointment notification, please check your account at Dahlia App for more details.";
 				MessageCreator creator = Message.creator(to, from, sms);

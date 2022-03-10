@@ -14,7 +14,7 @@ import tn.dalhia.repositories.AppointmentReportRepository;
 import tn.dalhia.repositories.AppointmentRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.IAppointmentService;
-
+import tn.dalhia.shared.tools.UtilsUser;
 
 
 @Slf4j
@@ -35,12 +35,16 @@ public class AppointmentService implements IAppointmentService {
 	
 	@Autowired
 	private SmsService Ss;
+
+	@Autowired
+	private UtilsUser utilsUser;
 	
 	@Override
 	public void addAppointment(Appointment app, Long ExpertId) {
 		//Date today = new Date();
-	
-		
+
+		User logg = utilsUser.getLoggedInUser();
+		app.setSender(logg);
 		//log.info("today:"+today);
 		User user = userRepo.findById(ExpertId).get();
 		if(user == null || user.getRole().getValue()==2|| user.getRole().getValue()==3 || user.getRole().getValue()==4)

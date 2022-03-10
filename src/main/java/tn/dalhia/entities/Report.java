@@ -8,7 +8,11 @@ import tn.dalhia.entities.enumerations.ReportCategory;
 import tn.dalhia.entities.enumerations.ReportStatus;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,7 +34,15 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private ReportStatus status;
     
+    @ManyToMany(cascade = CascadeType.ALL)
+
+    private List<User> suggestions;
     
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    @JsonIgnore
+    private User sender;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

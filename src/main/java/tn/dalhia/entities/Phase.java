@@ -3,6 +3,7 @@ package tn.dalhia.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,20 +12,26 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Phase {
+public class Phase implements Comparable<Phase>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
     private int number;
     private int duration;
-    private Date dateAdded;
-    private boolean finalPhase;
+    private LocalDateTime dateAdded;
+    private Boolean finalPhase;
+    private int status;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Quiz> quiz;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Resources> resources;
+
+    @Override
+    public int compareTo(Phase o){
+        return (this.number - o.getNumber());
+    }
 
 }

@@ -13,4 +13,6 @@ public interface IAppointmentService {
 	public List<Appointment> getAllAppointments();
 	public void updateAppointment(Appointment app, int id);
 	public void addAppointment(Appointment app, Long ExpertId);
+	public void getMostAndLeastVisitedExpert();
+	public void banReportedExpert();
 }

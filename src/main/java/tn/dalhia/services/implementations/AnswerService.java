@@ -25,17 +25,41 @@ public class AnswerService implements IAnswerService {
     }
 
 
-    /*@Override
+    @Override
     public List<Answer> getAllByQuestion( Long id){
         Question q = questionRepository.findById(id).orElse(null);
         if (q == null)
             return null;
 
         return q.getAnswers();
-    }*/
+    }
+
     @Override
-    public Answer add(Answer answer){
-        return answerRepository.save(answer);
+    public Answer add(Answer answer, Long id){
+        int isTrue = 0;
+        Question q = questionRepository.findById(id).orElse(null);
+        if (q == null)
+        return null;
+        if (q.getAnswers().size() < 4){
+
+            for(Answer a : q.getAnswers()){
+                if(a.getCorrect()==true)
+                    isTrue=1;
+                    break;
+            }
+             if (isTrue == 1 && answer.getCorrect()==true){
+                return null;
+            }else{
+                if (isTrue==0 && q.getAnswers().size()==4 && answer.getCorrect()==false)
+                     return null;
+                q.getAnswers().add(answer);
+                q.setNumber(q.getAnswers().size());
+                questionRepository.save(q);
+            }
+            return answer;
+        }
+        return null;
+
     }
 
     @Override
@@ -53,9 +77,12 @@ public class AnswerService implements IAnswerService {
     }
 
     @Override
-    public  boolean delete(Long id){
+    public  boolean delete(Long id, Long idQuestion){
         Answer a = answerRepository.findById(id).orElse(null);
-        if(a != null){
+        Question q = questionRepository.findById(idQuestion).orElse(null);
+        if(a != null && q!=null){
+            q.setNumber(q.getNumber()-1);
+            questionRepository.save(q);
             answerRepository.delete(a);
             return true;
         }

@@ -28,9 +28,9 @@ public class CourseCommentController {
                 courseCommentService.getAll()
         );
     }
-    @PostMapping("/add")
-    public ResponseEntity<CourseComment> add(@RequestBody CourseComment courseComment){
-        CourseComment c = courseCommentService.add(courseComment);
+    @PostMapping("/{id}/add")
+    public ResponseEntity<CourseComment> add(@RequestBody CourseComment courseComment, @PathVariable("idCourse") Long id){
+        CourseComment c = courseCommentService.add(courseComment, id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 c
         );

@@ -1,8 +1,15 @@
 package tn.dalhia.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class OwnedChannels {
 
     @Id
@@ -12,6 +19,10 @@ public class OwnedChannels {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id2")
+    private User user2;
 
     @ManyToOne
     @JoinColumn(name = "channel_id")

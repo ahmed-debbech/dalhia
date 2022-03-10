@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import tn.dalhia.entities.enumerations.TopicClaimType;

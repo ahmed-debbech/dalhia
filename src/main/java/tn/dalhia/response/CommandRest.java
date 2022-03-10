@@ -14,6 +14,7 @@ public class CommandRest {
 	private String email;
 	private int card;
 	private int code;
+	private int quantity;
 	private List<Product> products;
 	@JsonIgnore
 	private User users;
@@ -58,6 +59,12 @@ public class CommandRest {
 	}
 	public void setUsers(User users) {
 		this.users = users;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	

@@ -3,6 +3,7 @@ package tn.dalhia.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,14 +12,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NonNull private String title;
-    @NonNull private Date dateAdded;
-    @NonNull private Date dateRemoved;
+    private String title;
+    private LocalDateTime dateAdded;
+    private LocalDateTime dateRemoved;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Answer> answers;
+    private List<Question> questions;
 }

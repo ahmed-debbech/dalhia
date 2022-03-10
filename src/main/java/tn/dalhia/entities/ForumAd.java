@@ -1,16 +1,24 @@
 package tn.dalhia.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class ForumAd {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
     private int viewChannel;
-    private Date startDate;
+    private LocalDateTime startDate;
     private Date endDate;
     private int expectedViews;
     private int actualViews; // the actual loads of the ad in a page for a user
@@ -25,7 +33,7 @@ public class ForumAd {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "forum_ad_id")
     private ForumAdTarget forumAdTarget;
 

@@ -3,10 +3,14 @@ package tn.dalhia.services.implementations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.dalhia.entities.Course;
 import tn.dalhia.entities.Phase;
+
+import tn.dalhia.repositories.CourseRepository;
 import tn.dalhia.repositories.PhaseRepository;
 import tn.dalhia.services.IPhaseService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Service
 @Slf4j
@@ -14,6 +18,8 @@ public class PhaseService implements IPhaseService {
 
     @Autowired
     PhaseRepository phaseRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     @Override
     public List<Phase> getAll(){
@@ -21,9 +27,26 @@ public class PhaseService implements IPhaseService {
     }
 
     @Override
-    public Phase add(Phase phase){
-
-        return phaseRepository.save(phase);
+    public Phase add(Phase phase, Long id) {
+        Course c = courseRepository.findById(id).orElse(null);
+        if (c == null)
+            return null;
+        int b=0;
+        for (Phase p : c.getPhases()) {
+            if (p.getFinalPhase() == true) {
+                b = 1;
+                System.err.println("ons");
+            }
+        }
+        if(b==0){
+            System.err.println(b);
+            phase.setNumber(c.getNbrPhases() + 1);
+            phase.setDateAdded(LocalDateTime.now());
+            c.getPhases().add(phase);
+            c.setNbrPhases(c.getNbrPhases() + 1);
+            courseRepository.save(c);
+        }
+        return phase;
     }
 
     @Override
@@ -41,9 +64,22 @@ public class PhaseService implements IPhaseService {
     }
 
     @Override
-    public  boolean delete(Long id){
+    public List<Phase> getAllByCourse(Long id){
+        Course c = courseRepository.findById(id).orElse(null);
+        if (c == null)
+            return null;
+
+        return c.getPhases();
+    }
+
+    @Override
+    public  Boolean delete(Long id, Long idCourse){
         Phase ph = phaseRepository.findById(id).orElse(null);
-        if(ph != null){
+        Course c = courseRepository.findById(idCourse).orElse(null);
+
+        if(ph != null && c!=null){
+            c.setNbrPhases(c.getNbrPhases()-1);
+            courseRepository.save(c);
             phaseRepository.delete(ph);
             return true;
         }

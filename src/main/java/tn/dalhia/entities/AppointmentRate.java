@@ -28,8 +28,10 @@ public class AppointmentRate {
     @Enumerated(EnumType.STRING)
     private Satisfaction satisfaction;
 
-    @JsonIgnore
+    /*@JsonIgnore
     @OneToOne
-    @JoinColumn(name = "appointment_id")
+    @JoinColumn(name = "appointment_id")*/
+    @JsonIgnore
+    @OneToOne(mappedBy="appointmentRate",cascade = CascadeType.ALL)
     private Appointment appointment;
 }

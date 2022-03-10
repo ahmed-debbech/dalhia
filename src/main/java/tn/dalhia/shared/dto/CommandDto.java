@@ -13,6 +13,7 @@ public class CommandDto {
 	private String email;
 	private int card;
 	private int code;
+	private int quantity;
 	private List<Product> products;
 	private User users;
 	public Long getId() {
@@ -62,6 +63,12 @@ public class CommandDto {
 	}
 	public void setUsers(User users) {
 		this.users = users;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	

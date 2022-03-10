@@ -40,6 +40,18 @@ public class AppointmentController {
 			 return listApps;
 		 }
 		 
+		//http://localhost:8089/Dahlia/review/retrieve-all-reviews
+		 @GetMapping("/retrieve-most&least-visited-expert")
+		 public void retrieveMostAndLeastVisitedExpert(){
+			 as.getMostAndLeastVisitedExpert();
+		 }
+		 
+		//http://localhost:8089/Dahlia/review/retrieve-all-reviews
+		 @GetMapping("/ban-reported-expert")
+		 public void banReportedExpert(){
+			 as.banReportedExpert();
+		 }
+		 
 	// http://localhost:8089/Dahlia/appointment/remove-appointment/{app-id}
 		@DeleteMapping("/remove-appointment/{app-id}")
 		public void removeAppointment(@PathVariable("app-id") Integer AppId) {

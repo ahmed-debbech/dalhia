@@ -1,6 +1,7 @@
 package tn.dalhia.entities;
 
 
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -73,8 +74,5 @@ public class Plan implements Serializable {
 	public void setSubscriptions(List<Subscription> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
-    
-	
 
-  
 }

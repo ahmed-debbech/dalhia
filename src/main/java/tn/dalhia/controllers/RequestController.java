@@ -1,8 +1,12 @@
 package tn.dalhia.controllers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import tn.dalhia.entities.Appointment;
 import tn.dalhia.entities.Request;
-import tn.dalhia.implementations.AppointmentService;
+import tn.dalhia.entities.User;
+import tn.dalhia.entities.enumerations.ReportCategory;
 import tn.dalhia.implementations.RequestService;
 
 @RestController
@@ -29,6 +33,11 @@ public class RequestController {
 		public void addRequest(@RequestBody Request rq,@PathVariable("expert-id") Long ExpertId) {
 		 rqs.addRequest(rq, ExpertId);
 		}
+
+		 @GetMapping("/get-most-requestedAssoc-byAct/{activity}")
+			public int getMostRequestedAssocByAct(@PathVariable("activity") ReportCategory activity) {
+			 return rqs.getMostRequestedAssocPerAct(activity);
+			}
 	 
 	//http://localhost:8089/Dahlia/request/retrieve-all-requests
 		 @GetMapping("/retrieve-all-requests")
@@ -49,4 +58,5 @@ public class RequestController {
 		public void editRequest(@RequestBody Request rq,@PathVariable("rq-id") Integer RqId) {
 			 rqs.updateRequest(rq, RqId);
 			}
+
 }

@@ -2,6 +2,7 @@ package tn.dalhia.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,38 +30,37 @@ public class PlanController {
 	PlanService planService;
 	
 	@PostMapping()
-	public PlanRest createPlan(@RequestBody PlanRequestModel planDetails) {
+	public PlanRest createPlan(@RequestBody PlanRequestModel planDetails, Authentication authentification) {
 		PlanRest returnValue = new PlanRest();
 		
 		ModelMapper modelMapper = new ModelMapper();
-		PlanDto createPlan = planService.createPlan(planDetails);
-		
+		PlanDto createPlan = planService.createPlan(planDetails,authentification);
 		returnValue = modelMapper.map(createPlan, PlanRest.class);
 		return returnValue;
 	}
 	
 	@PutMapping("/{id}")
-	public PlanRest updatePlan(@RequestBody PlanRequestModel planDetails, @PathVariable Long id) {
+	public PlanRest updatePlan(@RequestBody PlanRequestModel planDetails, @PathVariable Long id, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
 		
-		 PlanDto updatePlan = planService.updatePlan(planDetails,id);
+		 PlanDto updatePlan = planService.updatePlan(planDetails,id,authentification);
 		 PlanRest returnValue = modelMapper.map(updatePlan, PlanRest.class);
 		return returnValue;
 	}
 	
 	@GetMapping("/{id}")
-	public PlanRest getPlan(@PathVariable Long id) {
+	public PlanRest getPlan(@PathVariable Long id, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
-		 PlanDto getPlan = planService.getPlanById(id);
+		 PlanDto getPlan = planService.getPlanById(id,authentification);
 		 PlanRest returnValue = modelMapper.map(getPlan, PlanRest.class);
 		return returnValue;
 	}
 	@DeleteMapping("/{id}")
-	public OperationStatusModel deletePlan(@PathVariable Long id) {
+	public OperationStatusModel deletePlan(@PathVariable Long id, Authentication authentification) {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
 		
-		planService.deletePlan(id);
+		planService.deletePlan(id,authentification);
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 		
 		return returnValue;

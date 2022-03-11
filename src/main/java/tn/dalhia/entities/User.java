@@ -1,6 +1,5 @@
 package tn.dalhia.entities;
 
-
 import tn.dalhia.entities.enumerations.AppointmentStatus;
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.ReportCategory;

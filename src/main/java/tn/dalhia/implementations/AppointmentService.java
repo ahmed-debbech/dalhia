@@ -45,6 +45,7 @@ public class AppointmentService implements IAppointmentService {
 
 		User logg = utilsUser.getLoggedInUser();
 		app.setSender(logg);
+    
 		//log.info("today:"+today);
 		User user = userRepo.findById(ExpertId).get();
 		if(user == null || user.getRole().getValue()==2|| user.getRole().getValue()==3 || user.getRole().getValue()==4)

@@ -55,5 +55,4 @@ public class Offer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL , mappedBy="offer")
     private List<Application> applicationList= new ArrayList<>();;
 
-
 }

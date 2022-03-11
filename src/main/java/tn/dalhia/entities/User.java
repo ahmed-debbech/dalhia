@@ -425,5 +425,11 @@ public class User implements Serializable {
     private Donation donation;
 
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Application> applications;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<HistoryOffer> history;
+
 
 }

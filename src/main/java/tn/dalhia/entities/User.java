@@ -18,6 +18,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -157,254 +158,271 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Certificate> certificates;
 
-    
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Application> applications;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<HistoryOffer> history;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private List<Event> event = new ArrayList<>();
+
+
     public String getFirst_name() {
-		return first_name;
-	}
+        return first_name;
+    }
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
-	}
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
 
-	public String getLast_name() {
-		return last_name;
-	}
+    public String getLast_name() {
+        return last_name;
+    }
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
-	}
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-
-	public Date getDate_birth() {
-		return date_birth;
-	}
-
-	public void setDate_birth(Date date_birth) {
-		this.date_birth = date_birth;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public int getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
 
-	public int getStart_hour() {
-		return start_hour;
-	}
+    public Date getDate_birth() {
+        return date_birth;
+    }
 
-	public void setStart_hour(int start_hour) {
-		this.start_hour = start_hour;
-	}
+    public void setDate_birth(Date date_birth) {
+        this.date_birth = date_birth;
+    }
 
-	public int getEnd_hour() {
-		return end_hour;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setEnd_hour(int end_hour) {
-		this.end_hour = end_hour;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
 
 
-	public Boolean getEmailVerificationStatus() {
-		return emailVerificationStatus;
-	}
-	public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
-		this.emailVerificationStatus = emailVerificationStatus;
-	}
-	public String getEmailVerificationToken() {
-		return emailVerificationToken;
-	}
-	public void setEmailVerificationToken(String emailVerificationToken) {
-		this.emailVerificationToken = emailVerificationToken;
-	}
 
-	public String getUserId() {
-		return userId;
-	}
+    public int getStart_hour() {
+        return start_hour;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setStart_hour(int start_hour) {
+        this.start_hour = start_hour;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public int getEnd_hour() {
+        return end_hour;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public void setEnd_hour(int end_hour) {
+        this.end_hour = end_hour;
+    }
 
-	public Job getJob() {
-		return job;
-	}
 
-	public void setJob(Job job) {
-		this.job = job;
-	}
+    public Boolean getEmailVerificationStatus() {
+        return emailVerificationStatus;
+    }
+    public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
+        this.emailVerificationStatus = emailVerificationStatus;
+    }
+    public String getEmailVerificationToken() {
+        return emailVerificationToken;
+    }
+    public void setEmailVerificationToken(String emailVerificationToken) {
+        this.emailVerificationToken = emailVerificationToken;
+    }
 
-	public Speciality getSpeciality() {
-		return speciality;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setSpeciality(Speciality speciality) {
-		this.speciality = speciality;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public Subscription getSubscriptions() {
-		return subscriptions;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public void setSubscriptions(Subscription subscriptions) {
-		this.subscriptions = subscriptions;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	public List<Course> getCourses() {
-		return courses;
-	}
+    public Job getJob() {
+        return job;
+    }
 
-	public void setCourses(List<Course> courses) {
-		this.courses = courses;
-	}
+    public void setJob(Job job) {
+        this.job = job;
+    }
 
-	public List<CourseProgress> getCourseProgresses() {
-		return courseProgresses;
-	}
+    public Speciality getSpeciality() {
+        return speciality;
+    }
 
-	public void setCourseProgresses(List<CourseProgress> courseProgresses) {
-		this.courseProgresses = courseProgresses;
-	}
+    public void setSpeciality(Speciality speciality) {
+        this.speciality = speciality;
+    }
 
-	public List<Topic> getTopics() {
-		return topics;
-	}
+    public Subscription getSubscriptions() {
+        return subscriptions;
+    }
 
-	public void setTopics(List<Topic> topics) {
-		this.topics = topics;
-	}
+    public void setSubscriptions(Subscription subscriptions) {
+        this.subscriptions = subscriptions;
+    }
 
-	public List<Appointment> getAppointmentLists() {
-		return appointmentLists;
-	}
+    public List<Course> getCourses() {
+        return courses;
+    }
 
-	public void setAppointmentLists(List<Appointment> appointmentLists) {
-		this.appointmentLists = appointmentLists;
-	}
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
 
-	public List<Request> getRequests() {
-		return requests;
-	}
+    public List<CourseProgress> getCourseProgresses() {
+        return courseProgresses;
+    }
 
-	public void setRequests(List<Request> requests) {
-		this.requests = requests;
-	}
+    public void setCourseProgresses(List<CourseProgress> courseProgresses) {
+        this.courseProgresses = courseProgresses;
+    }
 
-	public List<Report> getReports() {
-		return reports;
-	}
+    public List<Topic> getTopics() {
+        return topics;
+    }
 
-	public void setReports(List<Report> reports) {
-		this.reports = reports;
-	}
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
 
-	public List<Donation> getDonations() {
-		return donations;
-	}
+    public List<Appointment> getAppointmentLists() {
+        return appointmentLists;
+    }
 
-	public void setDonations(List<Donation> donations) {
-		this.donations = donations;
-	}
+    public void setAppointmentLists(List<Appointment> appointmentLists) {
+        this.appointmentLists = appointmentLists;
+    }
 
-	public List<Participation> getParticipations() {
-		return participations;
-	}
+    public List<Request> getRequests() {
+        return requests;
+    }
 
-	public void setParticipations(List<Participation> participations) {
-		this.participations = participations;
-	}
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
+    }
 
-	public List<Certificate> getCertificates() {
-		return certificates;
-	}
+    public List<Report> getReports() {
+        return reports;
+    }
 
-	public void setCertificates(List<Certificate> certificates) {
-		this.certificates = certificates;
-	}
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
+    }
 
-	public List<Review> getReviews() {
-		return reviews;
-	}
+    public List<Donation> getDonations() {
+        return donations;
+    }
 
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}
+    public void setDonations(List<Donation> donations) {
+        this.donations = donations;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public List<Participation> getParticipations() {
+        return participations;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setParticipations(List<Participation> participations) {
+        this.participations = participations;
+    }
 
-	public List<Command> getCommands() {
-		return commands;
-	}
+    public List<Certificate> getCertificates() {
+        return certificates;
+    }
 
-	public void setCommands(List<Command> commands) {
-		this.commands = commands;
-	}
+    public void setCertificates(List<Certificate> certificates) {
+        this.certificates = certificates;
+    }
 
-	public String getEncryptedPaswword() {
-		return encryptedPaswword;
-	}
+    public List<Review> getReviews() {
+        return reviews;
+    }
 
-	public void setEncryptedPaswword(String encryptedPaswword) {
-		this.encryptedPaswword = encryptedPaswword;
-	}
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Command> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(List<Command> commands) {
+        this.commands = commands;
+    }
+
+    public String getEncryptedPaswword() {
+        return encryptedPaswword;
+    }
+
+    public void setEncryptedPaswword(String encryptedPaswword) {
+        this.encryptedPaswword = encryptedPaswword;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER,optional = true)
+    @JoinColumn(name = "donation_id", nullable = true)
+    private Donation donation;
+
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Application> applications;

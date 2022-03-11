@@ -22,6 +22,7 @@ import tn.dalhia.repositories.CommandRepository;
 import tn.dalhia.repositories.ProductRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.request.CommandRequestModel;
+import tn.dalhia.request.CommandRequestProducts;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.services.CommandService;
 import tn.dalhia.shared.dto.CommandDto;
@@ -46,16 +47,18 @@ public class CommandServiceImpl implements CommandService{
 	@Transactional
 	public CommandDto createCommand(CommandRequestModel commandDetails, String id, Authentication authentification) {
 		User userEntity = userRepo.findByUserId(id);
+		List<Product> products = new ArrayList<>();
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		if (commandDetails.getProducts() == null) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FILED.getErrorMessage());
 		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		
-		for (Product product : commandDetails.getProducts()) {
-			Product testProduct = productRepo.getById(product.getId());
+		for (CommandRequestProducts commandRequestProducts : commandDetails.getProducts()) {
+			Product testProduct = productRepo.findByProductId(commandRequestProducts.getIdProducts());
 			if (testProduct == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-			if (testProduct.getQuantity() == 0) throw new UserServiceException(ErrorMessages.QUANTITY_OVER.getErrorMessage());
-			testProduct.setQuantity(testProduct.getQuantity() - 1);
+			if (testProduct.getQuantity() == 0 || testProduct.getQuantity()-commandDetails.getQuantity()<0) throw new UserServiceException(ErrorMessages.QUANTITY_OVER.getErrorMessage());
+			testProduct.setQuantity(testProduct.getQuantity() - commandDetails.getQuantity());
 			productRepo.save(testProduct);
+			products.add(testProduct);
 		}
 		
 		Command commandEntity = new Command();
@@ -64,6 +67,7 @@ public class CommandServiceImpl implements CommandService{
 		// ?? add command question 
 		commandEntity.setCommandId(utils.generateCommandId(30));
 		commandEntity.setUsers(userEntity);
+		commandEntity.setProducts(products);
 //		for (Product products : commandDetails.getProducts()) {
 //			commandEntity.getProducts().add(products);
 //		}
@@ -86,7 +90,7 @@ public class CommandServiceImpl implements CommandService{
 		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		Command commandEntity = commandRepo.findByCommandId(id);
 		if (commandEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-
+		
 		commandEntity.setCard(commandDetails.getCard());
 		commandEntity.setCode(commandDetails.getCode());
 		commandEntity.setEmail(commandDetails.getEmail());

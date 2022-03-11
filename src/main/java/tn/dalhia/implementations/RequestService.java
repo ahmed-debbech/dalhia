@@ -15,6 +15,7 @@ import tn.dalhia.repositories.RequestRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.IReportService;
 import tn.dalhia.services.IRequestService;
+import tn.dalhia.shared.tools.UtilsUser;
 
 @Service
 @Slf4j
@@ -25,6 +26,9 @@ public class RequestService implements IRequestService {
 	
 	@Autowired
 	private UserRepository userRepo;
+
+	@Autowired
+	private UtilsUser utilsUser;
 	
 	public List<Request> getAllRequests() {
 		List<Request> rqs = (List<Request>) rqr.findAll();
@@ -44,6 +48,9 @@ public class RequestService implements IRequestService {
 
 	@Override
 	public void addRequest(Request rq, Long AssocId) {
+		User logg = utilsUser.getLoggedInUser();
+		rq.setSender(logg);
+
 		User user = userRepo.findById(AssocId).get();
         rq.setStatus(rq.getStatus().PENDING);
 		rq.setUser(user);

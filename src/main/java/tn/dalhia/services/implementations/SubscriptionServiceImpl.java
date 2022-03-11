@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,6 +129,7 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 
 	@Override
 	//@Scheduled(cron = "0 1 0 * * * ") //kolyoum maa nos lil o d9i9a
+	//@Scheduled(fixedRate=6000*60)
 	public void checkSubscription() throws ParseException {
 		List<Subscription> subs = subscriptionRepo.findAll();
 		

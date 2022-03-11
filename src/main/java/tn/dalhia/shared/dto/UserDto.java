@@ -41,8 +41,8 @@ public class UserDto implements Serializable {
 
 	private int zipCode;
 
-	private LocalTime start_hour;
-	private LocalTime end_hour;
+	private int start_hour;
+	private int end_hour;
 	@Enumerated(EnumType.STRING)
 	private Job job;
 
@@ -138,16 +138,16 @@ public class UserDto implements Serializable {
 	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
-	public LocalTime getStart_hour() {
+	public int getStart_hour() {
 		return start_hour;
 	}
-	public void setStart_hour(LocalTime start_hour) {
+	public void setStart_hour(int start_hour) {
 		this.start_hour = start_hour;
 	}
-	public LocalTime getEnd_hour() {
+	public int getEnd_hour() {
 		return end_hour;
 	}
-	public void setEnd_hour(LocalTime end_hour) {
+	public void setEnd_hour(int end_hour) {
 		this.end_hour = end_hour;
 	}
 	public Job getJob() {

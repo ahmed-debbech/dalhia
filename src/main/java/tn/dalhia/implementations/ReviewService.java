@@ -15,6 +15,7 @@ import tn.dalhia.repositories.OffensiveWordRepository;
 import tn.dalhia.repositories.ReviewRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.IReviewService;
+import tn.dalhia.shared.tools.UtilsUser;
 
 @Service
 @Slf4j
@@ -28,6 +29,9 @@ public class ReviewService implements IReviewService {
 	
 	@Autowired
 	private OffensiveWordRepository offensivewordRp;
+
+	@Autowired
+	private UtilsUser utilsUser;
 
 	public List<Review> getAllReviews() {
 		List<Review> rvs = (List<Review>) rvr.findAll();
@@ -62,6 +66,10 @@ public class ReviewService implements IReviewService {
 
 	@Override
 	public void addReview(Review rv, Long ExpertId) {
+
+		User logg = utilsUser.getLoggedInUser();
+		rv.setSender(logg);
+
 		User user = userRepo.findById(ExpertId).get();
 
 		String Body = rv.getReviewBody();

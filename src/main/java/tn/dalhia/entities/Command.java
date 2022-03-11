@@ -29,6 +29,8 @@ public class Command implements Serializable {
 	private int card;
 	@Column(nullable=false , length=3)
 	private int code;
+	@Column(nullable=false )
+	private int quantity;
 	
 	@ManyToOne
 	User users;
@@ -85,6 +87,12 @@ public class Command implements Serializable {
 	}
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	

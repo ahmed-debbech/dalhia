@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.dalhia.entities.Course;
+import tn.dalhia.entities.MyCourses;
 import tn.dalhia.entities.Phase;
 import tn.dalhia.services.ICourseService;
 import tn.dalhia.services.IPhaseService;
@@ -33,9 +34,17 @@ public class CourseController {
                 courseService.getAll()
         );
     }
-    @PostMapping("/add")
-    public ResponseEntity<Course> add(@RequestBody Course course){
-        Course c = courseService.add(course);
+
+    @GetMapping("/{idUser}/myCourses")
+    public ResponseEntity<MyCourses> getMyCourses(@PathVariable("idUser") Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                courseService.getMyCourses(id)
+        );
+    }
+
+    @PostMapping("/{idCourseCategory}/add")
+    public ResponseEntity<Course> add(@RequestBody Course course, @PathVariable("idCourseCategory") Long id){
+        Course c = courseService.add(course,id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 c
         );
@@ -78,4 +87,10 @@ public class CourseController {
         );
     }
 
+    @GetMapping("/MRC")
+    public ResponseEntity<List<Course>> mostRelevantCourse(){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                courseService.mostRelevantCourse()
+        );
+    }
 }

@@ -36,8 +36,7 @@ public class Appointment {
     
     @OneToOne(cascade = CascadeType.REMOVE)
     private AppointmentReport appointmentReport;
-   
-   
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore

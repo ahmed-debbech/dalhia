@@ -160,8 +160,6 @@ public class User implements Serializable {
 
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Application> applications;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<HistoryOffer> history;
@@ -427,8 +425,7 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Application> applications;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<HistoryOffer> history;
+
 
 
 }

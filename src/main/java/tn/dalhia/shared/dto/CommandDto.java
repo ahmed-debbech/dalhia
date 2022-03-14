@@ -1,8 +1,5 @@
 package tn.dalhia.shared.dto;
 
-import java.util.List;
-
-import tn.dalhia.entities.Product;
 import tn.dalhia.entities.User;
 
 public class CommandDto {
@@ -13,8 +10,6 @@ public class CommandDto {
 	private String email;
 	private int card;
 	private int code;
-	private int quantity;
-	private List<Product> products;
 	private User users;
 	public Long getId() {
 		return id;
@@ -52,24 +47,12 @@ public class CommandDto {
 	public void setCode(int code) {
 		this.code = code;
 	}
-	public List<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
 	public User getUsers() {
 		return users;
 	}
 	public void setUsers(User users) {
 		this.users = users;
 	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	
+
 	
 }

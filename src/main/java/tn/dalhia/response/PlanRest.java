@@ -2,6 +2,7 @@ package tn.dalhia.response;
 
 public class PlanRest {
 	
+	private Long id;
     private String title;
     private float price;
     private String photo;
@@ -22,6 +23,12 @@ public class PlanRest {
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
     
     

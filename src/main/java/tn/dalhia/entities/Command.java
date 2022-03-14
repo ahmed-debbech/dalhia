@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Command implements Serializable {
@@ -29,14 +29,17 @@ public class Command implements Serializable {
 	private int card;
 	@Column(nullable=false , length=3)
 	private int code;
-	@Column(nullable=false )
-	private int quantity;
+//	@Column(nullable=false )
+//	private int quantity;
 	
 	@ManyToOne
 	User users;
 	
-	@ManyToMany()
-	private List<Product> products;
+//	@ManyToMany()
+//	private List<Product> products;
+	
+	@OneToMany(mappedBy="commands")
+	private List<CommandProduct> quantities;
 
 	
 	public Long getId() {
@@ -82,19 +85,25 @@ public class Command implements Serializable {
 	public void setUsers(User users) {
 		this.users = users;
 	}
-	public List<Product> getProducts() {
-		return products;
+//	public List<Product> getProducts() {
+//		return products;
+//	}
+//	public void setProducts(List<Product> products) {
+//		this.products = products;
+//	}
+//	public int getQuantity() {
+//		return quantity;
+//	}
+//	public void setQuantity(int quantity) {
+//		this.quantity = quantity;
+//	}
+//	
+	public List<CommandProduct> getQuantities() {
+		return quantities;
 	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setQuantities(List<CommandProduct> quantities) {
+		this.quantities = quantities;
 	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	
 	
 
 

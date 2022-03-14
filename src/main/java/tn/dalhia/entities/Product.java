@@ -1,12 +1,14 @@
 package tn.dalhia.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -30,6 +32,9 @@ public class Product implements Serializable{
  	private int price;
  	@Column(nullable=false)
  	private int quantity;
+ 	
+ 	@OneToMany(mappedBy="products")
+	private List<CommandProduct> quantities;
 
 	public Long getId() {
 		return id;
@@ -79,6 +84,14 @@ public class Product implements Serializable{
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public List<CommandProduct> getQuantities() {
+		return quantities;
+	}
+
+	public void setQuantities(List<CommandProduct> quantities) {
+		this.quantities = quantities;
 	}
 
  	

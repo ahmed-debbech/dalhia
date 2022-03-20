@@ -93,4 +93,18 @@ public class CourseController {
                 courseService.mostRelevantCourse()
         );
     }
+
+    @GetMapping("/AC")
+    public ResponseEntity<List<Course>> acceptedCourses(){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                courseService.acceptedCourses()
+        );
+    }
+
+    @GetMapping("/RC")
+    public ResponseEntity<List<Course>> rejectedCourses(){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                courseService.rejectedCourses()
+        );
+    }
 }

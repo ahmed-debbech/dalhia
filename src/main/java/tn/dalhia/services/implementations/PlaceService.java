@@ -30,6 +30,8 @@ public class PlaceService implements IPlaceService {
         Course c = courseRepository.findById(id).orElse(null);
         if(c==null)
             return null;
+        if (c.getModality()== "en ligne")
+            return null;
         c.getPlaces().add(place);
         courseRepository.save(c);
         return place;

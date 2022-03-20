@@ -42,7 +42,8 @@ public class QuizService implements IQuizService {
         for(Phase p : c.getPhases()){
             if(p.getFinalPhase() == true) return null;
         }
-
+        quiz.setDateAdded(LocalDateTime.now());
+        quiz.setTitle("Quiz");
         Phase phase = new Phase();
         phase.setQuiz(new ArrayList<>());
         phase.setFinalPhase(true);

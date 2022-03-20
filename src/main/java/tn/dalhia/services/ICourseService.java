@@ -9,6 +9,8 @@ public interface ICourseService {
 
     List<Course> getAll();
     List<Course> mostRelevantCourse ();
+    List<Course> acceptedCourses();
+    List<Course> rejectedCourses();
     MyCourses getMyCourses(Long id);
     Course add(Course course, Long id);
     Course modify(Course course, Long id);

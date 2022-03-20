@@ -43,7 +43,6 @@ public class CertificateService implements ICertificateService {
         if(cc.getPrice()==0) {
             certificate.setCertificateType(CertificateType.HOBBY);
         }else if(this.noteQuiz(courseId, quizUser, idQuiz) >= 30){
-            System.err.println("note");
             certificate.setCertificateType(CertificateType.PROFESSIONAL);
         }
 
@@ -90,7 +89,6 @@ public class CertificateService implements ICertificateService {
                         }
                     }
                 }
-
                 System.err.println(note);
                 User user = userRepository.findById(1L).orElse(null);
                 for (CourseProgress courseProgress : user.getCourseProgresses()) {

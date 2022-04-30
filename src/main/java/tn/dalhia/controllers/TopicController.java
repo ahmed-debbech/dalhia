@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/forum/topics")
 @RequiredArgsConstructor
+//@CrossOrigin("http://localhost:4200")
 @Slf4j
 public class TopicController {
 

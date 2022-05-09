@@ -27,9 +27,9 @@ public class Topic {
     @Enumerated(EnumType.STRING)
     private Tag tag;
     private int score;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private LocalDateTime datePublished;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateRemoved;
     private boolean banned;
     private LocalDateTime lastBeTopicOfTheDay; //last time this topic was the topic of the day
@@ -43,7 +43,7 @@ public class Topic {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+    //@JsonIgnore
     private User user;
 
 }

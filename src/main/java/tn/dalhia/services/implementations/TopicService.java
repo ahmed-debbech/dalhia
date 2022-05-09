@@ -50,9 +50,11 @@ public class TopicService implements ITopicService {
         topic.setDateRemoved(null);
         topic.setScore(0);
         User logg = utilsUser.getLoggedInUser();
-        topic.setUser(logg);
         topic.setDatePublished(LocalDateTime.now());
-        return topicRepository.save(topic);
+        topic.setUser(logg);
+        topic = topicRepository.save(topic);
+        System.err.println(topic);
+        return topic;
     }
 
     @Override

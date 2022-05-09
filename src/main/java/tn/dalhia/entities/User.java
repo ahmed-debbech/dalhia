@@ -131,8 +131,6 @@ public class User implements Serializable {
     //@OneToMany(cascade = CascadeType.ALL) //uni
     //private List<Application> applications;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //bi
-    private List<Topic> topics; //?? to ask about comments
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<Appointment> appointmentLists;
@@ -329,13 +327,6 @@ public class User implements Serializable {
         this.courseProgresses = courseProgresses;
     }
 
-    public List<Topic> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
-    }
 
     public List<Appointment> getAppointmentLists() {
         return appointmentLists;

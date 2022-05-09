@@ -165,9 +165,9 @@ public class TopicService implements ITopicService {
         }
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    //@Scheduled(cron = "0 0 0 * * *")
     @Override
-    public void getTopicOfTheDay(){
+    public Topic getTopicOfTheDay(){
         //we get all topics of this day
         List<Topic> topicsOfToday = topicRepository.getTopicsOfToday();
         System.err.println(topicsOfToday.toString());
@@ -253,6 +253,6 @@ public class TopicService implements ITopicService {
         System.err.println("THE POST OF THE DAY IS: " + postOfTheDay);
         //we affect that to database
         postOfTheDay.setLastBeTopicOfTheDay(LocalDateTime.now());
-        topicRepository.save(postOfTheDay);
+        return topicRepository.save(postOfTheDay);
     }
 }

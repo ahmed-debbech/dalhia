@@ -127,7 +127,10 @@ public class TopicController {
         );
     }
     @GetMapping("/topicOfTheDay")
-    public void topoftheday(){
-        topicService.getTopicOfTheDay();
+    public ResponseEntity<Topic> topoftheday(){
+        Topic t  = topicService.getTopicOfTheDay();
+        return ResponseEntity.status(HttpStatus.OK).body(
+                t
+        );
     }
 }

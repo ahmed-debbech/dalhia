@@ -1,5 +1,8 @@
 package tn.dalhia.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import tn.dalhia.entities.Product;
 import tn.dalhia.request.ProductRequestModel;
 import tn.dalhia.response.OperationStatusModel;
 import tn.dalhia.response.ProductRest;
@@ -66,4 +70,17 @@ public class ProductController {
 		
 		return returnValue;
 	}
+	@GetMapping
+	public List<ProductRest> getProduct(Authentication authentification) {
+		List<Product> products = productService.getProducts(authentification);
+		List<ProductRest> returnValue = new ArrayList<>();
+				
+		for (Product product : products) {
+			ModelMapper modelMapper = new ModelMapper();
+			ProductRest rest = modelMapper.map(product, ProductRest.class);
+			returnValue.add(rest);
+		}
+		return returnValue;
+	}
+	
 }

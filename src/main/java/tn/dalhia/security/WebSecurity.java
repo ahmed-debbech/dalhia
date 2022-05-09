@@ -29,6 +29,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure (HttpSecurity http) throws Exception {
+		 http.cors().and()
+         .authorizeRequests()
+         .antMatchers(HttpMethod.OPTIONS).permitAll();
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST , SecurityConstants.SIGN_UP_URL)
 		.permitAll()
 		.antMatchers(HttpMethod.GET , SecurityConstants.VERIFICATION_EMAIL_URL)
@@ -37,8 +40,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 		.permitAll()
 		.antMatchers(HttpMethod.POST , SecurityConstants.PASSWORD_RESET_URL)
 		.permitAll()
-//		.antMatchers(HttpMethod.GET , SecurityConstants.EXPORT_PDF)
-//		.permitAll()
+		.antMatchers(HttpMethod.GET , SecurityConstants.EXPORT_PDF)
+		.permitAll()
 		.anyRequest().authenticated() //sign up authorized be9i lkol le
 			//	.anyRequest().permitAll()
 		//.and().oauth2Login()
@@ -47,7 +50,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 		.addFilter(new AuthorizationFilter(authenticationManager())) //lkool lezem iconectiw ken sign up
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // bch nkoulou l spring security eli rest api te3na lezem ikounou stateless
 //	}				// maghir matsir http session
-	
+		
+//	http.cors();
 	}
 	@Override
 	public void configure (AuthenticationManagerBuilder auth) throws Exception {

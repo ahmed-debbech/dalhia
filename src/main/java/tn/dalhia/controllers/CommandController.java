@@ -6,6 +6,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import tn.dalhia.request.CommandRequestModel;
+import tn.dalhia.response.CommandProductRest;
 import tn.dalhia.response.CommandRest;
 import tn.dalhia.response.OperationStatusModel;
 import tn.dalhia.response.RequestOperationName;
@@ -34,7 +36,7 @@ public class CommandController {
 	@Autowired
 	CommandService commandService;
 	
-	@PostMapping("/{id}")
+	@PostMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public CommandRest createCommand (@RequestBody CommandRequestModel commandDetails, @PathVariable String id, Authentication authentification) {
 
 		ModelMapper modelMapper = new ModelMapper();
@@ -43,7 +45,7 @@ public class CommandController {
 		return returnValue;
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public CommandRest updateCommand (@RequestBody CommandRequestModel commandDetails, @PathVariable String id, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
 		CommandDto createCommand = commandService.updateCommand(commandDetails,id,authentification);
@@ -51,7 +53,7 @@ public class CommandController {
 		return returnValue;
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public CommandRest getCommand(@PathVariable String id, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
 		CommandDto command = commandService.getCommandById(id,authentification);
@@ -60,8 +62,8 @@ public class CommandController {
 		return returnValue;
 	}
 
-	@GetMapping("/get-commands-pagination")
-	public List<CommandRest> getCommands(@RequestParam(value="page",defaultValue="0") int page ,
+	@GetMapping(path="/get-commands-pagination",produces={MediaType.APPLICATION_JSON_VALUE})
+	public List<CommandRest> getCommandsPage(@RequestParam(value="page",defaultValue="0") int page ,
 			@RequestParam(value="limit",defaultValue="3") int limit, Authentication authentification) {
 		List<CommandRest> returnValue = new ArrayList<>();
 		 List<CommandDto> commands = commandService.getCommandsPagination(page,limit,authentification);
@@ -74,7 +76,7 @@ public class CommandController {
 		return returnValue;
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public OperationStatusModel deleteCommand(@PathVariable String id, Authentication authentification) {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
@@ -84,5 +86,10 @@ public class CommandController {
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 		
 		return returnValue;
+	}
+	
+	@GetMapping(produces={MediaType.APPLICATION_JSON_VALUE})
+	public List<CommandProductRest> getCommands(Authentication authentification) {
+		return commandService.getCommands(authentification);
 	}
 }

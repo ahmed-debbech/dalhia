@@ -6,6 +6,7 @@ public class ProductRequestModel {
  	private String description;
  	private int price;
  	private int quantity;
+    private String photo;
 
 	public String getTitle() {
 		return title;
@@ -31,6 +32,13 @@ public class ProductRequestModel {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
  	
+	
  	
 }

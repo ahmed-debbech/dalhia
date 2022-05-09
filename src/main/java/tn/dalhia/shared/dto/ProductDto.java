@@ -8,6 +8,8 @@ public class ProductDto {
  	private String description;
  	private int price;
  	private int quantity;
+ 	
+ 	private String photo;
 
 	public Long getId() {
 		return id;
@@ -45,7 +47,14 @@ public class ProductDto {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 
+	
 	// zid mtaa command f lkol rest ,req...
  	
  	

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import tn.dalhia.request.CommandRequestModel;
+import tn.dalhia.response.CommandProductRest;
 import tn.dalhia.shared.dto.CommandDto;
 
 public interface CommandService {
@@ -17,5 +18,7 @@ public interface CommandService {
 	void deleteCommand(String id, Authentication authentification);
 
 	List<CommandDto> getCommandsPagination(int page, int limit, Authentication authentification);
+
+	List<CommandProductRest> getCommands(Authentication authentification);
 
 }

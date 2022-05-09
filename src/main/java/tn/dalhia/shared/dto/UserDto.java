@@ -1,11 +1,12 @@
 package tn.dalhia.shared.dto;
 
 import java.io.Serializable;
-import java.time.LocalTime;
 import java.util.Date;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import tn.dalhia.entities.enumerations.Job;
 import tn.dalhia.entities.enumerations.Role;
@@ -31,6 +32,7 @@ public class UserDto implements Serializable {
 
 	private String password;
 
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date_birth;
 
 	private String address;

@@ -1,11 +1,15 @@
 package tn.dalhia.services.implementations;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.Plan;
+import tn.dalhia.entities.Subscription;
+import tn.dalhia.entities.User;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.PlanRepository;
 import tn.dalhia.request.PlanRequestModel;
@@ -69,10 +73,26 @@ public class PlanServiceImpl implements PlanService {
 	public void deletePlan(Long id, Authentication authentification) {
 		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		Plan plan = planRepo.findById(id).orElse(null);
+		
 		if (plan == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		if(plan.getSubscriptions()!=null) {
+			List<Subscription> subscriptions = plan.getSubscriptions();
+			for(Subscription sub : subscriptions) {
+				User user = sub.getUserDetails();
+				user.setSubscriptions(null);
+			}
+			
+		}
+			
 		planRepo.delete(plan);
 		
 		
+	}
+
+	@Override
+	public List<Plan> getPlans(Authentication authentification) {
+		// TODO Auto-generated method stub
+		return planRepo.findAll();
 	}
 
 }

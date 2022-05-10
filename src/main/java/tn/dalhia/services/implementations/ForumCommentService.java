@@ -12,7 +12,9 @@ import tn.dalhia.utils.CommentUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,10 +60,17 @@ public class ForumCommentService implements IForumCommentService {
     @Override
     public List<ForumComment> getAll(Long id) {
         Topic c = topicRepository.findById(id).orElse(null);
-        if(c == null){
+        if(c == null) {
             return null;
         }
-        return c.getForumComments();
+        List<ForumComment> cmt = new ArrayList<>();
+        for(ForumComment fc : c.getForumComments()){
+            if(!fc.isBanned()){
+                System.err.println("gggg");
+                cmt.add(fc);
+            }
+        }
+        return cmt;
     }
 
     @Override

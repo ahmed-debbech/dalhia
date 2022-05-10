@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import tn.dalhia.entities.Topic;
-import tn.dalhia.entities.TopicClaim;
-import tn.dalhia.entities.TopicRate;
-import tn.dalhia.entities.User;
+import tn.dalhia.entities.*;
 import tn.dalhia.entities.enumerations.VoteType;
 import java.time.temporal.ChronoUnit;
 import tn.dalhia.repositories.TopicRateRepository;
@@ -23,6 +20,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -71,7 +69,12 @@ public class TopicService implements ITopicService {
 
     @Override
     public Topic get(Long id) {
-        return topicRepository.findById(id).orElse(null);
+        Topic tt = topicRepository.findById(id).orElse(null);
+        if(tt != null) {
+            List<ForumComment> gg = tt.getForumComments().stream().filter(cm -> !cm.isBanned()).collect(Collectors.toList());
+            tt.setForumComments(gg);
+        }
+        return tt;
     }
 
     @Override

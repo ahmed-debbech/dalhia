@@ -32,6 +32,7 @@ public class Topic {
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateRemoved;
     private boolean banned;
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private LocalDateTime lastBeTopicOfTheDay; //last time this topic was the topic of the day
 
     @OneToMany(cascade = CascadeType.ALL)

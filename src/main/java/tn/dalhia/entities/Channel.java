@@ -1,6 +1,7 @@
 package tn.dalhia.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import tn.dalhia.entities.enumerations.Access;
 import tn.dalhia.entities.enumerations.ChannelType;
@@ -23,6 +24,7 @@ public class Channel {
     private String name;
     private ChannelType channelType;
     private Access access; // private by default for INDIV chats
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime dateCreated;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Message> messageList;

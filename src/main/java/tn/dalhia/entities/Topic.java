@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -26,9 +27,12 @@ public class Topic {
     @Enumerated(EnumType.STRING)
     private Tag tag;
     private int score;
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private LocalDateTime datePublished;
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateRemoved;
     private boolean banned;
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private LocalDateTime lastBeTopicOfTheDay; //last time this topic was the topic of the day
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -40,7 +44,7 @@ public class Topic {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+    //@JsonIgnore
     private User user;
 
 }

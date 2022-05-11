@@ -15,9 +15,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.Command;
+import tn.dalhia.entities.CommandProduct;
 import tn.dalhia.entities.Product;
 import tn.dalhia.entities.User;
 import tn.dalhia.exceptions.UserServiceException;
+import tn.dalhia.repositories.CommandProductRepository;
 import tn.dalhia.repositories.CommandRepository;
 import tn.dalhia.repositories.ProductRepository;
 import tn.dalhia.repositories.UserRepository;
@@ -41,45 +43,45 @@ public class CommandServiceImpl implements CommandService{
 	ProductRepository productRepo;
 	
 	@Autowired
+	CommandProductRepository commandProductRepo;
+	
+	@Autowired
     UtilsUser utils;
 	
 	@Override
 	@Transactional
 	public CommandDto createCommand(CommandRequestModel commandDetails, String id, Authentication authentification) {
 		User userEntity = userRepo.findByUserId(id);
-		List<Product> products = new ArrayList<>();
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		if (commandDetails.getProducts() == null) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FILED.getErrorMessage());
 		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		
-		for (CommandRequestProducts commandRequestProducts : commandDetails.getProducts()) {
-			Product testProduct = productRepo.findByProductId(commandRequestProducts.getIdProducts());
-			if (testProduct == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-			if (testProduct.getQuantity() == 0 || testProduct.getQuantity()-commandDetails.getQuantity()<0) throw new UserServiceException(ErrorMessages.QUANTITY_OVER.getErrorMessage());
-			testProduct.setQuantity(testProduct.getQuantity() - commandDetails.getQuantity());
-			productRepo.save(testProduct);
-			products.add(testProduct);
-		}
+	
 		
 		Command commandEntity = new Command();
+		
 		BeanUtils.copyProperties(commandDetails,commandEntity);
 		
-		// ?? add command question 
 		commandEntity.setCommandId(utils.generateCommandId(30));
 		commandEntity.setUsers(userEntity);
-		commandEntity.setProducts(products);
-//		for (Product products : commandDetails.getProducts()) {
-//			commandEntity.getProducts().add(products);
-//		}
-//		if(commandEntity.getProducts() != null) {
-//		commandEntity.getProducts().add(ProductEntity);}
-//		else{
-//			List<Product> lP = new ArrayList<Product>();//nes2el monsieur
-//			lP.add(ProductEntity);
-//			commandEntity.setProducts(lP);
-//		}
+		
+
 
 		Command storedCommand = commandRepo.save(commandEntity);
+		
+		for (CommandRequestProducts commandRequestProducts : commandDetails.getProducts()) {
+			CommandProduct commandProductEntity = new CommandProduct();
+			Product testProduct = productRepo.findByProductId(commandRequestProducts.getIdProducts());
+			if (testProduct == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+			if (testProduct.getQuantity() == 0 || testProduct.getQuantity()-commandRequestProducts.getQuantity()<0) throw new UserServiceException(ErrorMessages.QUANTITY_OVER.getErrorMessage());
+			testProduct.setQuantity(testProduct.getQuantity() - commandRequestProducts.getQuantity());
+			productRepo.save(testProduct);
+			commandProductEntity.setCommands(storedCommand);
+			commandProductEntity.setProducts(testProduct);
+			commandProductEntity.setQuantityProduct(commandRequestProducts.getQuantity());
+			commandProductRepo.save(commandProductEntity);
+		}
+		
 		ModelMapper modelMapper = new ModelMapper();
 		CommandDto returnValue = modelMapper.map(storedCommand, CommandDto.class);
 		return returnValue;

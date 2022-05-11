@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class ForumAd {
     private Long id;
     private String title;
     private int viewChannel;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime startDate;
     private Date endDate;
     private int expectedViews;

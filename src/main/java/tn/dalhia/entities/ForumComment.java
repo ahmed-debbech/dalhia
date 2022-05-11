@@ -1,6 +1,7 @@
 package tn.dalhia.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -21,14 +22,16 @@ public class ForumComment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String text;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime datePublished;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime dateRemoved;
     private boolean banned;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
 
-    @JsonIgnore
+    //@JsonIgnore
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL)

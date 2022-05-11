@@ -1,5 +1,6 @@
 package tn.dalhia.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,7 +19,9 @@ public class Message {
     private Long id;
     private String text;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime dateSent;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime dateRemoved;
     private boolean banned; // when in group chat
 

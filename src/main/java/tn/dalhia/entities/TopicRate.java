@@ -1,6 +1,7 @@
 package tn.dalhia.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import tn.dalhia.entities.enumerations.VoteType;
 
@@ -19,6 +20,7 @@ public class TopicRate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime date;
     private VoteType voteType;
 

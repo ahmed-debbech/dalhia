@@ -1,6 +1,7 @@
 package tn.dalhia.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import tn.dalhia.entities.enumerations.TopicClaimType;
@@ -20,6 +21,7 @@ public class TopicClaim {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String text;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime date_created;
     private boolean approved;
     @Enumerated(EnumType.STRING)

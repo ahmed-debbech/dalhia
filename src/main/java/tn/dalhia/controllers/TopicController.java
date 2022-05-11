@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/forum/topics")
 @RequiredArgsConstructor
+//@CrossOrigin("http://localhost:4200")
 @Slf4j
 public class TopicController {
 
@@ -126,7 +127,10 @@ public class TopicController {
         );
     }
     @GetMapping("/topicOfTheDay")
-    public void topoftheday(){
-        topicService.getTopicOfTheDay();
+    public ResponseEntity<Topic> topoftheday(){
+        Topic t  = topicService.getTopicOfTheDay();
+        return ResponseEntity.status(HttpStatus.OK).body(
+                t
+        );
     }
 }

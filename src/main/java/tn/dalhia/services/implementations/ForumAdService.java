@@ -10,7 +10,9 @@ import tn.dalhia.services.IForumAdService;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,18 @@ public class ForumAdService implements IForumAdService {
 
     @Override
     public List<ForumAd> getAll() {
-        return repository.findAll();
+        List<ForumAd> lf = repository.findAll();
+        List<ForumAd> low = lf.stream().filter(fa -> fa.getViewChannel() == 2).collect(Collectors.toList());
+        List<ForumAd> med = lf.stream().filter(fa -> fa.getViewChannel() == 1).collect(Collectors.toList());
+        List<ForumAd> high = lf.stream().filter(fa -> fa.getViewChannel() == 0).collect(Collectors.toList());
+        List<ForumAd> fin = new ArrayList<>();
+        int nLow = (int)(Math.random()*((low.size() - 1)+1)+0);
+        int nMed = (int)(Math.random()*((med.size() - 1)+1)+0);
+        int nHigh = (int)(Math.random()*((high.size() - 1)+1)+0);
+        fin.add(low.get(nLow));
+        fin.add(med.get(nMed));
+        fin.add(high.get(nHigh));
+        return fin;
     }
 
     @Override

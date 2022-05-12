@@ -7,6 +7,8 @@ import tn.dalhia.entities.enumerations.Access;
 import tn.dalhia.entities.enumerations.ChannelType;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;

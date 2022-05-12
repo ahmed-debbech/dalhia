@@ -27,7 +27,16 @@ public interface ReviewRepository extends CrudRepository<Review,Integer> {
 	@Query(value="SELECT AVG(review.stars) FROM review JOIN user GROUP BY review.user_id ORDER BY AVG(review.stars) ASC LIMIT 1", nativeQuery= true)
 	public Float getWorstExpertScore();
 	
+	@Query(value="SELECT AVG(review.stars) FROM review WHERE review.user_id =:expId", nativeQuery= true)
+	public Float getExpertScore(@Param("expId")Long expId);
+	
+	
 	@Query(value="SELECT review.user_id FROM review JOIN user GROUP BY review.user_id ORDER BY AVG(review.stars) ASC LIMIT 1", nativeQuery= true)
 	public Long getWorstExpertId();
+	
+	@Query(value="SELECT * FROM review WHERE review.user_id = :expId", nativeQuery= true)
+	public List<Review> getReviewsByExpert(@Param("expId")Long expId);
 
+	@Query(value="SELECT * FROM review WHERE review.sender_id = :senderId", nativeQuery= true)
+	public List<Review> getMyReviews(@Param("senderId")Long senderId);
 }

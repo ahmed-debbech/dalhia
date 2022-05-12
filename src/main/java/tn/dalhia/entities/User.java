@@ -8,7 +8,11 @@ import tn.dalhia.entities.enumerations.Speciality;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,7 +54,10 @@ import tn.dalhia.entities.enumerations.Speciality;
 @Getter
 @Setter
 @ToString
-
+@JsonIgnoreProperties(value={"handler","hibernateLazyInitializer","FieldHandler"})
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 @Entity
 public class User implements Serializable {
 	

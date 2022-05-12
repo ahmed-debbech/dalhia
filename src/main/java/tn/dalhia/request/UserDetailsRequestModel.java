@@ -21,7 +21,7 @@ public class UserDetailsRequestModel {
     private String city;
     private String state;
     private int zipCode;
-    private SubscriptionRequestModel subscriptions;
+    //private SubscriptionRequestModel subscriptions;
     // zid mtaa product f lkol rest ,req...
     
     
@@ -127,7 +127,7 @@ public class UserDetailsRequestModel {
 		this.speciality = speciality;
 	}
 
-	public SubscriptionRequestModel getSubscription() {
+	/*public SubscriptionRequestModel getSubscription() {
 		return subscriptions;
 	}
 
@@ -142,6 +142,6 @@ public class UserDetailsRequestModel {
 
 	public void setSubscriptions(SubscriptionRequestModel subscriptions) {
 		this.subscriptions = subscriptions;
-	}
+	}*/
 
 }

@@ -56,6 +56,8 @@ public class UserDto implements Serializable {
 
 	private Boolean emailVerificationStatus = false;
 	private String emailVerificationToken;
+	
+	private Long subscriptionId;
 
 	// zid mtaa product f lkol rest ,req...
 
@@ -183,5 +185,15 @@ public class UserDto implements Serializable {
 	public void setEncryptedPaswword(String encryptedPaswword) {
 		this.encryptedPaswword = encryptedPaswword;
 	}
+
+	public Long getSubscriptionId() {
+		return subscriptionId;
+	}
+
+	public void setSubscriptionId(Long subscriptionId) {
+		this.subscriptionId = subscriptionId;
+	}
+	
+	
 
 }

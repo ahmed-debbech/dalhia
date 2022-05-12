@@ -41,16 +41,6 @@ public class WebConfiguration implements WebMvcConfigurer{
 	        configuration.addExposedHeader("UserId");
 	        configuration.addAllowedHeader("Role");
 	        configuration.addExposedHeader("Role");
-	        configuration.addAllowedOrigin("*");
-	        configuration.addAllowedHeader("Content-Type");
-	        configuration.addAllowedHeader("x-xsrf-token");
-	        configuration.addAllowedHeader("Authorization");
-	        configuration.addAllowedHeader("Access-Control-Allow-Headers");
-	        configuration.addAllowedHeader("Origin");
-	        configuration.addAllowedHeader("Accept");
-	        configuration.addAllowedHeader("X-Requested-With");
-	        configuration.addAllowedHeader("Access-Control-Request-Method");
-	        configuration.addAllowedHeader("Access-Control-Request-Headers");
 	        configuration.addAllowedMethod("OPTIONS");
 	        configuration.addAllowedMethod("GET");
 	        configuration.addAllowedMethod("PUT");

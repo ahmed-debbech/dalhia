@@ -130,6 +130,9 @@ public class UserServiceImpl implements UserService {
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		BeanUtils.copyProperties(userEntity,returnValue);
+		if(userEntity.getSubscriptions()!=null) {
+			returnValue.setSubscriptionId(userEntity.getSubscriptions().getId());
+		}
 		return returnValue;
 
 	
@@ -229,7 +232,7 @@ public class UserServiceImpl implements UserService {
 		String senderName = "Women App Team";
 		String mailContent = "<p>Dear " + firstName + "</p>";
 		mailContent += "<p> Someone has requested to reset your password with our project .If it were not you , please ignore it otherwise please click on the link below : </p>";
-		String verifyURL = "http://localhost:8080/verification-service/password-reset.html?token=" + token;
+		String verifyURL = "http://localhost:4200/#/change-password?token=" + token;
 		
 		mailContent += "<h2><a href=" + verifyURL + ">Click this link to reset password</a></h2>";
 		

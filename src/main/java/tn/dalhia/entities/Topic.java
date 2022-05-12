@@ -44,7 +44,7 @@ public class Topic {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    //@JsonIgnore
+    @JsonIgnore
     private User user;
 
 }

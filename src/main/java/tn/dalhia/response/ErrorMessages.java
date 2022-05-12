@@ -11,7 +11,9 @@ public enum ErrorMessages {
 	COULD_NOT_DELETE_RECORD("Could not delete record"),
 	EMAIL_ADDRESS_NOT_VERIFIED("Email adress could not verified"),
 	QUANTITY_OVER("We re sorry , this product is currently out of stock"),
-	SECURITY_ERROR("you re not allowed to do that");
+	SECURITY_ERROR("you re not allowed to do that"),
+	DATE_ERROR("Check the date is not valid"),
+	ALREADY_SUB("this user is already subscribed");
 	
 	
 	private String errorMessage;

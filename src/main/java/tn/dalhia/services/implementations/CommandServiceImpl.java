@@ -3,8 +3,6 @@ package tn.dalhia.services.implementations;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 
 import tn.dalhia.entities.Command;
 import tn.dalhia.entities.CommandProduct;
@@ -25,6 +27,7 @@ import tn.dalhia.repositories.ProductRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.request.CommandRequestModel;
 import tn.dalhia.request.CommandRequestProducts;
+import tn.dalhia.response.CommandProductRest;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.services.CommandService;
 import tn.dalhia.shared.dto.CommandDto;
@@ -56,8 +59,11 @@ public class CommandServiceImpl implements CommandService{
 		if (commandDetails.getProducts() == null) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FILED.getErrorMessage());
 		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		
-	
-		
+		for (CommandRequestProducts commandRequestProducts : commandDetails.getProducts()) {
+			Product testProduct = productRepo.findByTitle(commandRequestProducts.getTitle());
+			if (testProduct == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+			if (testProduct.getQuantity() == 0 || testProduct.getQuantity()-commandRequestProducts.getQuantity()<0) throw new UserServiceException(ErrorMessages.QUANTITY_OVER.getErrorMessage());
+		}
 		Command commandEntity = new Command();
 		
 		BeanUtils.copyProperties(commandDetails,commandEntity);
@@ -71,9 +77,7 @@ public class CommandServiceImpl implements CommandService{
 		
 		for (CommandRequestProducts commandRequestProducts : commandDetails.getProducts()) {
 			CommandProduct commandProductEntity = new CommandProduct();
-			Product testProduct = productRepo.findByProductId(commandRequestProducts.getIdProducts());
-			if (testProduct == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-			if (testProduct.getQuantity() == 0 || testProduct.getQuantity()-commandRequestProducts.getQuantity()<0) throw new UserServiceException(ErrorMessages.QUANTITY_OVER.getErrorMessage());
+			Product testProduct = productRepo.findByTitle(commandRequestProducts.getTitle());
 			testProduct.setQuantity(testProduct.getQuantity() - commandRequestProducts.getQuantity());
 			productRepo.save(testProduct);
 			commandProductEntity.setCommands(storedCommand);
@@ -84,6 +88,18 @@ public class CommandServiceImpl implements CommandService{
 		
 		ModelMapper modelMapper = new ModelMapper();
 		CommandDto returnValue = modelMapper.map(storedCommand, CommandDto.class);
+		final String ACCOUNT_SID ="AC228e60b8a2ebb67be77e99883a9ce3fa";
+	    final String AUTH_TOKEN = "40e87a192b2f6779dbd40fcc49bace35";
+		
+		  Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+	        Message message = Message.creator(
+	                new com.twilio.type.PhoneNumber("+21654649865"), //to
+	                new com.twilio.type.PhoneNumber("+16812525336"), //from
+	                "Thank you for purchasing from us. "
+	                + "This is to confirm that your order has been processed, and will reach you in a matter of 3days. We insist on reminding you that you have contributed in the help towards a good cause!")
+	            .create();
+
+	        System.out.println(message.getBody());
 		return returnValue;
 	}
 
@@ -140,6 +156,32 @@ public class CommandServiceImpl implements CommandService{
 			CommandDto commandDto = modelMapper.map(command,CommandDto.class);
 			 //BeanUtils.copyProperties(command, commandDto);
 			 returnValue.add(commandDto);
+		}
+		return returnValue;
+	}
+	
+	@Override
+	public List<CommandProductRest> getCommands( Authentication authentification) {
+		List<CommandProductRest> returnValue = new ArrayList<>();
+		List<Command> commands = commandRepo.findAll();
+		
+		for(Command command : commands) {
+			CommandProductRest ret = new CommandProductRest();
+			ret.setCommandId(command.getCommandId());
+			ret.setEmail(command.getEmail());
+			ret.setName(command.getName());
+			ret.setUserId(command.getUsers().getUserId());
+			List<CommandProduct> commandProducts  = command.getQuantities();
+			 List<Long> idProducts = new ArrayList<>();
+			 List<Integer> quantity= new ArrayList<>();
+			 for (CommandProduct commandPro : commandProducts) {
+				 idProducts.add(commandPro.getProducts().getId());
+				 quantity.add(commandPro.getQuantityProduct());
+				 
+			 }
+			 ret.setIdProducts(idProducts);
+			 ret.setQuantity(quantity);
+			 returnValue.add(ret);
 		}
 		return returnValue;
 	}

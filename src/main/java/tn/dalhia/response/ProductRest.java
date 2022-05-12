@@ -2,11 +2,13 @@ package tn.dalhia.response;
 
 public class ProductRest {
 
+	private Long id;
 	private String title;
 	private String productId;
  	private String description;
  	private int price;
  	private int quantity;
+ 	private String photo;
 
 	public String getTitle() {
 		return title;
@@ -38,6 +40,19 @@ public class ProductRest {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
  	
+	
  	
 }

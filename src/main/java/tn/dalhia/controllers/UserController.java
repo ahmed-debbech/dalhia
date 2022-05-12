@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,8 +56,8 @@ public class UserController {
 	@Autowired
 	CommandService commandService;
 
-	@PostMapping()
-	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
+	@PostMapping(produces={MediaType.APPLICATION_JSON_VALUE})
+	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails ) throws Exception {
 		UserRest returnValue = new UserRest();
 
 		//UserDto userDto = new UserDto();
@@ -70,7 +72,7 @@ public class UserController {
 		return returnValue;
 
 	}
-	@GetMapping(path="/{id}")
+	@GetMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public UserRest getUserByUserId(@PathVariable String id , Authentication authentification ) {
 		UserRest returnValue = new UserRest();
 		UserDto userDto = userService.getUserByUserId(id,authentification);
@@ -78,8 +80,14 @@ public class UserController {
 		BeanUtils.copyProperties(userDto, returnValue);
 		return returnValue;
 	}
+	
+	@GetMapping(path="/get-users",produces={MediaType.APPLICATION_JSON_VALUE})
+	public List<UserRest> getUsers(Authentication authentification ) {
+		
+		return userService.getUsersF(authentification);
+	}
 
-	@PutMapping(path="/{id}")
+	@PutMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public UserRest updateUser (@PathVariable String id , @RequestBody UserDetailsRequestModel userDetails, Authentication authentification) {
 		UserRest returnValue = new UserRest();
 
@@ -94,7 +102,7 @@ public class UserController {
 		return returnValue;
 	}
 
-	@DeleteMapping(path="/{id}")
+	@DeleteMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public OperationStatusModel deleteUser(@PathVariable String id ,Authentication authentification) {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
@@ -104,7 +112,7 @@ public class UserController {
 		return returnValue;
 	}
 
-	@GetMapping(path="/email-verification")
+	@GetMapping(path="/email-verification",produces={MediaType.APPLICATION_JSON_VALUE})
 
 	public OperationStatusModel verifyEmailToken(@RequestParam(value="token") String token) {
 
@@ -124,7 +132,7 @@ public class UserController {
 
 
 
-	@PostMapping(path="/password-reset-request")
+	@PostMapping(path="/password-reset-request",produces={MediaType.APPLICATION_JSON_VALUE})
 
 	public OperationStatusModel requestReset(@RequestBody PasswordResetRequestModel passwordResetRequestModel) throws Exception {
 
@@ -142,7 +150,7 @@ public class UserController {
 		return returnValue;
 	}
 
-	@PostMapping(path="/password-reset")
+	@PostMapping(path="/password-reset",produces={MediaType.APPLICATION_JSON_VALUE})
 	public OperationStatusModel resetPassword(@RequestBody PasswordResetModel passwordResetModel)  {
 
 		OperationStatusModel returnValue = new OperationStatusModel();
@@ -170,9 +178,11 @@ public class UserController {
 		
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String currentDateTime = dateFormatter.format(new Date());
+		int i ;
+		
 		
 		String headerKey = "Content-Disposition";
-		String headerValue = "attachment; filename=user_" + currentDateTime + ".pdf";
+		String headerValue = "attachment; filename=user.pdf";
 		response.setHeader(headerKey, headerValue);
 
 		List<User> users = userService.getUsers();
@@ -184,7 +194,7 @@ public class UserController {
 
 	}
 	
-	@GetMapping(path="/get-users-pagination")
+	@GetMapping(path="/get-users-pagination",produces={MediaType.APPLICATION_JSON_VALUE})
 	public List<UserRest> getUsersPagination(@RequestParam(value="page",defaultValue="0") int page ,
 			@RequestParam(value="limit",defaultValue="3") int limit, Authentication authentification)
 	{

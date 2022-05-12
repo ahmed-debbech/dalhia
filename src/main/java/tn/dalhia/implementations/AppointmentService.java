@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.dalhia.entities.Appointment;
+import tn.dalhia.entities.AppointmentRate;
+import tn.dalhia.entities.AppointmentReport;
 import tn.dalhia.entities.User;
+import tn.dalhia.repositories.AppointmentRateRepository;
 import tn.dalhia.repositories.AppointmentReportRepository;
 import tn.dalhia.repositories.AppointmentRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.IAppointmentService;
 import tn.dalhia.shared.tools.UtilsUser;
+
 
 
 @Slf4j
@@ -28,6 +32,9 @@ public class AppointmentService implements IAppointmentService {
 	private AppointmentReportRepository AppRpRepo;
 	
 	@Autowired
+	private AppointmentRateRepository AppRtRepo;
+	
+	@Autowired
 	private UserRepository userRepo;
 	
 	@Autowired
@@ -39,13 +46,17 @@ public class AppointmentService implements IAppointmentService {
 	@Autowired
 	private UtilsUser utilsUser;
 	
+	
+
+	
 	@Override
 	public void addAppointment(Appointment app, Long ExpertId) {
 		//Date today = new Date();
 
-		User logg = utilsUser.getLoggedInUser();
-		app.setSender(logg);
-    
+		 User logg = utilsUser.getLoggedInUser();
+	        app.setSender(logg);
+		
+
 		//log.info("today:"+today);
 		User user = userRepo.findById(ExpertId).get();
 		if(user == null || user.getRole().getValue()==2|| user.getRole().getValue()==3 || user.getRole().getValue()==4)
@@ -137,7 +148,7 @@ public class AppointmentService implements IAppointmentService {
 	}
 
 	@Override
-	public void banReportedExpert() {
+	public User banReportedExpert() {
 		
 		Long UsrId = AppRpRepo.retrieveUserId();
 		User user = userRepo.findById(UsrId).get();
@@ -153,15 +164,14 @@ public class AppointmentService implements IAppointmentService {
 			}
 			Ss.sendWarningSms(user);
 			log.info("BAN WARNING Mail and SMS are sent to Expert successfully.");
-			
+			return user;
 			}
 		else if(count>1)
 		{
 			AppRpRepo.updateBan(UsrId);
 			log.info("Reported Expert: "+user.getFirst_name()+" "+user.getLast_name()+" ,Profession: "+user.getJob()+" ,Address: "+user.getAddress()+" ,Phone: "+user.getPhone()+" is BANNED by Admin.");
-			
 			AppRepo.DeleteAppByUsrId(UsrId);
-			
+
 			try {
 				
 				Ms.sendBanEmail(user);
@@ -170,14 +180,60 @@ public class AppointmentService implements IAppointmentService {
 			}
 			Ss.sendBanSms(user);
 			log.info("BAN Mail and SMS are sent to Expert successfully.");
-			
+			return user;
 		}	
 		else
 		{
 			log.info("No Appointment Reports found therefore no experts to ban.");
+			return null;
 		}
+		
 	}
 
+	@Override
+	public User getMostExpert() {
+		Long Exp_id =AppRepo.getMostVisitedExpertId();
+	  return userRepo.findById(Exp_id).get();
+	}
+
+	@Override
+	public User getLeastExpert() {
+		
+		Long Exp_id = AppRepo.getLeastVisitedExpertId();
+		return userRepo.findById(Exp_id).get();
+	}
+
+	@Override
+	public List<User> getExperts() {
+		
+		
+		return userRepo.findAll();
+	}
+	
+	@Override
+	public List<Appointment> getMyAppointments(Long senderId) {
+		
+		
+		return AppRepo.getMyAppointments(senderId);
+	}
+	
+	@Override
+	public User getExpertDetails(Long expertId){
+		
+		return userRepo.getById(expertId);
+	}
+	
+	@Override
+	public List<AppointmentReport> getAppointmentReports(Long id)
+	{
+		return AppRpRepo.getAppointmentReport(id);
+	}
+	
+	@Override
+	public List<AppointmentRate> getAppointmentRates(Long id)
+	{
+		return AppRtRepo.getAppointmentRate(id);
+	}
 	
 
 }

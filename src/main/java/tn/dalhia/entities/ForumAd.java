@@ -3,6 +3,8 @@ package tn.dalhia.entities;
 import lombok.*;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -12,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ForumAd {
+public class ForumAd{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -7,8 +7,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -16,13 +20,17 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Review {
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "sender")
+public class Review implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ReviewId;
 
     @Temporal(TemporalType.DATE)
-    private Date ReviewDate;
+    //@JsonFormat(pattern="yyyy-MM-dd")
+    private Date reviewDate;
     private String ReviewHeader;
     private String ReviewBody;
     private Float Stars;
@@ -35,7 +43,7 @@ public class Review {
     
     @ManyToOne
     @JoinColumn(name = "sender_id")
-    @JsonIgnore
+    //@JsonIgnore
     private User sender;
 
 }

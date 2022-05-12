@@ -4,6 +4,8 @@ import lombok.*;
 import tn.dalhia.entities.enumerations.CourseStatus;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;

@@ -3,6 +3,7 @@ package tn.dalhia.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tn.dalhia.entities.AppointmentRate;
 import tn.dalhia.implementations.AppointmentRateService;
 
-
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/appointmentRate")
 public class AppointementRateController {
@@ -24,6 +25,7 @@ public class AppointementRateController {
 	AppointmentRateService ars;
 	
 	//http://localhost:8089/Dahlia/appointmentRate/add-appointmentRate/8
+	@CrossOrigin(origins="*")
 	 @PostMapping("/add-appointmentRate/{app-id}")
 		public void addAppointmentRate(@RequestBody AppointmentRate Ar,@PathVariable("app-id") Integer AppId) {
 		 ars.addAppointmentRate(Ar, AppId);

@@ -12,4 +12,10 @@ public interface IReviewService {
 	public void addReview(Review rq, Long ExpertId);
 	public void deleteReview(int id);
 	public void getBestAndWorstExpertWithScore();
+	public User getMostScoredExpert();
+	public User getWorstScoredExpert();
+	public Float getBestScore();
+	public Float getWorstScore();
+	public Float getExpertScore(Long expId);
+	public List<Review> getMyReviews(Long senderId);
 }

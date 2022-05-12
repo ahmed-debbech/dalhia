@@ -1,6 +1,8 @@
 package tn.dalhia.entities;
 
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -25,7 +27,7 @@ import tn.dalhia.entities.enumerations.AppReportCategory;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppointmentReport {
+public class AppointmentReport implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

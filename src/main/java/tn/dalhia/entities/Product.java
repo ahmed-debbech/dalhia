@@ -32,6 +32,8 @@ public class Product implements Serializable{
  	private int price;
  	@Column(nullable=false)
  	private int quantity;
+ 	@Column(nullable=false)
+    private String photo;
  	
  	@OneToMany(mappedBy="products")
 	private List<CommandProduct> quantities;
@@ -94,6 +96,15 @@ public class Product implements Serializable{
 		this.quantities = quantities;
 	}
 
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	
  	
 
 }

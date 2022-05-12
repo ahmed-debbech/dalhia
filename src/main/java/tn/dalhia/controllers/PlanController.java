@@ -1,7 +1,12 @@
 package tn.dalhia.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import tn.dalhia.entities.Plan;
 import tn.dalhia.request.PlanRequestModel;
 import tn.dalhia.response.OperationStatusModel;
 import tn.dalhia.response.PlanRest;
@@ -29,7 +35,7 @@ public class PlanController {
 	@Autowired
 	PlanService planService;
 	
-	@PostMapping()
+	@PostMapping(produces={MediaType.APPLICATION_JSON_VALUE})
 	public PlanRest createPlan(@RequestBody PlanRequestModel planDetails, Authentication authentification) {
 		PlanRest returnValue = new PlanRest();
 		
@@ -39,7 +45,7 @@ public class PlanController {
 		return returnValue;
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public PlanRest updatePlan(@RequestBody PlanRequestModel planDetails, @PathVariable Long id, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
 		
@@ -48,14 +54,14 @@ public class PlanController {
 		return returnValue;
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public PlanRest getPlan(@PathVariable Long id, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
 		 PlanDto getPlan = planService.getPlanById(id,authentification);
 		 PlanRest returnValue = modelMapper.map(getPlan, PlanRest.class);
 		return returnValue;
 	}
-	@DeleteMapping("/{id}")
+	@DeleteMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public OperationStatusModel deletePlan(@PathVariable Long id, Authentication authentification) {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
@@ -65,4 +71,17 @@ public class PlanController {
 		
 		return returnValue;
 	}
+	@GetMapping(produces={MediaType.APPLICATION_JSON_VALUE})
+	public List<PlanRest> getPlans( Authentication authentification) {
+		List<Plan> Plans = planService.getPlans(authentification);
+		List<PlanRest> returnValue = new ArrayList<>();
+		ModelMapper modelMapper = new ModelMapper();
+		
+		for(Plan plan : Plans) {
+			PlanRest p = modelMapper.map(plan, PlanRest.class);
+			returnValue.add(p);
+		}
+		return returnValue;
+	}
+	
 }

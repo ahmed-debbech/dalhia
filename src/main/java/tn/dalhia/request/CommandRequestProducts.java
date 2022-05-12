@@ -1,15 +1,17 @@
 package tn.dalhia.request;
 
 public class CommandRequestProducts {
-	private String idProducts;
+	private String title;
 	private int quantity;
 
-	public String getIdProducts() {
-		return idProducts;
+
+
+	public String getTitle() {
+		return title;
 	}
 
-	public void setIdProducts(String idProducts) {
-		this.idProducts = idProducts;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public int getQuantity() {

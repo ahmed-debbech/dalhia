@@ -2,12 +2,18 @@ package tn.dalhia.response;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 public class SubscriptionRest {
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date_debut;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date_fin;
 	private String message ;
-	private String subscritpionId;
+	private String subscriptionId;
+	private String userId;
+	private Long planId;
 	public Date getDate_debut() {
 		return date_debut;
 	}
@@ -26,11 +32,24 @@ public class SubscriptionRest {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getSubscritpionId() {
-		return subscritpionId;
+	
+	public String getSubscriptionId() {
+		return subscriptionId;
 	}
-	public void setSubscritpionId(String subscritpionId) {
-		this.subscritpionId = subscritpionId;
+	public void setSubscriptionId(String subscriptionId) {
+		this.subscriptionId = subscriptionId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public Long getPlanId() {
+		return planId;
+	}
+	public void setPlanId(Long planId) {
+		this.planId = planId;
 	}
 	
 	

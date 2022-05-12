@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import tn.dalhia.entities.User;
+import tn.dalhia.response.UserRest;
 import tn.dalhia.shared.dto.UserDto;
 
 public interface UserService extends UserDetailsService  {
@@ -25,4 +26,5 @@ public interface UserService extends UserDetailsService  {
 	List<User> getUsers();
 	void checktokenExpiration() throws UnsupportedEncodingException, MessagingException;
 	List<UserDto> getUsersPagination(int page, int limit, Authentication authentification);
+	public List<UserRest> getUsersF(Authentication authentification);
 }

@@ -1,7 +1,11 @@
 package tn.dalhia.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import tn.dalhia.entities.Product;
 import tn.dalhia.request.ProductRequestModel;
 import tn.dalhia.response.OperationStatusModel;
 import tn.dalhia.response.ProductRest;
@@ -36,7 +41,7 @@ public class ProductController {
 	ProductRest returnValue = modelMapper.map(createProduct, ProductRest.class);
 	return returnValue;
 	}
-	@PutMapping("/{id}")
+	@PutMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public ProductRest updateProduct(@RequestBody ProductRequestModel product ,@PathVariable String id, Authentication authentification) {
 
 		
@@ -47,7 +52,7 @@ public class ProductController {
 		return returnValue;
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public ProductRest getProduct(@PathVariable String id, Authentication authentification) {
 		ModelMapper modelMapper = new ModelMapper();
 		ProductDto product = productService.getProductById(id,authentification);
@@ -55,7 +60,7 @@ public class ProductController {
 		return returnValue;
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping(path="/{id}",produces={MediaType.APPLICATION_JSON_VALUE})
 	public OperationStatusModel deleteProduct(@PathVariable String id, Authentication authentification) {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
@@ -66,4 +71,17 @@ public class ProductController {
 		
 		return returnValue;
 	}
+	@GetMapping(produces={MediaType.APPLICATION_JSON_VALUE})
+	public List<ProductRest> getProduct(Authentication authentification) {
+		List<Product> products = productService.getProducts(authentification);
+		List<ProductRest> returnValue = new ArrayList<>();
+				
+		for (Product product : products) {
+			ModelMapper modelMapper = new ModelMapper();
+			ProductRest rest = modelMapper.map(product, ProductRest.class);
+			returnValue.add(rest);
+		}
+		return returnValue;
+	}
+	
 }

@@ -3,13 +3,14 @@ package tn.dalhia.services.implementations;
 
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.request.SubscriptionRequestModel;
 import tn.dalhia.response.ErrorMessages;
 import tn.dalhia.response.RequestOperationStatus;
+import tn.dalhia.response.SubscriptionRest;
 import tn.dalhia.services.SubscriptionService;
 import tn.dalhia.shared.dto.SubscriptionDto;
 import tn.dalhia.shared.tools.UtilsUser;
@@ -55,7 +57,9 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 		
 		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		if(subscription.getDate_debut().compareTo(new Date())<=0 || subscription.getDate_fin().compareTo(subscription.getDate_debut())<=0) throw new UserServiceException(ErrorMessages.DATE_ERROR.getErrorMessage());
 		if (plan == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		if(userEntity.getSubscriptions()!=null) throw new UserServiceException(ErrorMessages.ALREADY_SUB.getErrorMessage());
 		
 		Subscription subEntity = new Subscription();
 		BeanUtils.copyProperties(subscription,subEntity);
@@ -80,6 +84,7 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 		if(!utils.connectedUser(authentification,null)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		SubscriptionDto returnValue = new SubscriptionDto();
 		Subscription sub = subscriptionRepo.findBySubscritpionId(id);
+		if(subscription.getDate_debut().compareTo(new Date())<=0 || subscription.getDate_fin().compareTo(subscription.getDate_debut())<=0) throw new UserServiceException(ErrorMessages.DATE_ERROR.getErrorMessage());
 		if (sub == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 
@@ -159,6 +164,25 @@ public class SubscriptionServiceImpl implements SubscriptionService  {
 			
 		}
 		
+	}
+
+	@Override
+	public List<SubscriptionRest> getSubscriptions(Authentication authentification) {
+		List<SubscriptionRest> returnValue= new ArrayList<>();
+		List<Subscription> subs = subscriptionRepo.findAll();
+		
+		for (Subscription sub : subs) {
+			ModelMapper modelMapper = new ModelMapper();
+			SubscriptionRest rest = modelMapper.map(sub, SubscriptionRest.class);
+			if(sub.getUserDetails()!=null) {
+				rest.setUserId(sub.getUserDetails().getUserId());
+			}
+			if(sub.getPlans()!=null) {
+				rest.setPlanId(sub.getPlans().getId());
+			}
+			returnValue.add(rest);
+		}
+		return returnValue;
 	}
 
 

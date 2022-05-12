@@ -2,11 +2,13 @@ package tn.dalhia.services.implementations;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,12 +23,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tn.dalhia.entities.PasswordResetTokenEntity;
+import tn.dalhia.entities.Subscription;
 import tn.dalhia.entities.User;
 import tn.dalhia.entities.enumerations.Role;
 import tn.dalhia.exceptions.UserServiceException;
 import tn.dalhia.repositories.PasswordResetTokenRepository;
+import tn.dalhia.repositories.SubscriptionRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.response.ErrorMessages;
+import tn.dalhia.response.UserRest;
 import tn.dalhia.services.UserService;
 import tn.dalhia.shared.dto.UserDto;
 import tn.dalhia.shared.tools.UtilsUser;
@@ -48,6 +52,9 @@ public class UserServiceImpl implements UserService {
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
+	SubscriptionRepository subscriptionRepo;
+	
+	@Autowired
 	private JavaMailSender mailSender;
 	
 	@Autowired
@@ -56,6 +63,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto createUser(UserDto user) throws UnsupportedEncodingException, MessagingException {
 		if(userRepo.findByEmail(user.getEmail()) !=null) throw new RuntimeException("Record already exists");
+		if(!user.getDate_birth().before(new Date())) throw new UserServiceException(ErrorMessages.DATE_ERROR.getErrorMessage());
 		
 		
 		User userEntity = new User();
@@ -111,8 +119,6 @@ public class UserServiceImpl implements UserService {
 			BeanUtils.copyProperties(userEntity,returnValue);
 			return returnValue;
 		
-		
-		
 	}
 
 	@Override
@@ -124,6 +130,9 @@ public class UserServiceImpl implements UserService {
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		BeanUtils.copyProperties(userEntity,returnValue);
+		if(userEntity.getSubscriptions()!=null) {
+			returnValue.setSubscriptionId(userEntity.getSubscriptions().getId());
+		}
 		return returnValue;
 
 	
@@ -137,6 +146,7 @@ public class UserServiceImpl implements UserService {
 		
 		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()); //Exception eli aamlneha ahna
+		if(!userEntity.getDate_birth().before(new Date())) throw new UserServiceException(ErrorMessages.DATE_ERROR.getErrorMessage());
 		
 			userEntity.setAddress(userDto.getAddress());
 			userEntity.setFirst_name(userDto.getFirst_name());
@@ -157,7 +167,11 @@ public class UserServiceImpl implements UserService {
 		User userEntity = userRepo.findByUserId(userId);
 		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
 		if (userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		
+		if(userEntity.getSubscriptions()!=null) {
+			Subscription sub = userEntity.getSubscriptions();
+			subscriptionRepo.delete(sub);
+			
+		}
 		userRepo.delete(userEntity);
 		
 	}
@@ -218,7 +232,7 @@ public class UserServiceImpl implements UserService {
 		String senderName = "Women App Team";
 		String mailContent = "<p>Dear " + firstName + "</p>";
 		mailContent += "<p> Someone has requested to reset your password with our project .If it were not you , please ignore it otherwise please click on the link below : </p>";
-		String verifyURL = "http://localhost:8080/verification-service/password-reset.html?token=" + token;
+		String verifyURL = "http://localhost:4200/#/change-password?token=" + token;
 		
 		mailContent += "<h2><a href=" + verifyURL + ">Click this link to reset password</a></h2>";
 		
@@ -286,6 +300,26 @@ public class UserServiceImpl implements UserService {
 		
 		
 		return userEntities;
+	}
+	
+	@Override
+	public List<UserRest> getUsersF(Authentication authentification) {
+
+		User userEntity = userRepo.findByUserId(authentification.getName());
+		List<UserRest> returnValue = new ArrayList<>();
+		if(!utils.connectedUser(authentification,userEntity)) throw new UserServiceException(ErrorMessages.SECURITY_ERROR.getErrorMessage());
+		List<User> userEntities = userRepo.findAll();
+		if (userEntities == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		for (User user : userEntities) {
+			ModelMapper modelMapper = new ModelMapper();
+			UserRest rest = modelMapper.map(user, UserRest.class);
+			if(user.getSubscriptions()!=null) {
+			rest.setSubscriptionId(user.getSubscriptions().getId());
+			}
+			returnValue.add(rest);
+		}
+		
+		return returnValue;
 	}
 
 	@Override

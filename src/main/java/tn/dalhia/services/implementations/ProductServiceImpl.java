@@ -1,5 +1,7 @@
 package tn.dalhia.services.implementations;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -44,6 +46,7 @@ public class ProductServiceImpl implements ProductService{
 		if (productEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		
 		productEntity.setDescription(product.getDescription());
+		productEntity.setPhoto(product.getPhoto());
 		productEntity.setPrice(product.getPrice());
 		productEntity.setTitle(product.getTitle());
 		productEntity.setQuantity(product.getQuantity());
@@ -70,6 +73,12 @@ public class ProductServiceImpl implements ProductService{
 		Product product = productRepo.findByProductId(id);
 		if (product == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		productRepo.delete(product);
+	}
+
+	@Override
+	public List<Product> getProducts(Authentication authentification) {
+		// TODO Auto-generated method stub
+		return productRepo.findAll();
 	}
 
 }

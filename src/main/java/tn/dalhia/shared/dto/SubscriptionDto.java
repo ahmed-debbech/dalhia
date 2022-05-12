@@ -9,6 +9,7 @@ public class SubscriptionDto {
 	private String message;
 	private String subscritpionId; 
 	private Long planId;
+	private String userId ;
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +46,12 @@ public class SubscriptionDto {
 	}
 	public void setPlanId(Long planId) {
 		this.planId = planId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

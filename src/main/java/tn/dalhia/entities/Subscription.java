@@ -1,6 +1,8 @@
 package tn.dalhia.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -35,6 +37,7 @@ public class Subscription implements Serializable {
 	private User userDetails;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Plan plans ; 
 
 	public Long getId() {

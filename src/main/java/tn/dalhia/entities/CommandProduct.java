@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,9 +30,11 @@ public class CommandProduct implements Serializable{/**
 		private int quantityProduct;
 		
 		@ManyToOne
+				@JsonIgnore
 		Product products;
 		
 		@ManyToOne
+				@JsonIgnore
 		Command commands;
 	
 }

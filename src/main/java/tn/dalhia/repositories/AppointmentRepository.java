@@ -1,6 +1,8 @@
 package tn.dalhia.repositories;
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +13,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import tn.dalhia.entities.Appointment;
+import tn.dalhia.entities.AppointmentRate;
+import tn.dalhia.entities.AppointmentReport;
+import tn.dalhia.entities.User;
 
 
 
@@ -36,5 +41,14 @@ public interface AppointmentRepository extends CrudRepository<Appointment,Intege
 	public void DeleteAppByUsrId(@Param("usrId") Long usrId);
 
 
+	@Query(value ="SELECT * FROM appointment WHERE appointment.sender_id =:senderId",nativeQuery=true)
+    public List<Appointment> getMyAppointments(@Param("senderId") Long senderId);
+	
+	@Query(value ="SELECT * FROM user WHERE id=:expertId",nativeQuery=true)
+    public List<User> getExpertDetails(@Param("expertId") Long expertId);
+	
+	
+	
+	
 }
 

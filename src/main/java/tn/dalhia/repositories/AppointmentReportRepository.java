@@ -2,6 +2,8 @@ package tn.dalhia.repositories;
 
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -34,5 +36,7 @@ public interface AppointmentReportRepository extends CrudRepository<AppointmentR
 
 	public void updateBan(@Param("usrId") Long usrId);
 	
+	@Query(value ="SELECT * FROM appointment_report WHERE id=:appReportId ",nativeQuery=true)
+	public List<AppointmentReport> getAppointmentReport(@Param("appReportId") Long appReportId);
 }
 

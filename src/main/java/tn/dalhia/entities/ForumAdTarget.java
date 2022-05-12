@@ -3,6 +3,8 @@ package tn.dalhia.entities;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ForumAdTarget {
+public class ForumAdTarget{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

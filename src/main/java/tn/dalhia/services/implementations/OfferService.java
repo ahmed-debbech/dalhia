@@ -20,6 +20,7 @@ import tn.dalhia.repositories.JobCategoryRepository;
 import tn.dalhia.repositories.OfferRepository;
 import tn.dalhia.repositories.UserRepository;
 import tn.dalhia.services.IOfferService;
+import tn.dalhia.shared.tools.UtilsUser;
 
 @Service
 public class OfferService implements IOfferService {
@@ -32,7 +33,8 @@ public class OfferService implements IOfferService {
 	private UserRepository userRepo ;
 	@Autowired
 	private HistoryOfferRepository historyRepo ;
-
+	@Autowired
+	private UtilsUser utilsUser;
 
 
 	public List<Offer> retrieveAllOffers() {
